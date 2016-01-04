@@ -61,3 +61,14 @@ footer.rodape{
 footer.rodape *{
     color: #fff;
 }
+
+.buscaInterna{
+    width: 100%;
+}
+.buscaInterna input[type="search"]{
+    width: 70%;
+    height: 40px;
+}
+.buscaInterna button{
+    height: 40px;
+}

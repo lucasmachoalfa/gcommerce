@@ -1,7 +1,9 @@
 <div class="container-fluid">
     <header class="row">
         <div class="col-lg-1 text-center logo">
-            <img src="img/logo.png" alt="" />
+            <a href="./">
+                <img src="img/logo.png" alt="" />
+            </a>
         </div>
         <div class="col-lg-4 busca">                    
             <input type="search" placeholder="Buscar produtos"/>
@@ -44,7 +46,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Clientes <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="cadCliente.php">Cadastro de cliente</a></li>
+                            <li><a href="cadCliente.php">Adicionar um novo cliente</a></li>
                             <li><a href="verClientes.php">Ver cliente</a></li>
                         </ul>
                     </li>
