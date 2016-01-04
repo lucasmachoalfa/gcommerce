@@ -1,0 +1,63 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic);
+*{
+    font-family: 'Open Sans', sans-serif;
+}
+img{
+    max-width: 100%;
+}
+.logo{
+    padding: 10px;
+    border-right: 1px solid #dedede;
+}
+.logo img{
+    height: 35px;
+}
+header{
+    border-bottom: 1px solid #dedede;
+}
+.busca{
+    padding: 5px 10px;
+    border-right: 1px solid #dedede;
+}
+.busca input{
+    border: 0;
+    outline: 0;
+    height: 45px;
+    width: 100%;
+    padding-left: 35px;
+    background: no-repeat left 3px center url(../img/search.png);
+    background-size: 20px auto;
+}
+.visitaLoja{
+    margin-right: 10px;
+}
+.minhaConta{
+    background: none; 
+    border: none;
+}
+.dirTopo{
+    padding-top: 12px;
+}
+.menuPrincipal.navbar-link{
+    background: #00a6cf!important;
+    border: none;
+    box-shadow: none;
+}
+.menuPrincipal.navbar-link .nav.navbar-nav > li > a{
+    color: #fff;
+}
+.menuPrincipal.navbar-link .nav.navbar-nav > li > a:hover{
+    background: #0089b3;
+}
+.menuPrincipal.navbar-link .nav.navbar-nav > li > a:focus{
+    background: #0089b3!important;
+}
+footer.rodape{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background: #002857;
+    margin-top: 60px;
+}
+footer.rodape *{
+    color: #fff;
+}
