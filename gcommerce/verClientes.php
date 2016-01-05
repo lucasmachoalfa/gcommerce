@@ -31,20 +31,22 @@
                         <tr> 
                             <th>Nome</th> 
                             <th><a href="#">Total Consumido</a></th>
-                            <th>Número de compras</th> 
-                            <th>Última compra</th> 
+                            <th><a href="#">Número de compras</a></th> 
+                            <th><a href="#">Última compra</a></th> 
                             <th>Cidade/Estado</th> 
                             <th>E-mail</th> 
+                            <th><a href="#">Data de Cadastro</a></th> 
                         </tr>
                     </thead>
                     <tbody>
                         <tr> 
-                            <th scope=row><a href="#">Rodrigo Ricciotti</a></th>
+                            <th scope=row><a href="#">Rodrigo Jesus</a></th>
                             <td>R$ 0,00</td> 
                             <td>0</td>
                             <td>-</td> 
                             <td>Rio de Janeiro/RJ</td> 
                             <td>rodrigo@agenciaguppy.com.br</td> 
+                            <td>20/12/12 às 20:30</td> 
                         </tr> 
                         <tr> 
                             <th scope=row><a href="#">Rodrigo Ricciotti</a></th>
@@ -53,6 +55,7 @@
                             <td>-</td> 
                             <td>Rio de Janeiro/RJ</td> 
                             <td>rodrigo@agenciaguppy.com.br</td> 
+                            <td>20/12/12 às 20:30</td> 
                         </tr> 
                         <tr> 
                             <th scope=row><a href="#">Rodrigo Ricciotti</a></th>
@@ -61,6 +64,7 @@
                             <td>-</td> 
                             <td>Rio de Janeiro/RJ</td> 
                             <td>rodrigo@agenciaguppy.com.br</td> 
+                            <td>20/12/12 às 20:30</td> 
                         </tr> 
                         <tr> 
                             <th scope=row><a href="#">Rodrigo Ricciotti</a></th>
@@ -69,6 +73,7 @@
                             <td>-</td> 
                             <td>Rio de Janeiro/RJ</td> 
                             <td>rodrigo@agenciaguppy.com.br</td> 
+                            <td>20/12/12 às 20:30</td> 
                         </tr> 
                     </tbody> 
                 </table>
