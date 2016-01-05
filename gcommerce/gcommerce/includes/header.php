@@ -32,28 +32,15 @@
                 <ul class="nav navbar-nav">
                     <li><a href="#">Painel</a></li>
                     <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Relatórios <span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Vendas</a></li>
-                            <li><a href="#">Produtos mais vendidos</a></li>
-                            <li><a href="#">Produtos mais acessados</a></li>
-                            <li><a href="#">Clientes</a></li>
-                        </ul>
-                    </li>
-                    <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Produtos <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Categorias</a></li>
-                            <li><a href="#">Adicionar produtos</a></li>
-                            <li><a href="#">Ver produtos</a></li>
-                            <li><a href="#">Alteração em massa</a></li>
+                            <li><a href="#">Item 1</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Vendas <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="vendas.php">Vendas</a></li>
-                            <li><a href="carrinho-abandonado.php">Carrinhos abandonados</a></li>
+                            <li><a href="#">Item 1</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -66,23 +53,13 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Marketing <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Descontos</a></li>
-                            <li><a href="#">Frete grátis</a></li>
-                            <li><a href="#">Cupom de desconto</a></li>
-                            <li><a href="#">Redes Sociais</a></li>
-                            <li><a href="#">Banners</a></li>
+                            <li><a href="#">Item 1</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configurações <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Meios de pagamento</a></li>
-                            <li><a href="#">Frete</a></li>
-                            <li><a href="#">E-mails personalizados</a></li>
-                            <li><a href="#">Publicidade</a></li>
-                            <li><a href="#">Google Analytics</a></li>
-                            <li><a href="#">SEO</a></li>
-                            <li><a href="#">Loja Offline</a></li>
+                            <li><a href="#">Item 1</a></li>
                         </ul>
                     </li>
                 </ul>
