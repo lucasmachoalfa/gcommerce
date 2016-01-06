@@ -72,3 +72,11 @@ footer.rodape *{
 .buscaInterna button{
     height: 40px;
 }
+
+/* SMALL */
+.sm-primary{color: #337ab7;}
+.sm-success{color: #5cb85c;}
+.sm-info{color: #5bc0de;}
+.sm-warning{color: #f0ad4e;}
+.sm-danger{color: #d9534f;}
+.sm-gray-light{color: #777;}
