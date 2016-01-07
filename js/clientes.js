@@ -46,6 +46,8 @@ $(document).ready(function () {
             validateBootstrap('email', 'Você deve preencher o Email!', 1);
         } else if (!isEmail(email.val())) {
             validateBootstrap('email', 'Você deve informar um Email válido!', 1);
+        } else if (!emailUnico(email.val())) {
+            validateBootstrap('email', 'Este email já se encontra em nossa base', 1);
         } else {
             validateBootstrap('email', '', 0);
             validEmail = 1;
@@ -81,7 +83,9 @@ $(document).ready(function () {
             validateBootstrap('cpf', 'Você deve preencher o CPF!', 1);
         } else if (!isCpf(cpf.val())) {
             validateBootstrap('cpf', 'Você deve preencher um CPF válido!', 1);
-        } else {
+        } else if(!cpfUnico(cpf.val())){
+            validateBootstrap('cpf', 'este CPF já se encontra em nossa base!', 1);
+        }else {
             validateBootstrap('cpf', '', 0);
             validCpf = 1;
         }
@@ -167,45 +171,30 @@ $(document).ready(function () {
                 validEstado === 1 &&
                 validCidade === 1
                 ) {
-            $.post('control/clienteControle.php',
-                    {
-                        opcao: 'cadCliente',
-                        email: email.val(),
-                        senha: senha.val(),
-                        nome: nome.val(),
-                        telefone: telefone.val(),
-                        cpf: cpf.val(),
-                        dataNascimento: dataNascimento.val(),
-                        sexo: sexo,
-                        nomeIdentificador: nomeIdentificador.val(),
-                        cep: cep.val(),
-                        logradouro: logradouro.val(),
-                        complemento: complemento.val(),
-                        numero: numero.val(),
-                        bairro: bairro.val(),
-                        estado: estado.val(),
-                        cidade: cidade.val(),
-                    },
-                    function (r) {
+            $.post(
+                'control/clienteControle.php',
+                {
+                    opcao: 'cadCliente',
+                    email: email.val(),
+                    senha: senha.val(),
+                    nome: nome.val(),
+                    telefone: telefone.val(),
+                    cpf: cpf.val(),
+                    dataNascimento: dataNascimento.val(),
+                    sexo: sexo,
+                    nomeIdentificador: nomeIdentificador.val(),
+                    cep: cep.val(),
+                    logradouro: logradouro.val(),
+                    complemento: complemento.val(),
+                    numero: numero.val(),
+                    bairro: bairro.val(),
+                    estado: estado.val(),
+                    cidade: cidade.val(),
+                },
+                function (r) {
 //                        console.log(r);
-                    window.location='verClientes.php';
-                    });
-        }else{
-            alert(
-                'email: '+validEmail+' '+
-                'senha: '+validSenha+' '+
-                'nome: '+validNome+' '+
-                'telefone: '+validTelefone+' '+
-                'cpf: '+validCpf+' '+
-                'data de nascimento: '+validDataNascimento+' '+
-                'sexo:' +validSexo+' '+
-                'nome identificador: '+validNomeIdentificador+' '+
-                'cep: '+validCep+' '+
-                'logradouro: '+validLogradouro+' '+
-                'numero: '+validNumero+' '+
-                'bairro: '+validBairro+' '+
-                'estado: '+validEstado+' '+
-                'cidade: '+validCidade
+                    window.location = 'verClientes.php';
+                }
             );
         }
     })

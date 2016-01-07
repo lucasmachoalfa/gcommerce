@@ -45,4 +45,35 @@ switch ($opcao) {
         
         $objEnderecoDao->cadEndereco($objEndereco);
     break;
+
+    case 'verificaEmail':
+        $email = $_POST['email'];
+        $resposta = 0;
+        
+        $objCliente->setEmail($email);
+        
+        $retorno = $objClienteDao->verificaEmail($objCliente);
+        
+        if($retorno===0){
+            $resposta = 1;
+        }
+        
+        print_r($resposta);
+    break;
+    
+    
+    case 'verificaCpf':
+        $cpf = $_POST['cpf'];
+        $resposta = 0;
+        
+        $objCliente->setCpf($cpf);
+        
+        $retorno = $objClienteDao->verificaCpf($objCliente);
+        
+        if($retorno===0){
+            $resposta = 1;
+        }
+        
+        print_r($resposta);
+    break;
 }

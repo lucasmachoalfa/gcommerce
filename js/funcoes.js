@@ -1,3 +1,41 @@
+function emailUnico(email) {
+    var bool;
+    $.ajax({
+        url: 'control/controleCliente.php',
+        method: 'POST',
+        async: false,
+        data: {opcao: 'verificaEmail', email: email},
+        success: function (resposta) {
+            if(resposta == 0){
+                bool = false;
+            }else{
+                bool = true;
+            }
+        }
+    });
+    
+    return bool;
+}
+
+function cpfUnico(cpf) {
+    var bool;
+    $.ajax({
+        url: 'control/controleCliente.php',
+        method: 'POST',
+        async: false,
+        data: {opcao: 'verificaCpf', cpf: cpf},
+        success: function (resposta) {
+            if(resposta == 0){
+                bool = false;
+            }else{
+                bool = true;
+            }
+        }
+    });
+    
+    return bool;
+}
+
 /*
  isCpf
  
