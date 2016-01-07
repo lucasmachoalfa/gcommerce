@@ -1,8 +1,8 @@
 <?php
 require_once 'banco.php';
+require_once 'bean/endereco.php';
 
 class EnderecoDao extends Banco{
-
     public function listaEstados() {
         $conexao = $this->abreConexao();
 
@@ -52,6 +52,26 @@ class EnderecoDao extends Banco{
         $linha = $banco->fetch_assoc();
 
         return $linha['idCidade'];
+        $this->fechaConexao();
+    }
+    
+    public function cadEndereco(Endereco $objEndereco){
+        $conexao = $this->abreConexao();
+        
+        echo $sql = "INSERT INTO ".TBL_ENDERECOS." SET
+                idCliente = ".$objEndereco->getIdCliente().",
+                nome = '".$objEndereco->getNome()."',
+                cep = '".$objEndereco->getCep()."',
+                logradouro = '".$objEndereco->getLogradouro()."',
+                numero = '".$objEndereco->getNumero()."',
+                complemento = '".$objEndereco->getComplemento()."',
+                bairro = '".$objEndereco->getBairro()."',
+                estado = '".$objEndereco->getEstado()."',
+                cidade = ".$objEndereco->getCidade()."
+               ";
+        
+        $conexao->query($sql) or die($conexao->error);
+        
         $this->fechaConexao();
     }
 
