@@ -32,71 +32,18 @@
                             <th>Nome</th> 
                             <th><a href="#">Total Consumido</a></th>
                             <th>Número de compras</th> 
-                            <th>Última compra</th> 
+                            <th>Data de cadastro</th> 
                             <th>Cidade/Estado</th> 
                             <th>E-mail</th> 
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr> 
-                            <th scope=row><a href="#">Rodrigo Ricciotti</a></th>
-                            <td>R$ 0,00</td> 
-                            <td>0</td>
-                            <td>-</td> 
-                            <td>Rio de Janeiro/RJ</td> 
-                            <td>rodrigo@agenciaguppy.com.br</td> 
-                        </tr> 
-                        <tr> 
-                            <th scope=row><a href="#">Rodrigo Ricciotti</a></th>
-                            <td>R$ 0,00</td> 
-                            <td>0</td>
-                            <td>-</td> 
-                            <td>Rio de Janeiro/RJ</td> 
-                            <td>rodrigo@agenciaguppy.com.br</td> 
-                        </tr> 
-                        <tr> 
-                            <th scope=row><a href="#">Rodrigo Ricciotti</a></th>
-                            <td>R$ 0,00</td> 
-                            <td>0</td>
-                            <td>-</td> 
-                            <td>Rio de Janeiro/RJ</td> 
-                            <td>rodrigo@agenciaguppy.com.br</td> 
-                        </tr> 
-                        <tr> 
-                            <th scope=row><a href="#">Rodrigo Ricciotti</a></th>
-                            <td>R$ 0,00</td> 
-                            <td>0</td>
-                            <td>-</td> 
-                            <td>Rio de Janeiro/RJ</td> 
-                            <td>rodrigo@agenciaguppy.com.br</td> 
-                        </tr> 
+                    <tbody id="listaClientes">
+                        <?php
+                        require_once 'listaClientesAjax.php';
+                        ?>
                     </tbody> 
                 </table>
             </div>
-            <nav class="text-center">
-                <ul class="pagination">
-                    <li>
-                        <a href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">6</a></li>
-                    <li><a href="#">7</a></li>
-                    <li><a href="#">8</a></li>
-                    <li><a href="#">9</a></li>
-                    <li><a href="#">10</a></li>
-                    <li>
-                        <a href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
         </div>
 
         <?php include_once 'includes/footer.php'; ?>
