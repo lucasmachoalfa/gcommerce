@@ -23,32 +23,29 @@ $estados = $objEnderecoDao->listaEstados();
                     <div class="col-sm-10">
                         <input type="email" id="email" name="email" class="form-control">
                         <span class="glyphicon form-control-feedback" id="icon-email" aria-hidden="true"></span>
+                        <label class="control-label" id="label-email"></label>
                     </div>
-                    <label class="col-sm-2"></label>
-                    <label class="col-sm-10 control-label" id="label-email"></label>
                 </div>
                 <div class="form-group" id="form-group-senha">
                     <label class="col-sm-2 control-label">Senha</label>
                     <div class="col-sm-4">
                         <input type="password" id="senha" name="senha" class="form-control">
                         <span class="glyphicon form-control-feedback" id="icon-senha" aria-hidden="true"></span>
+                        <label class="control-label" id="label-senha"></label>
                     </div>
                     <label class="col-sm-2 control-label">Confirmar senha</label>
                     <div class="col-sm-4">
                         <input type="password" id="senhaN" name="senhaN" class="form-control">
                         <span class="glyphicon form-control-feedback" id="icon-senhaN" aria-hidden="true"></span>
                     </div>
-                    <label class="col-sm-2"></label>
-                    <label class="col-sm-10 control-label" id="label-senha"></label>
                 </div>
                 <div class="form-group" id="form-group-nome">
                     <label class="col-sm-2 control-label">Nome completo</label>
                     <div class="col-sm-10">
                         <input type="text" id="nome" name="nome" class="form-control">
                         <span class="glyphicon form-control-feedback" id="icon-nome" aria-hidden="true"></span>
+                        <label class="control-label" id="label-nome"></label>
                     </div>
-                    <label class="col-sm-2"></label>
-                    <label class="col-sm-10 control-label" id="label-nome"></label>
                 </div>
                 <div class="form-group">
                     <div id="form-group-telefone">
@@ -101,52 +98,81 @@ $estados = $objEnderecoDao->listaEstados();
                 <h3 class="text-center">Endereço</h3>
                 <hr>
                 <!--<form class="form-horizontal">-->
-                <div class="form-group">
+                <div class="form-group" id="form-group-nomeIdentificador">
                     <label class="col-sm-2 control-label">Nome Identificador</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control">
+                        <input type="text" class="form-control" id="nomeIdentificador" name="nomeIdentificador">
+                        <span class="glyphicon form-control-feedback" id="icon-nomeIdentificador" aria-hidden="true"></span>
+                        <label class="control-label" id="label-nomeIdentificador"></label>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">CEP</label>
-                    <div class="col-sm-4">
-                        <input type="text" name="cep" id="cep" class="form-control">
+                    <div id="form-group-cep">
+                        <label class="col-sm-2 control-label">CEP</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="cep" id="cep" class="form-control">
+                            <span class="glyphicon form-control-feedback" id="icon-cep" aria-hidden="true"></span>
+                            <label class="control-label" id="label-cep"></label>
+                        </div>
                     </div>
-                    <label class="col-sm-2 control-label">Logradouro</label>
-                    <div class="col-sm-4">
-                        <input type="text" id="logradouro" name="logradouro" class="form-control">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="col-sm-2 control-label">Número</label>
-                    <div class="col-sm-1">
-                        <input type="text" class="form-control" name="numero" id="numero">
-                    </div>
-                    <label class="col-sm-2 control-label">Complemento</label>
-                    <div class="col-sm-3">
-                        <input type="text" class="form-control" name="complemento" id="complemento">
-                    </div>
-                    <label class="col-sm-2 control-label">Bairro</label>
-                    <div class="col-sm-2">
-                        <input type="text" class="form-control" id="bairro" name="bairro">
+                    <div id="form-group-logradouro">
+                        <label class="col-sm-2 control-label">Logradouro</label>
+                        <div class="col-sm-4">
+                            <input type="text" id="logradouro" name="logradouro" class="form-control">
+                            <span class="glyphicon form-control-feedback" id="icon-logradouro" aria-hidden="true"></span>
+                            <label class="control-label" id="label-logradouro"></label>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="col-sm-2 control-label">Estado</label>
-                    <div class="col-sm-5">
-                        <select id="estado" class="form-control">
-                            <option value="">Selecione um estado</option>
-                            <?php
-                            foreach ($estados as $estado){
-                                echo '<option value="'.$estado["siglaUF"].'">'.$estado["siglaUF"].'</option>';
-                            }
-                            ?>
-                        </select>
+                    <div id="form-group-numero">
+                        <label class="col-sm-2 control-label">Número</label>
+                        <div class="col-sm-1">
+                            <input type="text" class="form-control" name="numero" id="numero">
+                            <span class="glyphicon form-control-feedback" id="icon-numero" aria-hidden="true"></span>
+                            <label class="control-label" id="label-numero"></label>
+                        </div>
                     </div>
-                    <label class="col-sm-1 control-label">Cidade</label>
-                    <div class="col-sm-4">
-                        <select class="form-control" name="cidade" id="cidade">
-                        </select>
+                    <div>
+                        <label class="col-sm-2 control-label">Complemento</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" name="complemento" id="complemento">
+                            <label class="control-label"></label>
+                        </div>
+                    </div>
+                    <div id="form-group-bairro">
+                        <label class="col-sm-2 control-label">Bairro</label>
+                        <div class="col-sm-2">
+                            <input type="text" class="form-control" id="bairro" name="bairro">
+                            <span class="glyphicon form-control-feedback" id="icon-bairro" aria-hidden="true"></span>
+                            <label class=" control-label" id="label-bairro"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div id="form-group-estado">
+                        <label class="col-sm-2 control-label">Estado</label>
+                        <div class="col-sm-5">
+                            <select id="estado" class="form-control">
+                                <option value="">Selecione um estado</option>
+                                <?php
+                                foreach ($estados as $estado) {
+                                    echo '<option value="' . $estado["siglaUF"] . '">' . $estado["siglaUF"] . '</option>';
+                                }
+                                ?>
+                            </select>
+                            <span class="glyphicon form-control-feedback" id="icon-estado" aria-hidden="true"></span>
+                            <label class="control-label" id="label-estado"></label>
+                        </div>
+                    </div>
+                    <div id="form-group-cidade">
+                        <label class="col-sm-1 control-label">Cidade</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" name="cidade" id="cidade">
+                            </select>
+                            <span class="glyphicon form-control-feedback" id="icon-cidade" aria-hidden="true"></span>
+                            <label class="control-label" id="label-cidade"></label>
+                        </div>
                     </div>
                 </div>
                 <div class="form-group">
