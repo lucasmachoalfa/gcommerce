@@ -1,3 +1,72 @@
+/*
+ isCpf
+ 
+ Valida se for CPF
+ 
+ @param  string cpf O CPF com ou sem pontos e traço
+ @return bool True para CPF correto - False para CPF incorreto
+ */
+function isCpf(cpf) {
+
+    cpf = cpf.replace(/[^\d]+/g, '');
+    if (cpf == '')
+        return false;
+    // Elimina CPFs invalidos conhecidos    
+    if (cpf.length != 11 ||
+            cpf == "00000000000" ||
+            cpf == "11111111111" ||
+            cpf == "22222222222" ||
+            cpf == "33333333333" ||
+            cpf == "44444444444" ||
+            cpf == "55555555555" ||
+            cpf == "66666666666" ||
+            cpf == "77777777777" ||
+            cpf == "88888888888" ||
+            cpf == "99999999999")
+        return false;
+    // Valida 1o digito 
+    add = 0;
+    for (i = 0; i < 9; i ++)
+        add += parseInt(cpf.charAt(i)) * (10 - i);
+    rev = 11 - (add % 11);
+    if (rev == 10 || rev == 11)
+        rev = 0;
+    if (rev != parseInt(cpf.charAt(9)))
+        return false;
+    // Valida 2o digito 
+    add = 0;
+    for (i = 0; i < 10; i ++)
+        add += parseInt(cpf.charAt(i)) * (11 - i);
+    rev = 11 - (add % 11);
+    if (rev == 10 || rev == 11)
+        rev = 0;
+    if (rev != parseInt(cpf.charAt(10)))
+        return false;
+    return true;
+}
+
+/*
+ isCnpj
+ 
+ Valida se for um CNPJ
+ 
+ @param string cnpj
+ @return bool true para CNPJ correto
+ */
+function isCnpj(valor) {
+    valor = valor.toString();
+    valor = valor.replace(/[^0-9]/g, '');
+    var cnpj_original = valor;
+    var primeiros_numeros_cnpj = valor.substr(0, 12);
+    var primeiro_calculo = calc_digitos_posicoes(primeiros_numeros_cnpj, 5);
+    var segundo_calculo = calc_digitos_posicoes(primeiro_calculo, 6);
+    var cnpj = segundo_calculo;
+    if (cnpj === cnpj_original) {
+        return true;
+    }
+    return false;
+}
+
 function buscaCep(cep, campos) {
 //    var cep = $("#cepEndereco" + area).val();
 
@@ -21,11 +90,8 @@ function buscaCep(cep, campos) {
             buscaCidade(estado, campos, cidade);
             $("#" + campos.logradouro).val(logradouro);
             $("#" + campos.bairro).val(bairro);
-
         }
     });
-
-
 //    return retorno;
 }
 
@@ -54,7 +120,6 @@ function buscaCidade(estado, campos, cidade) {
 
             $("#" + campos.cidade).html('');
             $("#" + campos.cidade).append(result);
-
             if (typeof (cidade) != "undefined") {
                 $("#" + campos.cidade).val(cidade);
             }
@@ -64,7 +129,6 @@ function buscaCidade(estado, campos, cidade) {
 
 function isPhone(num) {
     var tecla = (window.event) ? event.keyCode : e.which;
-
     if (num.length == 2) {
         $("#telefone").val('(' + num + ')');
     } else if (num.length == 8) {
@@ -79,7 +143,7 @@ function isPhone(num) {
         return false;
 }
 
-function validaEmail(email) {
+function isEmail(email) {
     var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     return re.test(email);
 }
@@ -98,16 +162,15 @@ function validaEmail(email) {
  */
 function validateBootstrap(elemento, mensagem, erro) {
     if (erro === 1) {
-        //coloca a classe de erro no elemento validado
+//coloca a classe de erro no elemento validado
         $("#form-group-" + elemento).addClass('has-error has-feedback');
         $("#icon-" + elemento).addClass('glyphicon-warning-sign');
         $("#label-" + elemento).html(mensagem);
     } else {
-        //retira a classe de erro do elemento que estiver OK
+//retira a classe de erro do elemento que estiver OK
         $("#form-group-" + elemento).removeClass('has-error has-feedback');
         $("#icon-" + elemento).removeClass('glyphicon-warning-sign');
         $("#label-" + elemento).html(mensagem);
-
         //adiciona a classe de sucesso do elemento que estiver OK
         $("#form-group-" + elemento).addClass('has-success has-feedback');
         $("#icon-" + elemento).addClass('glyphicon-ok');
