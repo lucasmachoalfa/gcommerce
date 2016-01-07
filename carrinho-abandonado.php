@@ -92,7 +92,7 @@
                                     </div>
                                 </div>
                             </td> 
-                            <th><a href="#" class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-pencil"></i></a></th> 
+                            <th><button type="button" data-toggle="modal" data-target="#myModal" class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-pencil"></i></button></th> 
                             <th><a href="#" class="btn btn-danger  btn-sm"><i class="glyphicon glyphicon-trash"></i></a></th> 
                         </tr>
                     </tbody> 

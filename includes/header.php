@@ -30,7 +30,7 @@
         <div class="row">
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="#">Painel</a></li>
+                    <li><a href="./">Painel</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Relatórios <span class="caret"></span></a>
                         <ul class="dropdown-menu">
@@ -38,6 +38,7 @@
                             <li><a href="#">Produtos mais vendidos</a></li>
                             <li><a href="#">Produtos mais acessados</a></li>
                             <li><a href="#">Clientes</a></li>
+                            <li><a href="#">Cupons de desconto</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -66,9 +67,9 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Marketing <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Descontos</a></li>
-                            <li><a href="#">Frete grátis</a></li>
-                            <li><a href="#">Cupom de desconto</a></li>
+                            <li><a href="descontos.php">Descontos</a></li>
+                            <li><a href="frete-gratis.php">Frete grátis</a></li>
+                            <li><a href="cupom-de-desconto.php">Cupom de desconto</a></li>
                             <li><a href="#">Redes Sociais</a></li>
                             <li><a href="#">Banners</a></li>
                         </ul>
