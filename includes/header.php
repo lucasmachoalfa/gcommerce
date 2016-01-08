@@ -70,20 +70,20 @@
                             <li><a href="descontos.php">Descontos</a></li>
                             <li><a href="frete-gratis.php">Frete grátis</a></li>
                             <li><a href="cupom-de-desconto.php">Cupom de desconto</a></li>
-                            <li><a href="#">Redes Sociais</a></li>
-                            <li><a href="#">Banners</a></li>
+                            <li><a href="redes-sociais.php">Redes Sociais</a></li>
+                            <li><a href="banners.php">Banners</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Configurações <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Meios de pagamento</a></li>
-                            <li><a href="#">Frete</a></li>
-                            <li><a href="#">E-mails personalizados</a></li>
-                            <li><a href="#">Publicidade</a></li>
-                            <li><a href="#">Google Analytics</a></li>
-                            <li><a href="#">SEO</a></li>
-                            <li><a href="#">Loja Offline</a></li>
+                            <li><a href="meioss-de-pagamento.php">Meios de pagamento</a></li>
+                            <li><a href="frete.php">Frete</a></li>
+                            <li><a href="email-personalizados.php">E-mails personalizados</a></li>
+                            <li><a href="publicidade.php">Publicidade</a></li>
+                            <li><a href="google-analytics.php">Google Analytics</a></li>
+                            <li><a href="seo.php">SEO</a></li>
+                            <li><a href="status-da-loja.php">Status da loja</a></li>
                         </ul>
                     </li>
                 </ul>
