@@ -8,7 +8,6 @@ $estados = $objEnderecoDao->listaEstados();
     <head>
         <?php include_once 'includes/head.php'; ?>
         <script src="js/jquery.maskedinput.js"></script>
-        <script src="js/funcoes.js"></script>
         <script src="js/clientes.js"></script>
     </head>
     <body>
