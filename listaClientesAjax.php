@@ -2,9 +2,9 @@
 
 require_once 'model/clienteDao.php';
 
-$ordem = (isset($_POST['ordem'])) ? $_POST['ordem'] : 'dataCadastro DESC';
-$busca = (isset($_POST['busca'])) ? $_POST['busca'] : '';
-$pagina = (isset($_POST['pagina'])) ? $_POST['pagina'] : 1;
+$ordem = (isset($_GET['ordem'])) ? $_GET['ordem'] : 'dataCadastro DESC';
+$busca = (isset($_GET['busca'])) ? $_GET['busca'] : '';
+$pagina = (isset($_GET['pagina'])) ? $_GET['pagina'] : 1;
 
 $count = 20;
 

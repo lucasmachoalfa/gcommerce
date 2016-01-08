@@ -1,7 +1,17 @@
+function buscaCliente(termo) {
+    $("#carregando").show();
+    $("#listaClientes").html('');
+    
+    $("#listaClientes").load('listaClientesAjax.php?busca=' + termo, function () {
+        $("#carregando").hide();
+    });
+}
+
 $(document).ready(function () {
-    $("#cpf").mask('999.999.999-99');
-    $("#dataNascimento").mask('99/99/9999');
-    $("#cep").mask('99999-999');
+    ($("#cpf").length) ? $("#cpf").mask('999.999.999-99') : '';
+    ($("#dataNascimento").length) ? $("#dataNascimento").mask('99/99/9999') : '';
+    ($("#cep").length) ? $("#cep").mask('99999-999') : '';
+    ($("#listaClientes").length) ? buscaCliente('') : '';
 
     $("#btnCadCliente").click(function () {
         var email = $("#email");
@@ -83,9 +93,9 @@ $(document).ready(function () {
             validateBootstrap('cpf', 'Você deve preencher o CPF!', 1);
         } else if (!isCpf(cpf.val())) {
             validateBootstrap('cpf', 'Você deve preencher um CPF válido!', 1);
-        } else if(!cpfUnico(cpf.val())){
+        } else if (!cpfUnico(cpf.val())) {
             validateBootstrap('cpf', 'este CPF já se encontra em nossa base!', 1);
-        }else {
+        } else {
             validateBootstrap('cpf', '', 0);
             validCpf = 1;
         }
@@ -172,29 +182,29 @@ $(document).ready(function () {
                 validCidade === 1
                 ) {
             $.post(
-                'control/clienteControle.php',
-                {
-                    opcao: 'cadCliente',
-                    email: email.val(),
-                    senha: senha.val(),
-                    nome: nome.val(),
-                    telefone: telefone.val(),
-                    cpf: cpf.val(),
-                    dataNascimento: dataNascimento.val(),
-                    sexo: sexo,
-                    nomeIdentificador: nomeIdentificador.val(),
-                    cep: cep.val(),
-                    logradouro: logradouro.val(),
-                    complemento: complemento.val(),
-                    numero: numero.val(),
-                    bairro: bairro.val(),
-                    estado: estado.val(),
-                    cidade: cidade.val(),
-                },
-                function (r) {
+                    'control/clienteControle.php',
+                    {
+                        opcao: 'cadCliente',
+                        email: email.val(),
+                        senha: senha.val(),
+                        nome: nome.val(),
+                        telefone: telefone.val(),
+                        cpf: cpf.val(),
+                        dataNascimento: dataNascimento.val(),
+                        sexo: sexo,
+                        nomeIdentificador: nomeIdentificador.val(),
+                        cep: cep.val(),
+                        logradouro: logradouro.val(),
+                        complemento: complemento.val(),
+                        numero: numero.val(),
+                        bairro: bairro.val(),
+                        estado: estado.val(),
+                        cidade: cidade.val(),
+                    },
+                    function (r) {
 //                        console.log(r);
-                    window.location = 'verClientes.php';
-                }
+                        window.location = 'verClientes.php';
+                    }
             );
         }
     })
@@ -228,6 +238,21 @@ $(document).ready(function () {
             if ($("#cidade").val() != '') {
                 $("#cidade").attr('disabled', 'disabled');
             }
+        }
+    });
+
+
+    $("#btnBuscaCliente").click(function () {
+        var termo = $("#pesquisaCliente").val();
+        buscaCliente(termo);
+    });
+    $('#form-group-buscaCliente').keypress(function (e) {
+        var termo = $("#pesquisaCliente").val();
+        /* * verifica se o evento é Keycode (para IE e outros browsers) * se não for pega o evento Which (Firefox) */
+        var tecla = (e.keyCode ? e.keyCode : e.which);
+        /* verifica se a tecla pressionada foi o ENTER */
+        if (tecla == 13) {
+            buscaCliente(termo);
         }
     });
 });

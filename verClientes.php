@@ -2,6 +2,7 @@
 <html>
     <head>
         <?php include_once 'includes/head.php'; ?>
+        <script src="js/clientes.js"></script>
     </head>
     <body>
         <?php include_once 'includes/header.php'; ?>
@@ -16,10 +17,10 @@
                 </div>
                 <br><br>
                 <div class="col-lg-6">
-                    <div class="input-group">
-                        <input type="text" class="form-control" placeholder="Pesquisar cliente">
+                    <div class="input-group" id="form-group-buscaCliente">
+                        <input type="text" id="pesquisaCliente" class="form-control" placeholder="Pesquisar cliente">
                         <span class="input-group-btn">
-                            <button class="btn btn-info" type="button"><i class="glyphicon glyphicon-search"></i></button>
+                            <button class="btn btn-info" type="button" id="btnBuscaCliente"><i class="glyphicon glyphicon-search"></i></button>
                         </span>
                     </div>
                 </div>
@@ -39,10 +40,11 @@
                     </thead>
                     <tbody id="listaClientes">
                         <?php
-                        require_once 'listaClientesAjax.php';
+//                        require_once 'listaClientesAjax.php';
                         ?>
                     </tbody> 
                 </table>
+                <div id="carregando" style="display: none">Carregando...</div>
             </div>
         </div>
 

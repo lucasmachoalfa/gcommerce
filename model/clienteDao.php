@@ -33,6 +33,10 @@ class ClienteDao extends Banco {
     public function listaClientes($ordem,$paginacao,$busca){
         $conexao = $this->abreConexao();
         
+        if($busca != ''){
+            $where .= ' AND (c.nome like "%'.$busca.'%" OR email like "%'.$busca.'%" OR cpf = "'.$busca.'")';
+        }
+        
         $sql = "SELECT c.idCliente,c.nome,c.email, DATE_FORMAT(c.dataCadastro,'%d/%m/%Y <br /> %H:%i') as dataCadastro,
                 e.estado,
                 ci.nomeCidade as cidade
@@ -40,6 +44,7 @@ class ClienteDao extends Banco {
                     JOIN ".TBL_ENDERECOS." e ON e.idCliente = c.idCliente
                     JOIN ".TBL_CIDADES." ci ON e.cidade = ci.idCidade
                         WHERE status = 1
+                        ".$where."
                         ORDER BY ".$ordem."
                 ";
         
