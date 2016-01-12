@@ -22,6 +22,13 @@
                     <form id="defaultForm" method="post" class="form-horizontal">
                         <fieldset>
                             <div class="form-group">
+                                <label class="col-md-2 control-label">Logo para loja</label>
+                                <div class="col-md-10">
+                                    <img src="img/logo.png" alt="" height="60"/><br><br>
+                                    <input type="file"  class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
                                 <label class="col-md-2 control-label">Nome da empresa/loja</label>
                                 <div class="col-md-10">
                                     <input type="text"  class="form-control">
