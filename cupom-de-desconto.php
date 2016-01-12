@@ -11,6 +11,91 @@
         <script src="js/moment-with-locales.js"></script>
         <link href="css/bootstrap-datetimepicker.css" rel="stylesheet">
         <script src="js/bootstrap-datetimepicker.js"></script>
+        <link rel="stylesheet" href="css/jquery-ui.theme-smoothness.css">
+        <script src="js/jquery-ui.js"></script>
+        <style>
+            /* highlight results */
+            .ui-autocomplete span.hl_results {
+                background-color: #ffff66;
+            }
+
+            /* scroll results */
+            .ui-autocomplete {
+                max-height: 250px;
+                overflow-y: auto;
+                /* prevent horizontal scrollbar */
+                overflow-x: hidden;
+                /* add padding for vertical scrollbar */
+                padding-right: 5px;
+            }
+
+            .ui-autocomplete li {
+                font-size: 16px;
+            }
+
+            /* IE 6 doesn't support max-height
+            * we use height instead, but this forces the menu to always be this tall
+            */
+            * html .ui-autocomplete {
+                height: 100px;
+            }
+
+            ul.ui-autocomplete.ui-menu {
+                z-index: 999999;
+            }
+        </style>
+        <script>
+            $(document).ready(function () {
+                $("#buscaClienteInput")
+                .bind("keydown", function (event) {
+                    // don't navigate away from the field on tab when selecting an item
+                    if (event.keyCode === $.ui.keyCode.TAB &&
+                            $(this).autocomplete("instance").menu.active) {
+                        event.preventDefault();
+                    }
+                })
+                .autocomplete({
+                    minLength: 0,
+                    source: function (request, response) {
+                        var campos = {id: 'idCliente', label: 'email', desc: 'nome'};
+                        var query = extractLast(request.term);
+                        var clientes = busca(query, 'control/clienteControle.php', campos);
+
+                        clientes = ($.ui.autocomplete.filter(clientes, query));
+                        response(clientes);
+                    },
+                    select: function (event, ui) {
+                        var terms = split(this.value);
+                        terms.pop();
+                        terms.push(ui.item.label);
+                        terms.push("");
+                        
+                        this.value = terms.join(", ");
+                        return false;
+                    }
+                })
+                .autocomplete("instance")._renderItem = function (ul, item) {
+                    return $("<li>")
+                    .append("<a>" + item.label + "<br>" + item.desc + "</a>")
+                    .appendTo(ul);
+                };
+
+                $("#btnCadCupomdesconto").click(function () {
+                    var codigo = $("#codigoInput").val();
+                    var teste = $("#buscaClienteInput").val();
+                    var tipoCupom;
+                    $("input[name='tipoCupom']").each(function(){
+                        if($(this).is(':checked')){
+                            tipoCupom = $(this).val();
+                        }
+                    });
+                    
+                    
+
+                    console.log(tipoCupom);
+                })
+            });
+        </script>
     </head>
     <body>
         <?php include_once 'includes/header.php'; ?>
@@ -42,13 +127,13 @@
                                         <label class="col-sm-2 control-label">Tipo do cupom</label>
                                         <div class="col-sm-10">
                                             <label class="radio-inline">
-                                                <input type="radio" name="inlineRadioOptions" checked id="inlineRadio1" value="option1"> Desconto
+                                                <input type="radio" name="tipoCupom" checked value="desconto"> Desconto
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Frete grátis
+                                                <input type="radio" name="tipoCupom" value="frete"> Frete grátis
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> Primeira compra
+                                                <input type="radio" name="tipoCupom" value="primeiraCompra"> Primeira compra
                                             </label>
                                         </div>
                                     </div>
@@ -134,10 +219,10 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
+                                    <div class="form-group ui-widget">
                                         <label class="col-sm-2 control-label">Cliente</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control">
+                                            <input type="text" class="form-control" id="buscaClienteInput">
                                         </div>
                                     </div>
 
@@ -174,7 +259,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-success">Adicionar</button>
+                                <button type="button" id="btnCadCupomdesconto" class="btn btn-success">Adicionar</button>
                             </div>
                         </div>
                     </div>
@@ -274,7 +359,6 @@
                 </ul>
             </nav>
         </div>
-
         <?php include_once 'includes/footer.php'; ?>
     </body>
 </html>
