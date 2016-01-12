@@ -138,3 +138,11 @@ footer.rodape *{
 .modoPagamento .panel-heading > img{
     max-height: 45px;
 }
+
+/* E-MAILS PERSONALIZADOS */
+.emailsPersonalizados tr button[type="button"]{
+    opacity: 0;
+}
+.emailsPersonalizados tr:hover button[type="button"]{
+    opacity: 1;
+}
