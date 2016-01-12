@@ -2,8 +2,8 @@
 <html>
     <head>
         <?php include_once 'includes/head.php'; ?>
-        <script src="Chart.js-master/Chart.js"></script>
-        <script src="Chart.js-master/src/Chart.Doughnut.js"></script>
+        <script src="js/Chart.js/Chart.js"></script>
+        <script src="js/Chart.js/src/Chart.Doughnut.js"></script>
     </head>
     <body>
         <?php include_once 'includes/header.php'; ?>
