@@ -128,3 +128,13 @@ footer.rodape *{
 .publicidade .row.cinza{
     background-color: #f9f9f9;
 }
+
+/* MODO DE PAGAMENTO */
+.modoPagamento .panel-heading{
+    text-align: center;
+    background: #f5f5f5!important;
+    padding: 15px;
+}
+.modoPagamento .panel-heading > img{
+    max-height: 45px;
+}
