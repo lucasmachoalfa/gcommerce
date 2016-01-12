@@ -1,3 +1,38 @@
+//funções de busca, utilizando autocomplete do jquery
+var busca = function (termo, url, campos) {
+    if (typeof termo == 'undefined' || termo == '') {
+        termo = '';
+    }
+
+    var retorno = $.ajax({
+        method: 'POST',
+        url: url,
+        async: false,
+        data: {opcao: 'buscaInput', query: termo}
+    });
+
+    var obj = $.parseJSON(retorno.responseText);
+    var data = new Array();
+    $.each(obj, function (i, v) {
+
+        //var campo = {'name': v.nome, 'username': v.email};
+        //var campo = v.email;
+        var campo = {value: v[campos.id], label: v[campos.label], desc: v[campos.desc]};
+        data[data.length] = campo;
+    });
+
+    return(data);
+};
+
+function split(val) {
+    return val.split(/,\s*/);
+}
+function extractLast(term) {
+    return split(term).pop();
+}
+//fim das funções de busca
+
+
 function emailUnico(email) {
     var bool;
     $.ajax({
@@ -6,14 +41,14 @@ function emailUnico(email) {
         async: false,
         data: {opcao: 'verificaEmail', email: email},
         success: function (resposta) {
-            if(resposta == 0){
+            if (resposta == 0) {
                 bool = false;
-            }else{
+            } else {
                 bool = true;
             }
         }
     });
-    
+
     return bool;
 }
 
@@ -25,14 +60,14 @@ function cpfUnico(cpf) {
         async: false,
         data: {opcao: 'verificaCpf', cpf: cpf},
         success: function (resposta) {
-            if(resposta == 0){
+            if (resposta == 0) {
                 bool = false;
-            }else{
+            } else {
                 bool = true;
             }
         }
     });
-    
+
     return bool;
 }
 
