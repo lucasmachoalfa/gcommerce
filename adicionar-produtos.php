@@ -36,9 +36,9 @@
                     <div>
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#detalhes" aria-controls="detalhes" role="tab" data-toggle="tab">Detalhes</a></li>
+                            <li role="presentation"><a href="#detalhes" aria-controls="detalhes" role="tab" data-toggle="tab">Detalhes</a></li>
                             <li role="presentation"><a href="#categorias" aria-controls="categorias" role="tab" data-toggle="tab">Categorias</a></li>
-                            <li role="presentation"><a href="#estoque" aria-controls="estoque" role="tab" data-toggle="tab">Estoque e Variações</a></li>
+                            <li role="presentation" class="active"><a href="#estoque" aria-controls="estoque" role="tab" data-toggle="tab">Estoque e Variações</a></li>
                             <li role="presentation"><a href="#envio" aria-controls="envio" role="tab" data-toggle="tab">Envio</a></li>
                             <li role="presentation"><a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">SEO</a></li>
                             <li class="pull-right"><button type="button" class="btn btn-success">Salvar</button></li>
@@ -47,7 +47,7 @@
 
                         <!-- Tab panes -->
                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane active" id="detalhes">
+                            <div role="tabpanel" class="tab-pane" id="detalhes">
                                 <div class="row">
                                     <div class="col-md-7">
                                         <div class="form-group">
@@ -156,8 +156,168 @@
                                     </div>                                    
                                 </div>
                             </div>
-                            <div role="tabpanel" class="tab-pane" id="estoque">3</div>
-                            <div role="tabpanel" class="tab-pane" id="envio">4</div>
+                            <div role="tabpanel" class="tab-pane active" id="estoque">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <h4>SEO</h4>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label for="sku">REF</label>
+                                                <input type="text" name="sku"  class="form-control">
+                                                <span class="help-block small">Identificador único para a organização de estoques.</span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="track_stock">Gerenciar estoque </label>
+                                                <select name="track_stock" class="form-control">
+                                                    <option value="1">Sim</option>
+                                                    <option value="0">Não</option>
+                                                </select>
+                                                <span class="help-block small">Quer que o sistema controle o nível de estoque?</span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="fixed_quantity">Quantidade fixa. </label>
+                                                <select name="fixed_quantity" class="form-control">
+                                                    <option value="1">Sim</option>
+                                                    <option value="0" selected="selected">Não</option>
+                                                </select>
+                                                <span class="help-block small">Proibir o cliente de adicionar mais de uma unidade deste produto no carrinho?</span>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="quantity">Quantidade </label>
+                                                <input type="text" name="quantity" value="" class="form-control">
+                                                <span class="help-block" style="display:none;">Quantidade de todas as variações</span>
+                                            </div>
+                                        </div>
+                                        <hr>
+                                        <h4>Variações</h4>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Escolhe as opções</label>
+                                                    <div class="well well-inverse buffer-bottom-sm form-inline">
+                                                        <label class="checkbox buffer-right-md">
+                                                            <input name="product_options[]" type="checkbox" value="4166" class="option-checkbox"> Cor
+                                                        </label>
+                                                        <label class="checkbox buffer-right-md">
+                                                            <input name="product_options[]" type="checkbox" value="4167" class="option-checkbox"> Tamanho
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <button class="btn btn-primary">Adicionar/editar opções</button>
+                                                </div>
+                                            </div>  
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Adicione as variações</label>
+                                                    <div class="addVariacoes">
+                                                        <div class="row thead">
+                                                            <div class="col-sm-2 col-sm-offset-1">
+                                                                Opções
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                REF
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                Quantidade
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                Preço
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                Peso
+                                                            </div>
+                                                        </div>
+                                                        <!-- DUPLICAR DAQUI -->
+                                                        <div class="row">
+                                                            <div class="col-sm-1">
+                                                                <i class="glyphicon glyphicon-resize-vertical" style="font-size: 16px;"></i>
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <select class="form-control">
+                                                                    <option>- Escolhe Cor -</option>
+                                                                </select><br>
+                                                                <select class="form-control">
+                                                                    <option>- Escolhe Tamanho -</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <input type="text" class="form-control" />
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <input type="text" class="form-control" />
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <input type="text" class="form-control" />
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <input type="text" class="form-control" />
+                                                            </div>
+                                                            <div class="col-sm-1 text-right">
+                                                                <button class="btn btn-danger"><i class="glyphicon glyphicon-trash"></i></button>
+                                                            </div>
+                                                        </div>
+                                                        <!-- ATÉ AQUI -->
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <button class="btn btn-primary">Adicionar variação</button>
+                                                </div>
+                                            </div>  
+                                        </div>
+                                    </div>                                    
+                                </div>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="envio">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="shippable">Tipo de Produto</label>
+                                        <select name="shippable" class="form-control">
+                                            <option value="1">Entregável</option>
+                                            <option value="0">Não Entregável (Ex. Serviços)</option>
+                                        </select>
+                                        <p class="help-block"></p>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="processing_days">Dias para processamento</label>
+                                        <input type="text" name="processing_days" value="" class="form-control">
+                                        <p class="help-block small">Este valor será somado ao prazo de entrega. Se o pedido tiver mais de um produto, o que tiver maior prazo extra que será somado ao total do pedido.</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <label for="weight">Peso</label>
+                                        <div class="input-group">
+                                            <input type="text" name="weight" value="" class="form-control">
+                                            <span class="input-group-addon">KG</span>
+                                        </div>
+                                        <p class="help-block small">Este valor deve ser separado por vírgula e é muito importante para o cálculo preciso do frete.</p>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="width">Comprimento </label>
+                                        <div class="input-group">
+                                            <input type="text" name="width" value="" class="form-control">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-resize-horizontal"></i> CM</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="depth">Largura</label>
+                                        <div class="input-group">
+                                            <input type="text" name="depth" value="" class="form-control">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-resize-full"></i> CM</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="height">Altura</label>
+                                        <div class="input-group">
+                                            <input type="text" name="height" value="" class="form-control">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-resize-vertical"></i> CM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div role="tabpanel" class="tab-pane" id="seo">
                                 <div class="row">
                                     <div class="col-md-12">
