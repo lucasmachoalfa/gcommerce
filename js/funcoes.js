@@ -22,6 +22,8 @@ var busca = function (termo, url, campos) {
     });
 
     return(data);
+
+//return retorno;
 };
 
 function split(val) {
@@ -216,9 +218,41 @@ function isPhone(num) {
         return false;
 }
 
+function isNumero() {
+    var tecla = (window.event) ? event.keyCode : e.which;
+
+    if ((tecla > 47 && tecla < 58) || (tecla > 95 && tecla < 106))
+        return true;
+    else if (tecla === 8 || tecla === 16 || tecla === 17 || tecla === 0)
+        return true;
+    else
+        return false;
+}
+
 function isEmail(email) {
     var re = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
     return re.test(email);
+}
+
+function formatReal(int) {
+    var tmp = int + '';
+
+    tmp = tmp.replace(/([0-9]{1})$/g, ",$1");
+    if (tmp.length > 6)
+        tmp = tmp.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1,$2");
+
+    if (tmp.length > 9)
+        tmp = tmp.replace(/([0-9]{3}).([0-9]{3}),([0-9]{2}$)/g, ".$1.$2,$3");
+
+    if (tmp.length > 12)
+        tmp = tmp.replace(/([0-9]{3}).([0-9]{3}).([0-9]{3}),([0-9]{2}$)/g, ".$1.$2.$3,$4");
+
+    if (tmp.indexOf(".") == 0)
+        tmp = tmp.replace(".", "");
+    if (tmp.indexOf(",") == 0)
+        tmp = tmp.replace(",", "0,");
+
+    return tmp;
 }
 
 /*
