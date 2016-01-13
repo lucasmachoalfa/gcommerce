@@ -30,10 +30,10 @@ class ClienteDao extends Banco {
     }
     
     
-    public function listaClientes($ordem,$paginacao,$busca){
+    public function listaClientes($ordem,$paginacao = NULL, $busca = NULL){
         $conexao = $this->abreConexao();
         
-        if($busca != ''){
+        if($busca != '' && $busca != NULL){
             $where .= ' AND (c.nome like "%'.$busca.'%" OR email like "%'.$busca.'%" OR cpf = "'.$busca.'")';
         }
         
