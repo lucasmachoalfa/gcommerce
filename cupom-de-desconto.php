@@ -11,6 +11,7 @@
         <script src="js/moment-with-locales.js"></script>
         <link href="css/bootstrap-datetimepicker.css" rel="stylesheet">
         <script src="js/bootstrap-datetimepicker.js"></script>
+        
         <link rel="stylesheet" href="css/jquery-ui.theme-smoothness.css">
         <script src="js/jquery-ui.js"></script>
         <style>
@@ -44,58 +45,10 @@
                 z-index: 999999;
             }
         </style>
-        <script>
-            $(document).ready(function () {
-                $("#buscaClienteInput")
-                .bind("keydown", function (event) {
-                    // don't navigate away from the field on tab when selecting an item
-                    if (event.keyCode === $.ui.keyCode.TAB &&
-                            $(this).autocomplete("instance").menu.active) {
-                        event.preventDefault();
-                    }
-                })
-                .autocomplete({
-                    minLength: 0,
-                    source: function (request, response) {
-                        var campos = {id: 'idCliente', label: 'email', desc: 'nome'};
-                        var query = extractLast(request.term);
-                        var clientes = busca(query, 'control/clienteControle.php', campos);
-
-                        clientes = ($.ui.autocomplete.filter(clientes, query));
-                        response(clientes);
-                    },
-                    select: function (event, ui) {
-                        var terms = split(this.value);
-                        terms.pop();
-                        terms.push(ui.item.label);
-                        terms.push("");
-                        
-                        this.value = terms.join(", ");
-                        return false;
-                    }
-                })
-                .autocomplete("instance")._renderItem = function (ul, item) {
-                    return $("<li>")
-                    .append("<a>" + item.label + "<br>" + item.desc + "</a>")
-                    .appendTo(ul);
-                };
-
-                $("#btnCadCupomdesconto").click(function () {
-                    var codigo = $("#codigoInput").val();
-                    var teste = $("#buscaClienteInput").val();
-                    var tipoCupom;
-                    $("input[name='tipoCupom']").each(function(){
-                        if($(this).is(':checked')){
-                            tipoCupom = $(this).val();
-                        }
-                    });
-                    
-                    
-
-                    console.log(tipoCupom);
-                })
-            });
-        </script>
+        <script src="js/cupomDesconto.js"></script>
+        
+        <!--<script src="js/jquery.fcbkcomplete.js"></script>>
+        <link rel="stylesheet" href="js/FCBKcomplete/style.css" /-->
     </head>
     <body>
         <?php include_once 'includes/header.php'; ?>
@@ -117,10 +70,12 @@
                             </div>
                             <div class="modal-body">
                                 <form id="defaultForm" method="post" class="form-horizontal">
-                                    <div class="form-group">
+                                    <div class="form-group" id="form-group-codigo">
                                         <label class="col-sm-2 control-label">Código</label>
                                         <div class="col-sm-10">
-                                            <input type="email" id="email" name="email" class="form-control">
+                                            <input type="text" id="codigo" name="codigo" class="form-control">
+                                            <span class="glyphicon form-control-feedback" id="icon-codigo" aria-hidden="true"></span>
+                                            <label class="control-label" id="label-codigo"></label>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -141,10 +96,10 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Valor do desconto</label>
                                         <div class="col-sm-4">
-                                            <input type="email" id="email" name="email" class="form-control">
+                                            <input type="text" id="valorDesconto" name="valorDesconto" class="form-control">
                                         </div>
                                         <div class="col-sm-2">
-                                            <select class="form-control">
+                                            <select id="formatoDesconto" name="formatoDesconto" class="form-control">
                                                 <option>R$</option>
                                                 <option>%</option>
                                             </select>
@@ -156,11 +111,11 @@
                                     <div class="form-group">
                                         <label class="col-sm-2 control-label">Uso máximo</label>
                                         <div class="col-sm-2">
-                                            <input type="number" class="form-control" min="0">
+                                            <input type="number" id="usoMaximo" name="usoMaximo" class="form-control" min="0">
                                         </div>
                                         <label class="col-sm-4 control-label">Uso máximo por cliente</label>
                                         <div class="col-sm-2">
-                                            <input type="number" class="form-control" min="0">
+                                            <input type="number" id="usoMaximoCliente" name="usoMaximoCliente" class="form-control" min="0">
                                         </div>
                                     </div>
                                     <!-- FIM USO MÁXIMO -->
@@ -170,16 +125,16 @@
                                         <label class="col-sm-2 control-label">Data início</label>
                                         <div class="col-sm-4">
                                             <div class='input-group date' id='datetimepicker1'>
-                                                <input type='text' class="form-control" />
+                                                <input type='text' class="form-control" id="dataInicio" name="dataInicio" />
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
                                             </div>
                                         </div>
-                                        <label class="col-sm-2 control-label">Data início</label>
+                                        <label class="col-sm-2 control-label">Data fim</label>
                                         <div class="col-sm-4">
                                             <div class='input-group date' id='datetimepicker2'>
-                                                <input type='text' class="form-control" />
+                                                <input type='text' class="form-control" id="dataFim" name="dataFim" />
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-calendar"></span>
                                                 </span>
@@ -214,7 +169,7 @@
                                             <div class="input-group">
                                                 <div class="input-group-addon">R$</div>
                                                 <!-- VALIDAR PARA DIGITAR APENAS NÚMERO E PERMITIR COLOCAR VÍRGULA -->
-                                                <input type="text" class="form-control" id="exampleInputAmount" placeholder="Ex: 145,14">
+                                                <input type="text" id="valorMinimo" name="valorMinimo" ite class="form-control" id="exampleInputAmount" placeholder="Ex: 145,14">
                                             </div>
                                         </div>
                                     </div>
@@ -223,6 +178,7 @@
                                         <label class="col-sm-2 control-label">Cliente</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" id="buscaClienteInput">
+                                            <input type="hidden" id="clienteInput">
                                         </div>
                                     </div>
 
@@ -230,28 +186,31 @@
                                         <label class="col-sm-2 control-label">Tipo de aplicação</label>
                                         <div class="col-sm-10">
                                             <label class="radio-inline">
-                                                <input type="radio" name="inlineRadioOptions" checked id="inlineRadio1" value="option1"> Compra inteira
+                                                <input type="radio" name="tipoAplicacao" checked value="compraInteira"> Compra inteira
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Produto
+                                                <input type="radio" name="tipoAplicacao" value="produto"> Produto
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> Categoria
+                                                <input type="radio" name="tipoAplicacao" value="categoria"> Categoria
                                             </label>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <div class="col-sm-10 col-sm-offset-2">
-                                            <!-- EXIBIR INPUT ABAIXO QUANDO 'PRODUTO' ESTIVER MARCADO -->
-                                            <input type="email" id="email" name="email" class="form-control">
+                                            <div id="form-group-produtoInput" class="oculta">
+                                                <!-- EXIBIR INPUT ABAIXO QUANDO 'PRODUTO' ESTIVER MARCADO -->
+                                                <input type="text" id="produtoInput" name="produtoInput" class="form-control">
+                                                <span class="glyphicon form-control-feedback" id="icon-produtoInput" aria-hidden="true"></span>
+                                                <label class="control-label" id="label-produtoInput"></label>
+                                            </div>
+                                            
+                                            <div id="form-group-categoriaInput" class="oculta">
+                                                <input type="text" id="categoriaInput" name="categoriaInput" class="form-control">
+                                                <span class="glyphicon form-control-feedback" id="icon-categoriaInput" aria-hidden="true"></span>
+                                                <label class="control-label" id="label-categoriaInput"></label>
+                                            </div>
 
-                                            <!-- EXIBIR SELECT ABAIXO QUANDO 'CATEGORIA' ESTIVER MARCADO -->
-<!--                                            <select class="form-control">
-                                                <option>R$</option>
-                                                <option>%</option>
-                                            </select>-->
-
-                                            <!-- SUMIR COM INPUT E SELECT CASO 'COMPRA INTEIRA' ESTEJA MARCADO -->
                                         </div>
                                     </div>
 
