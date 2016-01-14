@@ -14,10 +14,11 @@ switch ($opcao) {
         $dataInicio = implode('-', array_reverse(explode('/',$_POST['dataInicio'])));
         $dataFim = implode('-',array_reverse(explode('/',$_POST['dataFim'])));
         $valorMinimo = $_POST['valorMinimo'];
-        $cliente = ($_POST['cliente'] == '') ? '0' : $_POST['cliente'];
+        $cliente = ($_POST['cliente'] == '') ? '0' : rtrim($_POST['cliente'],',');
         $tipoAplicacao = $_POST['tipoAplicacao'];
-        $produto = ($_POST['produto'] == '') ? '0' : $_POST['produto'];
-        $categoria = ($_POST['categoria'] == '') ? '0' : $_POST['categoria'];
+        $produto = ($_POST['produto'] == '') ? '0' : rtrim($_POST['produto'],',');
+        $categoria = ($_POST['categoria'] == '') ? '0' : rtrim($_POST['categoria'],',');
+        $status = 1;
         
         $objCupomDesconto->setCodigo($codigo);
         $objCupomDesconto->setTipoCupom($tipoCupom);
@@ -32,7 +33,8 @@ switch ($opcao) {
         $objCupomDesconto->setTipoAplicacao($tipoAplicacao);
         $objCupomDesconto->setProduto($produto);
         $objCupomDesconto->setCategoria($categoria);
+        $objCupomDesconto->setStatus($status);
         
-        $objCupomDescontoDao->cadCupomDesconto($objCupomDesconto);
+        $objMarketingDao->cadCupomDesconto($objCupomDesconto);
     break;
 }

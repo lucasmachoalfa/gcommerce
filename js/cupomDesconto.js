@@ -1,5 +1,9 @@
 id = new Array();
 $(document).ready(function () {
+    if($("#listaCupomDesconto").length){
+        $("#listaCupomDesconto").load('listaCupomDescontoAjax.php');
+    }
+    
     $("#btnCadCupomdesconto").click(function () {
         var codigo = $("#codigo").val();
         var tipoCupom;
@@ -10,14 +14,14 @@ $(document).ready(function () {
         var dataInicio = $("#dataInicio").val();
         var dataFim = $("#dataFim").val();
         var valorMinimo = $("#valorMinimo").val();
-        var cliente = $("#cliente").val();
+        var cliente = $("#clienteInput").val();
         var tipoAplicacao;
         var produtoInput = $("#produtoInput").val();
         var categoriaInput = $("#categoriaInput").val();
         
         var validCodigo = 0;
-        var validProdutoInput = 0;
-        var validCategoriaInput = 0;
+        var validProdutoInput = 1;
+        var validCategoriaInput = 1;
         $("input[name='tipoCupom']").each(function () {
             if ($(this).is(':checked')) {
                 tipoCupom = $(this).val();
@@ -151,7 +155,7 @@ $(document).ready(function () {
             id.push('');
 
             this.value = terms.join(", ");
-            $("#clienteInput").val(id.join(", "));
+            $("#clienteInput").val(id.join(","));
             return false;
         }
     })

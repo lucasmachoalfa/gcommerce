@@ -16,6 +16,7 @@ class CupomDesconto {
     private $tipoAplicacao;
     private $produto;
     private $categoria;
+    private $status;
 
     function getIdCupomDesconto() {
         return $this->idCupomDesconto;
@@ -127,6 +128,14 @@ class CupomDesconto {
 
     function setCategoria($categoria) {
         $this->categoria = seg($categoria);
+    }
+
+    public function getStatus() {
+        return $this->status;
+    }
+
+    public function setStatus($status) {
+        $this->status = seg($status);
     }
 
 }
