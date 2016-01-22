@@ -1,26 +1,3 @@
-//função para gerar uma string de números e letras aleatoriamente
-function generateString(chars) {
-    var pass = "";
-    var getRandomChar = function () {
-        /*
-         * matriz contendo em cada linha indices (inicial e final) da tabela ASCII para retornar alguns caracteres.
-         * [48, 57] = numeros;
-         * [64, 90] = "@" mais letras maiusculas;
-         * [97, 122] = letras minusculas;
-         */
-        var ascii = [[48, 57], [65, 89]];
-        var i = Math.floor(Math.random() * ascii.length);
-        return String.fromCharCode(Math.floor(Math.random() * (ascii[i][1] - ascii[i][0])) + ascii[i][0]);
-    }
-
-    for (var i = 0; i < chars; i++) {
-        pass += getRandomChar();
-    }
-
-    return pass;
-}
-
-
 //funções de busca, utilizando autocomplete do jquery
 var busca = function (termo, url, campos) {
     if (typeof termo == 'undefined' || termo == '') {
