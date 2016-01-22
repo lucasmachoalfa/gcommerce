@@ -37,4 +37,28 @@ switch ($opcao) {
         
         $objMarketingDao->cadCupomDesconto($objCupomDesconto);
     break;
+
+    case 'redessociais':
+        $facebook = $_POST['facebook'];
+        $instagram = $_POST['instagram'];
+        $twitter = $_POST['twitter'];
+        $google = $_POST['google'];
+        $vimeo = $_POST['vimeo'];
+        $youtube = $_POST['youtube'];
+        $pinterest = $_POST['pinterest'];
+        $flickr = $_POST['flickr'];
+        $linkedin = $_POST['linkedin'];
+        
+        $objRedesSociais->setFacebook($facebook);
+        $objRedesSociais->setInstagram($instagram);
+        $objRedesSociais->setTwitter($twitter);
+        $objRedesSociais->setGoogle($google);
+        $objRedesSociais->setVimeo($vimeo);
+        $objRedesSociais->setYoutube($youtube);
+        $objRedesSociais->setPinterest($pinterest);
+        $objRedesSociais->setFlickr($flickr);
+        $objRedesSociais->setLinkedin($linkedin);
+        
+        $objMarketingDao->cadRedesSociais($objRedesSociais);
+        break;
 }
