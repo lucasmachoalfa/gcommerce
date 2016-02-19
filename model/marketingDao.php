@@ -45,7 +45,7 @@ class marketingDao extends Banco {
 
         $where = '';
         if ($objCupomDesconto != NULL && $objCupomDesconto != '') {
-            $where = 'AND idCupomDesconto = ' . $objCupomDesconto->getIdCupomDesconto();
+            $where = 'AND cu.idCupomDesconto = ' . $objCupomDesconto->getIdCupomDesconto();
         }
         
         if($ordem != '' && $ordem != NULL){
@@ -58,8 +58,8 @@ class marketingDao extends Banco {
                     LEFT JOIN ".REL_CUPOM_CLIENTE." rcl ON cu.idCupomDesconto = rcl.idCupomDesconto
                     LEFT JOIN " . TBL_CLIENTES . " cl ON cl.idCliente = rcl.idCliente
                         WHERE cu.status = 1
-                        GROUP BY cu.idCupomDesconto
                         " . $where . "
+                        GROUP BY cu.idCupomDesconto
                         ".$ordem."
                 ";
 

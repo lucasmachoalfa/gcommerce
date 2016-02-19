@@ -1,7 +1,6 @@
 <?php
 require_once '../model/marketingDao.php';
 require_once '../model/clienteDao.php';
-
 $opcao = $_POST['opcao'];
 switch ($opcao) {
     case 'cadCupomDesconto':
@@ -11,15 +10,14 @@ switch ($opcao) {
         $formatoDesconto = $_POST['formatoDesconto'];
         $usoMaximo = $_POST['usoMaximo'];
         $usoMaximoCliente = $_POST['usoMaximoCliente'];
-        $dataInicio = implode('-', array_reverse(explode('/',$_POST['dataInicio'])));
-        $dataFim = implode('-',array_reverse(explode('/',$_POST['dataFim'])));
+        $dataInicio = implode('-', array_reverse(explode('/', $_POST['dataInicio'])));
+        $dataFim = implode('-', array_reverse(explode('/', $_POST['dataFim'])));
         $valorMinimo = $_POST['valorMinimo'];
-        $cliente = ($_POST['cliente'] == '') ? '0' : rtrim($_POST['cliente'],',');
+        $cliente = ($_POST['cliente'] == '') ? '0' : rtrim($_POST['cliente'], ',');
         $tipoAplicacao = $_POST['tipoAplicacao'];
-        $produto = ($_POST['produto'] == '') ? '0' : rtrim($_POST['produto'],',');
-        $categoria = ($_POST['categoria'] == '') ? '0' : rtrim($_POST['categoria'],',');
+        $produto = ($_POST['produto'] == '') ? '0' : rtrim($_POST['produto'], ',');
+        $categoria = ($_POST['categoria'] == '') ? '0' : rtrim($_POST['categoria'], ',');
         $status = 1;
-        
         $objCupomDesconto->setCodigo($codigo);
         $objCupomDesconto->setTipoCupom($tipoCupom);
         $objCupomDesconto->setValorDesconto($valorDesconto);
@@ -29,36 +27,65 @@ switch ($opcao) {
         $objCupomDesconto->setDataInicio($dataInicio);
         $objCupomDesconto->setDataFim($dataFim);
         $objCupomDesconto->setValorMinimo($valorMinimo);
-        $objCupomDesconto->setCliente($cliente);
+//        $objCupomDesconto->setCliente($cliente);
         $objCupomDesconto->setTipoAplicacao($tipoAplicacao);
-        $objCupomDesconto->setProduto($produto);
-        $objCupomDesconto->setCategoria($categoria);
+//        $objCupomDesconto->setProduto($produto);
+//        $objCupomDesconto->setCategoria($categoria);
         $objCupomDesconto->setStatus($status);
+        $idCupom = $objMarketingDao->cadCupomDesconto($objCupomDesconto);
         
-        $objMarketingDao->cadCupomDesconto($objCupomDesconto);
-    break;
-
-    case 'redessociais':
-        $facebook = $_POST['facebook'];
-        $instagram = $_POST['instagram'];
-        $twitter = $_POST['twitter'];
-        $google = $_POST['google'];
-        $vimeo = $_POST['vimeo'];
-        $youtube = $_POST['youtube'];
-        $pinterest = $_POST['pinterest'];
-        $flickr = $_POST['flickr'];
-        $linkedin = $_POST['linkedin'];
+        if($produto != '0'){
+            $produtos = explode(',',$produto);
+            $queryProdutos = '';
+            
+            foreach($produtos as $produto){
+                $queryProdutos .= '('.$idCupom.','.$produto.'),';
+            }
+            
+            $objMarketingDao->cadRelProduto($queryProdutos);
+        }
         
-        $objRedesSociais->setFacebook($facebook);
-        $objRedesSociais->setInstagram($instagram);
-        $objRedesSociais->setTwitter($twitter);
-        $objRedesSociais->setGoogle($google);
-        $objRedesSociais->setVimeo($vimeo);
-        $objRedesSociais->setYoutube($youtube);
-        $objRedesSociais->setPinterest($pinterest);
-        $objRedesSociais->setFlickr($flickr);
-        $objRedesSociais->setLinkedin($linkedin);
+        if($categoria != '0'){
+            $categorias = explode(',',$categoria);
+            $queryCategorias = '';
+            
+            foreach($categorias as $categoria){
+                $queryCategorias .= '('.$idCupom.','.$categoria.'),';
+            }
+            $objMarketingDao->cadRelCategoria($queryCategorias);
+        }
         
-        $objMarketingDao->cadRedesSociais($objRedesSociais);
+        if($cliente != '0'){
+            $clientes = explode(',',$cliente);
+            $queryClientes = '';
+            
+            foreach($clientes as $cliente){
+                $queryClientes .= '('.$idCupom.','.$cliente.'),';
+            }
+            
+            $queryClientes = rtrim($queryClientes,',');
+            $objMarketingDao->cadRelCliente($queryClientes);
+        }
+        
+        
+        break;
+        
+    case 'delCupomDesconto':
+        $idCupomDesconto = $_POST['idCupomDesconto'];
+        $objCupomDesconto->setIdCupomDesconto($idCupomDesconto);
+        $objMarketingDao->delCupomDesconto($objCupomDesconto);
+        break;
+    
+    case 'listaCupomDesconto':
+        $idCupomDesconto = $_POST['idCupomDesconto'];
+        $formato = $_POST['formato'];
+        $objCupomDesconto->setIdCupomDesconto($idCupomDesconto);
+        $cupom = $objMarketingDao->listaCupomDesconto($objCupomDesconto);
+        if ($formato == 'json') {
+            $cupom = json_encode($cupom);
+            print_r($cupom);
+        } else {
+            return $cupom;
+        }
         break;
 }

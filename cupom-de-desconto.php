@@ -11,7 +11,7 @@
         <script src="js/moment-with-locales.js"></script>
         <link href="css/bootstrap-datetimepicker.css" rel="stylesheet">
         <script src="js/bootstrap-datetimepicker.js"></script>
-        
+
         <link rel="stylesheet" href="css/jquery-ui.theme-smoothness.css">
         <script src="js/jquery-ui.js"></script>
         <style>
@@ -19,7 +19,6 @@
             .ui-autocomplete span.hl_results {
                 background-color: #ffff66;
             }
-
             /* scroll results */
             .ui-autocomplete {
                 max-height: 250px;
@@ -29,26 +28,23 @@
                 /* add padding for vertical scrollbar */
                 padding-right: 5px;
             }
-
             .ui-autocomplete li {
                 font-size: 16px;
             }
-
             /* IE 6 doesn't support max-height
             * we use height instead, but this forces the menu to always be this tall
             */
             * html .ui-autocomplete {
                 height: 100px;
             }
-
             ul.ui-autocomplete.ui-menu {
                 z-index: 999999;
             }
         </style>
         <script src="js/cupomDesconto.js"></script>
-        
-        <!--<script src="js/jquery.fcbkcomplete.js"></script>>
-        <link rel="stylesheet" href="js/FCBKcomplete/style.css" /-->
+
+<!--<script src="js/jquery.fcbkcomplete.js"></script>>
+<link rel="stylesheet" href="js/FCBKcomplete/style.css" /-->
     </head>
     <body>
         <?php include_once 'includes/header.php'; ?>
@@ -60,7 +56,32 @@
                     <!--<a href="adiconarCarrinhoConfig.php" class="btn btn-info btn-sm"  data-toggle="modal" data-target="#myModal">Adicionar configuração</a>-->
                     <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Adicionar regra de desconto</button>
                 </div>
-                <!-- Modal -->
+                
+                <!-- Modal de confirmação de exclusão -->
+                <div class="modal fade" id="confirm-delete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                <h4 class="modal-title" id="myModalLabel">Confirm Delete</h4>
+                            </div>
+
+                            <div class="modal-body">
+                                <p>Você está prestes a excluir um cupom de desconto. Esta ação é irreversível</p>
+                                <p>Você deseja continuar?</p>
+                                <p class="codigo-cupom"></p>
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancela</button>
+                                <a class="btn btn-danger btn-ok">Excluir</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Modal de cadastro e alteração de cupom -->
                 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -70,12 +91,17 @@
                             </div>
                             <div class="modal-body">
                                 <form id="defaultForm" method="post" class="form-horizontal">
-                                    <div class="form-group" id="form-group-codigo">
-                                        <label class="col-sm-2 control-label">Código</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" id="codigo" name="codigo" class="form-control">
-                                            <span class="glyphicon form-control-feedback" id="icon-codigo" aria-hidden="true"></span>
-                                            <label class="control-label" id="label-codigo"></label>
+                                    <div class="form-group">
+                                        <div id="form-group-codigo">
+                                            <label class="col-sm-2 control-label">Código</label>
+                                            <div class="col-sm-6">
+                                                <input type="text" id="codigo" name="codigo" class="form-control" maxlength="8">
+                                                <span class="glyphicon form-control-feedback" id="icon-codigo" aria-hidden="true"></span>
+                                                <label class="control-label" id="label-codigo"></label>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4">
+                                            <button type="button" id="btnGeraCodigo" class="btn btn-default">Gerar código aleatório</button>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -94,9 +120,13 @@
                                     </div>
                                     <!-- VALOR DE DESCONTO / SOME SE 'FRETE GRÁTIS' ESTIVER MARCADO -->
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">Valor do desconto</label>
-                                        <div class="col-sm-4">
-                                            <input type="text" id="valorDesconto" name="valorDesconto" class="form-control">
+                                        <div id="form-group-valorDesconto">
+                                            <label class="col-sm-2 control-label">Valor do desconto</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" id="valorDesconto" name="valorDesconto" class="form-control">
+                                                <span class="glyphicon form-control-feedback" id="icon-valorDesconto" aria-hidden="true"></span>
+                                                <label class="control-label" id="label-valorDesconto"></label>
+                                            </div>
                                         </div>
                                         <div class="col-sm-2">
                                             <select id="formatoDesconto" name="formatoDesconto" class="form-control">
@@ -122,13 +152,17 @@
 
 
                                     <div class="form-group">
-                                        <label class="col-sm-2 control-label">Data início</label>
-                                        <div class="col-sm-4">
-                                            <div class='input-group date' id='datetimepicker1'>
-                                                <input type='text' class="form-control" id="dataInicio" name="dataInicio" />
-                                                <span class="input-group-addon">
-                                                    <span class="glyphicon glyphicon-calendar"></span>
-                                                </span>
+                                        <div id="form-group-dataInicio">
+                                            <label class="col-sm-2 control-label">Data início</label>
+                                            <div class="col-sm-4">
+                                                <div class='input-group date' id='datetimepicker1'>
+                                                    <input type='text' class="form-control" id="dataInicio" name="dataInicio" />
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-calendar"></span>
+                                                    </span>
+                                                </div>
+                                                <!--<span class="glyphicon form-control-feedback" id="icon-dataInicio" aria-hidden="true"></span>-->
+                                                <label class="control-label" id="label-dataInicio"></label>
                                             </div>
                                         </div>
                                         <label class="col-sm-2 control-label">Data fim</label>
@@ -204,7 +238,7 @@
                                                 <span class="glyphicon form-control-feedback" id="icon-produtoInput" aria-hidden="true"></span>
                                                 <label class="control-label" id="label-produtoInput"></label>
                                             </div>
-                                            
+
                                             <div id="form-group-categoriaInput" class="oculta">
                                                 <input type="text" id="categoriaInput" name="categoriaInput" class="form-control">
                                                 <span class="glyphicon form-control-feedback" id="icon-categoriaInput" aria-hidden="true"></span>
@@ -225,48 +259,9 @@
                 </div>
             </div>
             <br><br>
-            <div class="table-responsive">
-                <table class="table table-striped carrinhosConfig"> 
-                    <thead> 
-                        <tr> 
-                            <th>Código</th> 
-                            <th>Tipo do cupom</th> 
-                            <th>Valor do desconto</th> 
-                            <th>Uso máximo</th> 
-                            <th>Uso máximo por cliente</th> 
-                            <th>Data início</th>
-                            <th>Data final</th> 
-                            <th>Valor mínimo</th> 
-                            <th>Tipo de aplicação</th> 
-                            <th>Editar</th> 
-                            <th>Excluir</th> 
-                        </tr>
-                    </thead>
-                    <tbody id="listaCupomDesconto">
-                        
-                        
-                    </tbody> 
-                </table>                
-            </div>
-            <nav class="text-center">
-                <ul class="pagination">
-                    <li>
-                        <a href="#" aria-label="Previous">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
-                    <li><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li>
-                        <a href="#" aria-label="Next">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+            <div class="table-responsive" id="listaCupomDesconto"></div>
+            <div id="carregando" style="display: none">Carregando...</div>
+
         </div>
         <?php include_once 'includes/footer.php'; ?>
     </body>
