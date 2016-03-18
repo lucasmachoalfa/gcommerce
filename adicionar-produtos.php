@@ -36,9 +36,9 @@
                     <div>
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation"><a href="#detalhes" aria-controls="detalhes" role="tab" data-toggle="tab">Detalhes</a></li>
+                            <li role="presentation" class="active"><a href="#detalhes" aria-controls="detalhes" role="tab" data-toggle="tab">Detalhes</a></li>
                             <li role="presentation"><a href="#categorias" aria-controls="categorias" role="tab" data-toggle="tab">Categorias</a></li>
-                            <li role="presentation" class="active"><a href="#estoque" aria-controls="estoque" role="tab" data-toggle="tab">Estoque e Variações</a></li>
+                            <li role="presentation"><a href="#estoque" aria-controls="estoque" role="tab" data-toggle="tab">Estoque e Variações</a></li>
                             <li role="presentation"><a href="#envio" aria-controls="envio" role="tab" data-toggle="tab">Envio</a></li>
                             <li role="presentation"><a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">SEO</a></li>
                             <li class="pull-right"><button type="button" class="btn btn-success">Salvar</button></li>
@@ -47,7 +47,7 @@
 
                         <!-- Tab panes -->
                         <div class="tab-content">
-                            <div role="tabpanel" class="tab-pane" id="detalhes">
+                            <div role="tabpanel" class="tab-pane active" id="detalhes">
                                 <div class="row">
                                     <div class="col-md-7">
                                         <div class="form-group">
@@ -139,24 +139,32 @@
                                             <label>Selecione as categorias</label>
                                             <div class="well">
                                                 <ul class="list-unstyled buffer-bottom-no">
-                                                    <li><label><input type="checkbox" name="categories[]" value="73652">&nbsp;&nbsp;Camisas</label></li>
-                                                    <li><label><input type="checkbox" name="categories[]" value="73653">&nbsp;&nbsp;Beachwear</label></li>
-                                                    <li><label><input type="checkbox" name="categories[]" value="73654">&nbsp;&nbsp;Bonés</label></li>
-                                                </ul>
-                                            </div>
-                                            <h4>Características</h4>
-                                            <hr>
-                                            <label>Tabela de tamanhos</label>
-                                            <div class="well">
-                                                <ul class="list-unstyled">
-                                                    <li><label><input type="checkbox" name="categories[]" value="73652">&nbsp;&nbsp;Teste</label></li>
+                                                    <?php
+                                                    require_once 'model/categoriaDao.php';
+
+                                                    $categorias = $objCategoriaDao->listaCategorias();
+                                                    if (count($categorias) > 0) {
+                                                        foreach ($categorias as $categoria) {
+                                                            echo '
+                                                            <li>
+                                                                <label>
+                                                                    <input type="checkbox" name="categoria" id="categoria-' . $categoria["idCategoria"] . '" value="' . $categoria["idCategoria"] . '">
+                                                                    <label for="categoria-' . $categoria["idCategoria"] . '">' . utf8_encode($categoria["titulo"]) . '</label>
+                                                                </label>
+                                                            </li>
+                                                        ';
+                                                        }
+                                                    } else {
+                                                        echo 'clique <a href="categorias.php" target="_blank">aqui</a> para cadastrar categorias';
+                                                    }
+                                                    ?>
                                                 </ul>
                                             </div>
                                         </div>
                                     </div>                                    
                                 </div>
                             </div>
-                            <div role="tabpanel" class="tab-pane active" id="estoque">
+                            <div role="tabpanel" class="tab-pane" id="estoque">
                                 <div class="row">
                                     <div class="col-md-12">
                                         <h4>SEO</h4>

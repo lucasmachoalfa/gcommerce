@@ -6,12 +6,17 @@ require_once 'bean/categoria.php';
 
 class CategoriaDao extends Banco {
 
-    public function listaCategorias(Categoria $objCategoria = NULL, $paginacao) {
+    public function listaCategorias(Categoria $objCategoria = NULL, $paginacao = NULL) {
         $conexao = $this->abreConexao();
 
         $where = '';
         if ($objCategoria != NULL) {
             $where = ' AND c.idCategoria = ' . $objCategoria->getIdCategoria();
+        }
+
+        $limit = "";
+        if ($paginacao != NULL) {
+            $limit = "LIMIT " . $paginacao;
         }
 
         $sql = "SELECT c.*, count(p.idProduto) AS quantidade
@@ -21,7 +26,7 @@ class CategoriaDao extends Banco {
                         WHERE c.status IN(1,2)
                         " . $where . "
                         GROUP BY c.idcategoria
-                        LIMIT " . $paginacao . "
+                      " . $limit . "
                 ";
 
         $banco = $conexao->query($sql);
