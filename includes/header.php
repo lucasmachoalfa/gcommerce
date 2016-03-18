@@ -44,7 +44,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Produtos <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Categorias</a></li>
+                            <li><a href="categorias.php">Categorias</a></li>
                             <li><a href="adicionar-produtos.php">Adicionar produtos</a></li>
                             <li><a href="#">Ver produtos</a></li>
                             <li><a href="#">Alteração em massa</a></li>
