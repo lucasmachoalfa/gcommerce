@@ -14,7 +14,7 @@
                     <!--<button type="button" class="btn btn-info btn-sm"  data-toggle="modal" data-target="#myModal">Adicionar configuração</button>-->
                 </div>
                 <!-- Modal -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal fade" id="modalOpcoes" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -22,7 +22,9 @@
                                 <h4 class="modal-title" id="myModalLabel">Adicionar configuração - Carrinho abandonado</h4>
                             </div>
                             <div class="modal-body">
-                                <p>...</p>
+                                <?php
+                                require_once 'listaOpcaoProdutoAjax.php';
+                                ?>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
@@ -36,11 +38,21 @@
                     <div>
                         <!-- Nav tabs -->
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#detalhes" aria-controls="detalhes" role="tab" data-toggle="tab">Detalhes</a></li>
-                            <li role="presentation"><a href="#categorias" aria-controls="categorias" role="tab" data-toggle="tab">Categorias</a></li>
-                            <li role="presentation"><a href="#estoque" aria-controls="estoque" role="tab" data-toggle="tab">Estoque e Variações</a></li>
-                            <li role="presentation"><a href="#envio" aria-controls="envio" role="tab" data-toggle="tab">Envio</a></li>
-                            <li role="presentation"><a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">SEO</a></li>
+                            <li role="presentation" class="active">
+                                <a href="#detalhes" aria-controls="detalhes" role="tab" data-toggle="tab">Detalhes</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#categorias" aria-controls="categorias" role="tab" data-toggle="tab">Categorias</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#estoque" aria-controls="estoque" role="tab" data-toggle="tab">Estoque e Variações</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#envio" aria-controls="envio" role="tab" data-toggle="tab">Envio</a>
+                            </li>
+                            <li role="presentation">
+                                <a href="#seo" aria-controls="seo" role="tab" data-toggle="tab">SEO</a>
+                            </li>
                             <li class="pull-right"><button type="button" class="btn btn-success">Salvar</button></li>
                         </ul>
                         <br>
@@ -212,7 +224,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <button class="btn btn-primary">Adicionar/editar opções</button>
+                                                    <button class="btn btn-primary" data-toggle="modal" data-target="#modalOpcoes">Adicionar/editar opções</button>
                                                 </div>
                                             </div>  
                                         </div>

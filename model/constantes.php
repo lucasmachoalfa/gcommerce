@@ -20,6 +20,7 @@ define("TBL_CUPOM_DESCONTO", DB_ADMIN . TBL_ADMIN . "marketing_cupomDesconto");
 define("TBL_REDES_SOCIAIS", DB_ADMIN . TBL_ADMIN . "marketing_redessociais");
 define("TBL_CATEGORIAS", DB_ADMIN . TBL_ADMIN . "categorias");
 define("TBL_PRODUTOS", DB_ADMIN . TBL_ADMIN . "produtos");
+define("TBL_OPCOES", DB_ADMIN . TBL_ADMIN . "opcoes");
 
 define("REL_CUPOM_PRODUTO", DB_ADMIN . TBL_ADMIN . "rel_produtosXCupomDesconto");
 define("REL_CUPOM_CLIENTE", DB_ADMIN . TBL_ADMIN . "rel_clientesXcupomDesconto");
