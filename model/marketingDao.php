@@ -130,33 +130,22 @@ class marketingDao extends Banco {
     
     
     //Funções relacionadas ao cadastro de Redes Sociais
-    public function cadRedesSociais(RedesSociais $objRedesSociais){
+    public function cadRedesSociais(RedesSociais $objRedesSociais = NULL){
         $conexao = $this->abreConexao();
         
-       echo $sql = "INSERT INTO ".TBL_REDES_SOCIAIS." SET
-                facebook = '".$objRedesSociais->getFacebook()."',
-                instagram = '".$objRedesSociais->getInstagram()."',
-                twitter = '".$objRedesSociais->getTwitter()."',
-                google = '".$objRedesSociais->getGoogle()."',
-                vimeo = '".$objRedesSociais->getVimeo()."',
-                youtube = '".$objRedesSociais->getYoutube()."',
-                pinterest = '".$objRedesSociais->getPinterest()."',
-                flickr = '".$objRedesSociais->getFlickr()."',
-                linkedin = '".$objRedesSociais->getLinkedin()."'
-                    
-                ON DUPLICATE KEY UPDATE 
-                facebook = '".$objRedesSociais->getFacebook()."',
-                instagram = '".$objRedesSociais->getInstagram()."',
-                twitter = '".$objRedesSociais->getTwitter()."',
-                google = '".$objRedesSociais->getGoogle()."',
-                vimeo = '".$objRedesSociais->getVimeo()."',
-                youtube = '".$objRedesSociais->getYoutube()."',
-                pinterest = '".$objRedesSociais->getPinterest()."',
-                flickr = '".$objRedesSociais->getFlickr()."',
-                linkedin = '".$objRedesSociais->getLinkedin()."'
-               ";
+        $idRede = $objRedesSociais->getIdRede();
+        $link = $objRedesSociais->getLink();
+        $sql = '';
+        $i = 0;
         
-        $conexao->query($sql) or die($conexao->error);
+       foreach ($idRede as $id){
+           $sql .= 'UPDATE '.TBL_REDES_SOCIAIS.' SET link = "'.$link[$i].'" WHERE idRedesSociais = '.$id.'; ';
+           
+           $i++;
+       }
+       
+       
+        $conexao->multi_query($sql) or die($conexao->error);
         
         $this->fechaConexao();
     }
@@ -165,12 +154,26 @@ class marketingDao extends Banco {
     public function listaRedesSociais(){
         $conexao = $this->abreConexao();
         
-        $sql = "SELECT * FROM ".TBL_REDES_SOCIAIS."";
+        $sql = "SELECT * FROM ".TBL_REDES_SOCIAIS." ORDER BY ordem";
         
         $banco = $conexao->query($sql);
-        $linha = $banco->fetch_assoc();
         
-        return $linha;
+        $linhas = array();
+        while($linha = $banco->fetch_assoc()){
+            $linhas[] = $linha;
+        }
+        
+        return $linhas;
+        
+        $this->fechaConexao();
+    }
+    
+    public function ordenaRedesSociais($sql){
+        $conexao = $this->abreConexao();
+        
+        echo $sql;
+        
+        $conexao->multi_query($sql) or die($conexao->error);
         
         $this->fechaConexao();
     }

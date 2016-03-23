@@ -88,4 +88,22 @@ switch ($opcao) {
             return $cupom;
         }
         break;
+        
+    case 'redessociais':
+        $objRedesSociais->setIdRede($_POST['idRede']);
+        $objRedesSociais->setLink($_POST['link']);
+
+        $objMarketingDao->cadRedesSociais($objRedesSociais);
+        break;
+    
+    case 'ordenaRedes':
+        $ordem = 0;
+        $sql = '';
+        foreach ($_POST['idRede'] as $idRede){
+            $sql .= 'UPDATE '.TBL_REDES_SOCIAIS.' SET ordem = '.$ordem.' WHERE idRedesSociais = '.$idRede.'; ' ;
+            $ordem++;
+        }
+        
+        $objMarketingDao->ordenaRedesSociais($sql);
+        break;
 }
