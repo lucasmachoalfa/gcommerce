@@ -2,6 +2,21 @@
 <html>
     <head>
         <?php include_once 'includes/head.php'; ?>        
+        <style>
+            /*.option-form{*/
+            .buffer-top-sm{
+                border: 1px solid #dfdfdf;
+                margin-bottom: 10px;
+                padding: 5px;
+                background: #fff;
+            }
+            .estampa{
+                width: 40px;
+                height: 40px;
+                background-size: 40px 40px;                
+                background-repeat: no-repeat;
+            }
+        </style>
     </head>
     <body>
         <?php include_once 'includes/header.php'; ?>
