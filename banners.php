@@ -10,26 +10,109 @@
         <!-- SWITCH -->
         <link href="css/bootstrap-switch.css" rel="stylesheet">
         <script src="js/bootstrap-switch.js"></script>
+        <script src="js/moment-with-locales.js"></script>
+        <link href="css/bootstrap-datetimepicker.css" rel="stylesheet">
+        <script src="js/bootstrap-datetimepicker.js"></script>
+
         <script>
+
             $(document).ready(function () {
-                $(function () {
-                    $("[name='my-checkbox']").bootstrapSwitch();
+                var foto = '';
+
+                $("#imagem").on('change', function (event) {
+
+
+                    foto = event.target.files[0];
+                    var tmppath = URL.createObjectURL(event.target.files[0]);
+
+                    if (tmppath !== null) {
+                        var img = document.createElement('img');
+                        img.setAttribute('src', tmppath);
+//                        img.setAttribute('id', 'image_' + i);
+                        $("#imagePreview").html('');
+                        $("#imagePreview").append(img);
+                    }
+                });
+
+                $("[name='visivel']").bootstrapSwitch();
+
+                $('#dataEntrada').datetimepicker({
+                    locale: 'pt',
+                    format: 'DD/MM/YYYY'
+                });
+
+                $('#dataSaida').datetimepicker({
+                    useCurrent: false, //Important! See issue #1075
+                    locale: 'pt',
+                    format: 'DD/MM/YYYY'
+                });
+
+                $("#dataEntrada").on("dp.change", function (e) {
+                    $('#dataSaida').data("DateTimePicker").minDate(e.date);
+                });
+
+                $("#dataSaida").on("dp.change", function (e) {
+                    $('#dataEntrada').data("DateTimePicker").maxDate(e.date);
+                });
+
+                $("[name='visivel']").on('switchChange.bootstrapSwitch', function (event, state) {
+                    var status = state;
+                    var id = $(this).attr('id');
+
+                    console.log('id: ' + id + ' visivel: ' + state);
+                })
+
+                $('[data-toggle="tooltip"]').tooltip();
+
+                $("#btnCadBanner").click(function () {
+                    var titulo;
+                    var link;
+                    var novaJanela = ($("#novaJanela").is(':checked')) ? 1 : 0;
+                    var dataEntrada;
+                    var dataSaida;
+
+                    var validImagem = false;
+                    var validTitulo = false;
+                    var validDataEntrada = false;
+                    
+                    if(foto != ''){
+                        validImagem = true;
+                    }
+                    
+                    if(titulo != ''){
+                        validTitulo = true;
+                    }
+                    
+                    if(dataEntrada != ''){
+                        validDataEntrada = true;
+                    }
+                    
+                    if (validImagem && validTitulo && validDataEntrada) {
+                    var data = new FormData();
+                            data.append('opcao', 'cadastrar');
+                            data.append('foto', foto);
+                            data.append('titulo', titulo);
+                            data.append('link', link);
+                            data.append('novaJanela', novaJanela);
+                            data.append('dataEntrada', dataEntrada);
+                            data.append('dataSaida', dataSaida);
+                            $.ajax({
+                            url: 'control/controleBanners.php',
+                                    method: 'POST',
+                                    cache: false,
+                                    contentType: false,
+                                    processData: false,
+                                    data: data,
+                                    success: function () {
+
+                                        window.location = 'banners.php'
+                                    }
+                        });
+                        * /
                 });
             });
         </script>
 
-        <!-- DATEPICKER -->
-        <script>
-            $(document).ready(function () {
-                $(function () {
-                    $('[data-toggle="tooltip"]').tooltip();
-                });
-            });
-        </script>
-        <script src="js/moment-with-locales.js"></script>
-        <link href="css/bootstrap-datetimepicker.css" rel="stylesheet">
-        <script src="js/bootstrap-datetimepicker.js"></script>
-        
         <style>
             .verBanners .thead{
                 font-weight: bold;
@@ -48,7 +131,6 @@
             .verBanners .row:last-of-type{
                 border-bottom: 0;
             }
-            
         </style>
     </head>
     <body>
@@ -75,9 +157,11 @@
                                             <label for="image">Imagem </label>
                                             <div class="fileupload fileupload-new" data-provides="fileupload">
                                                 <div class="input-group">
-                                                    <input type="file" name="image">
+                                                    <input type="file" name="imagem" id="imagem">
                                                 </div>
-                                            </div>			
+                                            </div><br />
+                                            <div id="imagePreview">
+                                            </div>
                                         </div>
                                         <div class="col-md-7">
                                             <div class="row">
@@ -103,7 +187,7 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <strong>Ativar na data</strong>
-                                                    <div class='input-group date' id='datetimepicker1'>
+                                                    <div class='input-group date' id='dataEntrada'>
                                                         <input type='text' class="form-control" />
                                                         <span class="input-group-addon">
                                                             <span class="glyphicon glyphicon-calendar"></span>
@@ -112,35 +196,13 @@
                                                 </div>
                                                 <div class="col-md-6">
                                                     <strong>Desativar na data</strong>
-                                                    <div class='input-group date' id='datetimepicker2'>
+                                                    <div class='input-group date' id='dataSaida'>
                                                         <input type='text' class="form-control" />
                                                         <span class="input-group-addon">
                                                             <span class="glyphicon glyphicon-calendar"></span>
                                                         </span>
                                                     </div>
                                                 </div>
-
-                                                <script type="text/javascript">
-            $(document).ready(function () {
-                $(function () {
-                    $('#datetimepicker1').datetimepicker({
-                        locale: 'pt',
-                        format: 'DD/MM/YYYY'
-                    });
-                    $('#datetimepicker2').datetimepicker({
-                        useCurrent: false, //Important! See issue #1075
-                        locale: 'pt',
-                        format: 'DD/MM/YYYY'
-                    });
-                    $("#datetimepicker1").on("dp.change", function (e) {
-                        $('#datetimepicker2').data("DateTimePicker").minDate(e.date);
-                    });
-                    $("#datetimepicker2").on("dp.change", function (e) {
-                        $('#datetimepicker1').data("DateTimePicker").maxDate(e.date);
-                    });
-                });
-            });
-                                                </script>
                                             </div>
                                         </div>
                                     </div>
@@ -148,7 +210,7 @@
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                                <button type="submit" class="btn btn-success">Adicionar banner</button>
+                                <button type="button" id="btnCadBanner" class="btn btn-success">Adicionar banner</button>
                             </div>
                         </div>
                     </div>
@@ -165,9 +227,9 @@
                     <div class="col-md-1">Excluir</div>
                     <div class="col-md-2">Visível</div>
                 </div>
-                <div class="row">
+                <div class="row tbody">
                     <div class="col-md-1">
-                        <i class="glyphicon glyphicon-resize-vertical btn btn-default btn-lg"></i>
+                        <i class="glyphicon glyphicon-resize-vertical"></i>
                     </div>
                     <div class="col-md-3">
                         <img src="http://www.agenciaguppy.com.br/img/banner/pousada-amparo.png" alt=""/>                        
@@ -185,12 +247,12 @@
                         <a href="#" class="btn btn-danger  btn-sm"><i class="glyphicon glyphicon-trash"></i></a>
                     </div>
                     <div class="col-md-2">
-                        <input type="checkbox" name="my-checkbox" checked>
+                        <input type="checkbox" name="visivel" id="1" checked>
                     </div>
                 </div>
-                <div class="row cinza">
+                <div class="row tbody cinza">
                     <div class="col-md-1">
-                        <i class="glyphicon glyphicon-resize-vertical btn btn-default btn-lg"></i>
+                        <i class="glyphicon glyphicon-resize-vertical"></i>
                     </div>
                     <div class="col-md-3">
                         <img src="http://www.agenciaguppy.com.br/img/banner/pousada-amparo.png" alt=""/>                        
@@ -208,12 +270,12 @@
                         <a href="#" class="btn btn-danger  btn-sm"><i class="glyphicon glyphicon-trash"></i></a>
                     </div>
                     <div class="col-md-2">
-                        <input type="checkbox" name="my-checkbox" checked>
+                        <input type="checkbox" name="visivel" id="2" checked>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row tbody">
                     <div class="col-md-1">
-                        <i class="glyphicon glyphicon-resize-vertical btn btn-default btn-lg"></i>
+                        <i class="glyphicon glyphicon-resize-vertical"></i>
                     </div>
                     <div class="col-md-3">
                         <img src="http://www.agenciaguppy.com.br/img/banner/pousada-amparo.png" alt=""/>                        
@@ -231,12 +293,12 @@
                         <a href="#" class="btn btn-danger  btn-sm"><i class="glyphicon glyphicon-trash"></i></a>
                     </div>
                     <div class="col-md-2">
-                        <input type="checkbox" name="my-checkbox" checked>
+                        <input type="checkbox" name="visivel" id="3" checked>
                     </div>
                 </div>
-                
+
             </div>            
-           
+
         </div>
 
         <?php include_once 'includes/footer.php'; ?>
