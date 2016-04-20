@@ -1,6 +1,7 @@
 <?php
 
 require_once '../model/emailDao.php';
+require_once 'funcoes.php';
 
 $opcao = $_POST['opcao'];
 switch ($opcao) {
@@ -29,14 +30,4 @@ switch ($opcao) {
         
         $objEmailDao->altEmail($objEmail);
         break;
-}
-
-function utf8Converter($array) {
-    array_walk_recursive($array, function(&$item, $key) {
-        if (!mb_detect_encoding($item, 'utf-8', true)) {
-            $item = utf8_encode($item);
-        }
-    });
-
-    return $array;
 }

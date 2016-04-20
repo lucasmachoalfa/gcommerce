@@ -2,6 +2,7 @@
 
 require_once '../model/enderecoDao.php';
 require_once '../plugin/phpquery/phpQuery/phpQuery.php';
+require_once 'funcoes.php';
 
 
 $opcao = $_POST['opcao'];
@@ -73,14 +74,4 @@ function simple_curl($url, $post = array(), $get = array()) {
     curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     return curl_exec($ch);
-}
-
-function utf8Converter($array) {
-    array_walk_recursive($array, function(&$item, $key) {
-        if (!mb_detect_encoding($item, 'utf-8', true)) {
-            $item = utf8_encode($item);
-        }
-    });
-
-    return $array;
 }
