@@ -1,6 +1,8 @@
 <?php
 require_once 'constantesBanco.php';
 
+date_default_timezone_set('America/Sao_Paulo');
+
 //função para remover expressões comuns de banco de dados
 function seg($var) {
     $procura = array("insert into", "update", "delete from", "select % from");
@@ -22,6 +24,7 @@ define("TBL_CATEGORIAS", DB_ADMIN . TBL_ADMIN . "categorias");
 define("TBL_PRODUTOS", DB_ADMIN . TBL_ADMIN . "produtos");
 define("TBL_OPCOES", DB_ADMIN . TBL_ADMIN . "opcoes");
 define("TBL_EMAIL", DB_ADMIN . TBL_ADMIN . "emailsPersonalizados");
+define("TBL_VENDEDOR", DB_ADMIN . TBL_ADMIN . "vendedores");
 
 define("REL_CUPOM_PRODUTO", DB_ADMIN . TBL_ADMIN . "rel_produtosXCupomDesconto");
 define("REL_CUPOM_CLIENTE", DB_ADMIN . TBL_ADMIN . "rel_clientesXcupomDesconto");
