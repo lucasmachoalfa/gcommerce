@@ -78,6 +78,21 @@
                                 <div class="row">
                                     <div class="col-md-7">
                                         <div class="form-group">
+                                            <label>Vendedor</label>
+                                            <select name="vendedor" id="vendedor" class="form-control">
+                                                <?php
+                                                require_once './model/vendedoresDao.php';
+                                                
+                                                $vendedores = $objVendedorDao->listaVendedor();
+                                                
+                                                foreach($vendedores as $vendedor){
+                                                    echo '<option value="'.$vendedor["idVendedor"].'">'.utf8_encode($vendedor["nome"]).'</option>';
+                                                }
+                                                ?>
+                                            </select>
+                                            <span class="help-block small">Exemplo: Tênis Zoom Fly Low, Camiseta Authentic</span>
+                                        </div>
+                                        <div class="form-group">
                                             <label>Nome</label>
                                             <input type="text" name="name" value="" class="form-control">
                                             <span class="help-block small">Exemplo: Tênis Zoom Fly Low, Camiseta Authentic</span>

@@ -2,14 +2,8 @@
 <html>
     <head>
         <?php include_once 'includes/head.php'; ?>
-        <style>
-            .carrinhosConfig th, .carrinhosConfig td{
-                text-align: center;
-            }
-        </style>
         <link rel="stylesheet" href="css/jquery-ui.theme-smoothness.css">
         <script src="js/jquery-ui.js"></script>
-
         <script src="js/categoria.js"></script>
     </head>
     <body>
