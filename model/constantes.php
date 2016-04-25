@@ -25,6 +25,7 @@ define("TBL_PRODUTOS", DB_ADMIN . TBL_ADMIN . "produtos");
 define("TBL_OPCOES", DB_ADMIN . TBL_ADMIN . "opcoes");
 define("TBL_EMAIL", DB_ADMIN . TBL_ADMIN . "emailsPersonalizados");
 define("TBL_VENDEDOR", DB_ADMIN . TBL_ADMIN . "vendedores");
+define("TBL_VARIACAO", DB_ADMIN . TBL_ADMIN . "variacoes");
 
 define("REL_CUPOM_PRODUTO", DB_ADMIN . TBL_ADMIN . "rel_produtosXCupomDesconto");
 define("REL_CUPOM_CLIENTE", DB_ADMIN . TBL_ADMIN . "rel_clientesXcupomDesconto");

@@ -10,7 +10,10 @@ class OpcaoDao extends Banco {
     public function listaOpcoes() {
         $conexao = $this->abreConexao();
         
-        $sql = "SELECT * FROM ".TBL_OPCOES." WHERE status = 1";
+        $sql = "SELECT o.idOpcao, o.titulo,
+                FROM ".TBL_OPCOES." o
+                LEFT JOIN ".TBL_VARIACOES."
+                WHERE o.status = 1";
         
         $banco = $conexao->query($sql);
         
