@@ -1,6 +1,9 @@
 # Arquivos de nbproject
 nbproject/*
-nbproject/*.*
+
+#imagens
+images/*
+
 
 # Windows image file caches
 Thumbs.db
@@ -16,6 +19,9 @@ $RECYCLE.BIN/
 *.cab
 *.msi
 *.msm
+*.msp
+
+# Windows shortcuts
 *.msp
 
 # Windows shortcuts
