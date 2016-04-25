@@ -17,6 +17,20 @@
                 background-repeat: no-repeat;
             }
         </style>
+        <script>
+            function criarOpcoes(){
+                $("#novaOpcao").show();
+            }
+            
+            
+            function abreVariacoes(id){
+                $("#option-form-"+id).show();
+            }
+            
+            $(document).ready(function(){
+                
+            });
+        </script>
     </head>
     <body>
         <?php include_once 'includes/header.php'; ?>
@@ -34,7 +48,7 @@
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">Adicionar configuração - Carrinho abandonado</h4>
+                                <h4 class="modal-title" id="myModalLabel">Adicionar configuração - Opções e variações</h4>
                             </div>
                             <div class="modal-body">
                                 <?php
@@ -80,17 +94,17 @@
                                         <div class="form-group">
                                             <label>Vendedor</label>
                                             <select name="vendedor" id="vendedor" class="form-control">
+                                                    <option value="">Selecione...</option>
                                                 <?php
-                                                require_once './model/vendedoresDao.php';
+                                                require_once './model/vendedorDao.php';
                                                 
-                                                $vendedores = $objVendedorDao->listaVendedor();
+                                                $vendedores = $objVendedorDao->listaVendedores();
                                                 
                                                 foreach($vendedores as $vendedor){
                                                     echo '<option value="'.$vendedor["idVendedor"].'">'.utf8_encode($vendedor["nome"]).'</option>';
                                                 }
                                                 ?>
                                             </select>
-                                            <span class="help-block small">Exemplo: Tênis Zoom Fly Low, Camiseta Authentic</span>
                                         </div>
                                         <div class="form-group">
                                             <label>Nome</label>
