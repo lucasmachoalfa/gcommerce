@@ -83,6 +83,7 @@ if (count($opcoes) > 0) :
                                         </div>
                                     </div>
                                     <a href = "#" class = "btn btn-default"><i class = "glyphicon glyphicon-plus-sign"></i> Adicionar valor</a>
+									<br><br>
                                 </div>
                                 <?php
                             endforeach;
