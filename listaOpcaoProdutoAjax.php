@@ -25,7 +25,7 @@ if (count($opcoes) > 0) :
                                         <input type = "text" placeholder = "Ex. cor, tamanho, ..." value = "<?php echo $opcao['titulo']; ?>" class = "form-control translate">
                                     </div>
                                     <div class = "col-md-4">
-                                        <a class = "option_title btn btn-default form-control" href = "javascript:abreVariacoes(<?php echo $opcao['idOpcao']; ?>)">Variações<span class = "caret"></span></a>
+                                        <a class = "option_title btn btn-default form-control" href = "javascript:abreVariacoes(<?php echo $opcao['idOpcao']; ?>)">VariaÃ§Ãµes<span class = "caret"></span></a>
                                     </div>
                                     <div class = "col-md-1">
                                         <a class = "btn btn-danger pull-right" href = "javascript:delOpcao"><i class = "glyphicon glyphicon-trash"></i></a>
@@ -34,7 +34,7 @@ if (count($opcoes) > 0) :
                                 <br>
                                 <div></div>
 
-                                <!--DIV OPTION-FORM COMEÇA COM DISPLAY NONE -->
+                                <!--DIV OPTION-FORM COMEÃ‡A COM DISPLAY NONE -->
                                 <div class = "option-form" style = "display: none;" id='option-form-<?php echo $opcao['idOpcao']; ?>'>
                                     <div class = "buffer-top-sm">
                                         <div class = "option-items ui-sortable" id = "option-items-1">
@@ -101,61 +101,11 @@ endif;
 ?>
 <div class="row">
     <div class="col-md-12">
-        <table class="table ui-sortable-handle" style="display:none" id="novaOpcao">
-            <tr>
-                <td>
-                    <div>
-                        <div class="row">
-                            <div class="col-md-1">
-                                <a href="#" class="btn color-setting-btn pull-left colorpicker-element">
-                                    <i class="glyphicon glyphicon-resize-vertical"></i>
-                                </a>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="text" placeholder="Ex. cor, tamanho, ..." class="form-control translate">    
-                            </div>
-                            <div class="col-md-4">
-                                <a class="option_title btn btn-default form-control" href="javascript:abreVariacoes(0)">Variações <span class="caret"></span></a>
-                            </div>
-                            <div class="col-md-1">
-                                <a class="btn btn-danger pull-right"><i class="glyphicon glyphicon-trash"></i></a>
-                            </div>
-                        </div>
-                        <br>
-                        <div></div>
-
-                        <!-- DIV OPTION-FORM COMEÇA COM DISPLAY NONE -->
-                        <div class="option-form" style="display: none;" id="option-form-0">
-                            <div class="buffer-top-sm">
-                                <div class="option-items ui-sortable" id="option-items-1">
-                                    <div class="option-values-form">
-                                        <div class="row">
-                                            <div class="col-md-1">
-                                                <a href="#" class="btn color-setting-btn pull-left colorpicker-element">
-                                                    <i class="glyphicon glyphicon-resize-vertical"></i>
-                                                </a>
-                                            </div>
-                                            <div class="col-md-1">
-                                                <!-- SE TIVER ESTAMPA, COLOCAR background-image: url(LINK DA ESTAMPA); dentro do style na tag abaixo -->
-                                                <!-- SE TIVER COR, COLOCAR background-color: HEXADEXIMAL DA COR; dentro do style na tag abaixo -->
-                                                <div class="estampa" style=""></div>
-                                            </div>
-                                            <div class="col-md-9">
-                                                <input type="text" name="option[1][values][5][name]" value="P" placeholder="Ex.: Azul, Branco, ..." class="form-control translate" data-table="option_values" data-fid="18296" data-name="name">            
-                                            </div>
-                                            <div class="col-md-1">                 
-                                                <a class="btn btn-danger pull-right"><i class="glyphicon glyphicon-trash"></i></a>
-                                            </div>                                                        
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> 
-                            <a href="#" class="btn btn-default"><i class="glyphicon glyphicon-plus-sign"></i> Adicionar valor</a>
-                        </div>
-                    </div>
-                </td>
-            </tr>                        
-        </table>
+        <div>
+            <table id="novasOpcoes" class="table ui-sortable-handle">
+                
+            </table>
+        </div>
         <a id="dLabel" class="btn btn-info" href="javascript:criarOpcoes()" role="button">
             Adicionar
         </a>
