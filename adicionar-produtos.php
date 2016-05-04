@@ -16,125 +16,21 @@
                 background-size: 40px 40px;                
                 background-repeat: no-repeat;
             }
+
+            .inl-bl {
+                display: inline-block;
+            }
+            
+            .colorpicker-component{
+                width:149px;
+            }
+
+            .escondeVariacao{display: none!important; }
         </style>
-        <script>
-            i = 0;
-            function apagaOpcao(id, novaOpcao) {
-                if (typeof (novaOpcao) === 'undefined') {
-                    //não é uma nova opção a ser cadastrada,
-                    //tem que ir no banco e excluir
+        <script src="plugin/bootstrap-colorpicker-master/dist/js/bootstrap-colorpicker.min.js"></script>
 
-                    $.post('control/opcaoControle.php', {idOpcao: id, opcao: 'excluir'},
-                            function (r) {
-                                console.log(r);
-                            });
-                } else {
-                    //é uma nova opção que ainda não foi cadastrada
-                    //apenas efeito para excluir a linha
-                    var tr = $(id).closest('tr');
-
-                    tr.fadeOut(400, function () {
-                        tr.remove();
-                    });
-                }
-            }
-
-            function criarOpcoes() {
-                var tr = document.createElement('tr');
-                tr.setAttribute("id", 'novaOpcao-' + i);
-                var td = document.createElement('td');
-                tr.appendChild(td);
-                i++;
-
-                var div = document.createElement('div');
-                var row = document.createElement('div');
-                row.setAttribute("class", "row");
-
-                var md1 = document.createElement('div');
-                md1.setAttribute("class", "col-md-1");
-                var colorPicker = document.createElement('a');
-                colorPicker.setAttribute("class", "btn color-setting-btn pull-left colorpicker-element");
-                md1.appendChild(colorPicker);
-                row.appendChild(md1);
-
-                var idInput = "titulo-" + i;
-                var md6 = document.createElement('div');
-                md6.setAttribute('class', "col-md-6");
-                var formGroup = document.createElement('div');
-                formGroup.setAttribute('class', 'form-group');
-                formGroup.setAttribute('id', 'form-group-' + idInput);
-                var input = document.createElement('input');
-                input.setAttribute('class', "form-control translate");
-                input.setAttribute('type', "text");
-                input.setAttribute('placeholder', "Ex. cor, tamanho, ...");
-                input.setAttribute('id', idInput);
-                input.setAttribute('onblur', 'cadastraOpcao("'+idInput+'")');
-                var spanErro = document.createElement('span');
-                spanErro.setAttribute('class', "glyphicon form-control-feedback");
-                spanErro.setAttribute('id', "icon-"+idInput);
-                spanErro.setAttribute('aria-hidden', "true");
-                var labelErro = document.createElement('label');
-                labelErro.setAttribute('class', "control-label");
-                labelErro.setAttribute('id', "label-"+idInput);
-                formGroup.appendChild(input);
-                formGroup.appendChild(spanErro);
-                formGroup.appendChild(labelErro);
-
-                md6.appendChild(formGroup);
-                row.appendChild(md6);
-
-                var md4 = document.createElement('div');
-                md4.setAttribute('class', "col-md-4");
-                row.appendChild(md4);
-
-                var md1Btn = document.createElement('div');
-                md1Btn.setAttribute('class', "col-md-1");
-                var btnApagar = document.createElement('a');
-                btnApagar.setAttribute('class', "btn btn-danger pull-right");
-                btnApagar.setAttribute('href', "#");
-                btnApagar.setAttribute('onclick', "apagaOpcao(this,1)");
-                btnApagar.setAttribute('id', "apaga-"+idInput);
-                var trash = document.createElement('i');
-                trash.setAttribute('class', "glyphicon glyphicon-trash");
-                btnApagar.appendChild(trash);
-                md1Btn.appendChild(btnApagar);
-                row.appendChild(md1Btn);
-
-                //final
-                div.appendChild(row);
-                td.appendChild(div);
-                $("#novasOpcoes").append(tr);
-
-//                $("#novaOpcao").show();
-            }
-
-
-            function abreVariacoes(id) {
-                $("#option-form-" + id).show();
-            }
-
-            function cadastraOpcao(id) {
-                var titulo = $("#" + id).val();
-
-                if (titulo == '') {
-                    validateBootstrap(id, 'Você deve preencher o título', 1);
-//                    $("#" + id).focus();
-                } else {
-                    validateBootstrap(id, '', 0);
-                    $.post('control/controleOpcao.php', {opcao: 'cadastrar', titulo: titulo},
-                    function (r) {
-                        console.log(r);
-                        $("#" + id).attr('readonly',true);
-                        $("#apaga-" + id).attr('disabled',true);
-                    });
-                }
-
-            }
-
-            $(document).ready(function () {
-
-            });
-        </script>
+        <link href="plugin/bootstrap-colorpicker-master/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+        <link href="plugin/bootstrap-colorpicker-master/docs/assets/main.css" rel="stylesheet">
     </head>
     <body>
         <?php include_once 'includes/header.php'; ?>
@@ -158,6 +54,24 @@
                                 <?php
                                 require_once 'listaOpcaoProdutoAjax.php';
                                 ?>
+
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div id="carregando" style="display:none">Carregando...</div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div>
+                                            <table id="novasOpcoes" class="table ui-sortable-handle">
+
+                                            </table>
+                                        </div>
+                                        <a id="dLabel" class="btn btn-info" href="javascript:criarOpcoes()" role="button">
+                                            Adicionar
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
