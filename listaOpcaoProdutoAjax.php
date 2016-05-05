@@ -56,14 +56,11 @@ if (count($opcoes) > 0) :
                                                                         $style = 'url(' . $variacoes['atributo'] . ')';
                                                                     }
                                                                     ?>
-                                                                    <!--SE TIVER ESTAMPA, COLOCAR background-image: url(LINK DA ESTAMPA);
-                                                                    dentro do style na tag abaixo -->
-                                                                    <!--SE TIVER COR, COLOCAR background-color: HEXADEXIMAL DA COR;
-                                                                    dentro do style na tag abaixo -->
+
                                                                     <div class = "estampa" style = "background: <?php echo $style; ?>"></div>
                                                                 </div>
                                                                 <div class = "col-md-9">
-                                                                    <input type="text" value="<?php echo $variacoes['titulo']; ?>"  class="form-control translate" data-table = "option_values">
+                                                                    <input type="text" id="input-variacao-titulo-<?php echo $variacoes['idVariacao']; ?>" value="<?php echo $variacoes['titulo']; ?>"  class="form-control translate" onblur="alteraVariacao(<?php echo $variacoes['idVariacao']; ?>)" data-table = "option_values">
                                                                 </div>
                                                                 <div class="col-md-1">
                                                                     <a class="btn btn-danger pull-right" href="javascript:apagaVariacao(<?php echo $variacoes['idVariacao']; ?>)"><i class = "glyphicon glyphicon-trash"></i></a>
@@ -73,6 +70,9 @@ if (count($opcoes) > 0) :
                                                         endforeach;
                                                     endif;
                                                     ?>
+                                                </div>
+
+                                                <div class = "option-values-form" id='option-form-novasVariacoes-<?php echo $opcao['idOpcao']; ?>'>
                                                 </div>
                                             </div>
                                         </div>
@@ -130,7 +130,7 @@ endif;
         var titulo = $("#" + id).val();
 
         if (titulo == '') {
-            validateBootstrap(id, 'Você deve preencher o título', 1);
+            validateBootstrap(id, 'VocÃª deve preencher o tÃ­tulo', 1);
 //                    $("#" + id).focus();
         } else {
             validateBootstrap(id, '', 0);
@@ -144,24 +144,6 @@ endif;
                     });
         }
 
-    }
-
-    function apagaVariacao(id, novaVariacao) {
-        if (typeof (novaVariacao) === 'undefined') {
-            $.post('control/opcaoControle.php', {idVariacao: id, opcao: 'excluirVariacao'},
-                    function (r) {
-                        console.log(r);
-                        var tr = $("#variacao-" + id).closest('div.row');
-                        tr.fadeOut(400, function () {
-                            tr.remove();
-                        });
-                    });
-        } else {
-            var tr = $("#" + id).closest('div.row');
-            tr.fadeOut(400, function () {
-                tr.remove();
-            });
-        }
     }
 
     function criarOpcoes() {
@@ -249,7 +231,7 @@ endif;
 
         if (titulo == '') {
             validateBootstrap("input-titulo-" + idVariacao, 'Voce deve preencher o título!', 1);
-            
+
             alert('Voce deve preencher o título!');
         } else {
             validateBootstrap("input-titulo-" + idVariacao, '', 0);
@@ -259,13 +241,13 @@ endif;
         if (cor != '' && (imagem != '' && typeof (imagem) != 'undefined')) {
             validateBootstrap("input-imagem-" + idVariacao, 'Voce deve selecionar uma cor OU uma imagem', 1);
             validateBootstrap("input-picker-" + idVariacao, '', 1);
-            alert('não pode!');
+            alert('Voce deve selecionar uma cor OU uma imagem!');
         } else {
             validateBootstrap("input-imagem-" + idVariacao, '', 0);
             validateBootstrap("input-picker-" + idVariacao, '', 0);
             validAtributo = true;
         }
-        
+
 
         if (validAtributo && validTitulo) {
             var data = new FormData();
@@ -284,7 +266,66 @@ endif;
                 data: data,
                 success: function (r) {
                     console.log(r);
-alert('enviou');
+                    $("#option-form-" + idOpcao).load('listaVariacoesAjax.php?idOpcao=' + idOpcao);
+
+
+                    $("#input-titulo-" + idVariacao).attr('readonly', true);
+                    $("#input-picker-" + idVariacao).attr('readonly', true);
+                    $("#input-imagem-" + idVariacao).attr('disabled', true);
+                    
+                    
+                    $("#apaga-variacao-" + idVariacao).attr('disabled', true);
+                    $("#apaga-variacao-" + idVariacao).removeAttr('onclick');
+                }
+            });
+        }
+    }
+
+    function alteraVariacao(idVariacao) {
+
+        var titulo = $("#input-variacao-titulo-" + idVariacao).val();
+//        var cor = $("#input-variacao-picker-" + idVariacao).val();
+//        var imagem = foto["input-variacao-imagem-" + idVariacao];
+        var validTitulo = false;
+//        var validAtributo = false;
+
+        if (titulo == '') {
+            validateBootstrap("input-titulo-" + idVariacao, 'Voce deve preencher o título!', 1);
+
+            alert('Voce deve preencher o título!');
+        } else {
+            validateBootstrap("input-titulo-" + idVariacao, '', 0);
+            validTitulo = true;
+        }
+
+//        if (cor != '' && (imagem != '' && typeof (imagem) != 'undefined')) {
+//            validateBootstrap("input-imagem-" + idVariacao, 'Voce deve selecionar uma cor OU uma imagem', 1);
+//            validateBootstrap("input-picker-" + idVariacao, '', 1);
+//            alert('nÃ£o pode!');
+//        } else {
+//            validateBootstrap("input-imagem-" + idVariacao, '', 0);
+//            validateBootstrap("input-picker-" + idVariacao, '', 0);
+//            validAtributo = true;
+//        }
+
+//        if (validAtributo && validTitulo) {
+        if (validTitulo) {
+            var data = new FormData();
+            data.append('opcao', 'alteraVariacao');
+            data.append('titulo', titulo);
+            data.append('idVariacao', idVariacao);
+//            data.append('cor', cor);
+//            data.append('foto', imagem);
+
+            $.ajax({
+                url: 'control/opcaoControle.php',
+                method: 'POST',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: data,
+                success: function (r) {
+                    console.log(r);
                 }
             });
         }
@@ -336,6 +377,7 @@ alert('enviou');
         var btnTrash = document.createElement('a');
         btnTrash.setAttribute('class', 'btn btn-danger pull-right');
         btnTrash.setAttribute('href', 'javascript:apagaVariacao("row-variacao-' + j + '",1)');
+        btnTrash.setAttribute('id', 'apaga-variacao-' + j );
         var iTrash = document.createElement('i');
         iTrash.setAttribute('class', 'glyphicon glyphicon-trash');
 
@@ -343,10 +385,27 @@ alert('enviou');
         md1Trash.appendChild(btnTrash);
         row.appendChild(md1Trash);
 
-        $("#option-form-" + idOpcao).append(row);
+        $("#option-form-novasVariacoes-" + idOpcao).append(row);
         j++;
     }
 
+    function apagaVariacao(id, novaVariacao) {
+        if (typeof (novaVariacao) === 'undefined') {
+            $.post('control/opcaoControle.php', {idVariacao: id, opcao: 'excluirVariacao'},
+                    function (r) {
+                        console.log(r);
+                        var tr = $("#variacao-" + id).closest('div.row');
+                        tr.fadeOut(400, function () {
+                            tr.remove();
+                        });
+                    });
+        } else {
+            var tr = $("#" + id).closest('div.row');
+            tr.fadeOut(400, function () {
+                tr.remove();
+            });
+        }
+    }
 
     function abreVariacoes(id) {
         $("#variacoes-" + id).toggleClass('escondeVariacao');
@@ -364,40 +423,11 @@ alert('enviou');
     }
 
     function adicionaColorPicker(id) {
-//        $("#cor-variacao-" + id).css('display','block');
-//        $("#" + id).colorpicker({
-//            color: '#ffaa00',
-//            container: true,
-//            inline: true
-//        });
         $("#input-picker-" + id).colorpicker({
             format: 'hex'
         });
     }
-
-    function fechaColorPicker(id) {
-        alert('saiu');
-        $("#" + id).css('display', 'none');
-    }
-
     $(document).ready(function () {
-        /*
-         color: '#ffaa00',
-         container: true,
-         inline: true
-         });
-         
-         
-         $("#btnCor").on('click', function (e) {
-         //            $("#cor1").colorpicker('show');
-         
-         alert('1kjfsdj');
-         $('#cor').colorpicker({
-         color: '#ffaa00',
-         container: true,
-         inline: true
-         });
-         })
-         +*/
+
     });
 </script>

@@ -6,13 +6,18 @@ require_once 'bean/variacao.php';
 
 class OpcaoDao extends Banco {
 
-    public function listaOpcoes() {
+    public function listaOpcoes(Opcao $objOpcao = NULL) {
         $conexao = $this->abreConexao();
 
+        $where = '';
+        if ($objOpcao != NULL) {
+            $where = 'AND o.idOpcao = ' . $objOpcao->getIdOpcao();
+        }
         $sql = "SELECT o.idOpcao, o.titulo, GROUP_CONCAT(v.idVariacao,'-',v.titulo,'-',v.atributo ORDER BY v.ordem) AS variacoes
                 FROM " . TBL_OPCOES . " o
                 LEFT JOIN " . TBL_VARIACAO . " v ON o.idOpcao = v.idOpcao AND v.status = 1
                 WHERE o.status = 1
+                ".$where."
                 GROUP BY o.idOpcao
                 ORDER BY o.ordem
                 ";
@@ -56,7 +61,7 @@ class OpcaoDao extends Banco {
 
         $this->fechaConexao();
     }
-    
+
     public function cadVariacao(Variacao $objVariacao) {
         $conexao = $this->abreConexao();
 
@@ -66,6 +71,24 @@ class OpcaoDao extends Banco {
                 atributo = '" . $objVariacao->getAtributo() . "',
                 status = 1,
                 ordem = 0
+               ";
+
+        $conexao->query($sql) or die($conexao->error);
+
+        $this->fechaConexao();
+    }
+
+    public function altVariacao(Variacao $objVariacao) {
+        $conexao = $this->abreConexao();
+
+//        echo $sql = "UPDATE " . TBL_VARIACAO . " SET
+//                titulo = '" . $objVariacao->getTitulo() . "',
+//                atributo = '" . $objVariacao->getAtributo() . "'
+//                    WHERE idVariacao = ".$objVariacao->getIdVariacao()."
+//               ";
+        echo $sql = "UPDATE " . TBL_VARIACAO . " SET
+                titulo = '" . $objVariacao->getTitulo() . "'
+                    WHERE idVariacao = " . $objVariacao->getIdVariacao() . "
                ";
 
         $conexao->query($sql) or die($conexao->error);

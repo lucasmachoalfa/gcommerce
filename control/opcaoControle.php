@@ -1,7 +1,7 @@
 <?php
 require_once '../model/opcaoDao.php';
 
-echo $opcao = $_POST['opcao'];
+$opcao = $_POST['opcao'];
 switch ($opcao){
     case 'excluirOpcao':
         $idOpcao = $_POST['idOpcao'];
@@ -40,7 +40,7 @@ switch ($opcao){
  
     case 'cadastraVariacao':
         $titulo = $_POST['titulo'];
-        $idOpcao = $_POST['idOpcao'];;
+        $idOpcao = $_POST['idOpcao'];
         $atributo = ($_FILES['foto']['name'] != '') ? uploadImagem($_FILES['foto'], 'opcoes') : $_POST['cor'];
         
         $objVariacao->setTitulo($titulo);
@@ -49,5 +49,18 @@ switch ($opcao){
         
         
         $objOpcaoDao->cadVariacao($objVariacao);
+        break;
+    
+    case 'alteraVariacao':
+        $titulo = $_POST['titulo'];
+        $idVariacao = $_POST['idVariacao'];
+        $atributo = ($_FILES['foto']['name'] != '') ? uploadImagem($_FILES['foto'], 'opcoes') : $_POST['cor'];
+        
+        $objVariacao->setTitulo($titulo);
+        $objVariacao->setidVariacao($idVariacao);
+//        $objVariacao->setAtributo($atributo);
+        
+        
+        $objOpcaoDao->altVariacao($objVariacao);
         break;
 }
