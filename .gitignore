@@ -1,9 +1,14 @@
+# O proprio
+.gitignore
+
+# Arquivo de conexão ao banco
+model/constantesBanco.php
+
 # Arquivos de nbproject
-nbproject/*
+nbproject/
 
 #imagens
 images/*
-
 
 # Windows image file caches
 Thumbs.db

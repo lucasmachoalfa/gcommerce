@@ -1,5 +1,6 @@
 <?php
 require_once '../model/opcaoDao.php';
+require_once 'funcoes.php';
 
 $opcao = $_POST['opcao'];
 switch ($opcao){

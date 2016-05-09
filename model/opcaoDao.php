@@ -11,7 +11,7 @@ class OpcaoDao extends Banco {
 
         $where = '';
         if ($objOpcao != NULL) {
-            $where = 'AND o.idOpcao = ' . $objOpcao->getIdOpcao();
+            $where = 'AND o.idOpcao ' . $objOpcao->getIdOpcao();
         }
         $sql = "SELECT o.idOpcao, o.titulo, GROUP_CONCAT(v.idVariacao,'-',v.titulo,'-',v.atributo ORDER BY v.ordem) AS variacoes
                 FROM " . TBL_OPCOES . " o

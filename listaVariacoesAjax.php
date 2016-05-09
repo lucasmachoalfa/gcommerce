@@ -1,6 +1,6 @@
 <?php
 require_once 'model/opcaoDao.php';
-$idOpcao = $_GET['idOpcao'];
+$idOpcao = '= '.$_GET['idOpcao'];
 
 $objOpcao->setIdOpcao($idOpcao);
 
