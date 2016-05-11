@@ -18,13 +18,11 @@
 
             $(document).ready(function () {
                 var foto = '';
-
                 $("#imagem").on('change', function (event) {
 
 
                     foto = event.target.files[0];
                     var tmppath = URL.createObjectURL(event.target.files[0]);
-
                     if (tmppath !== null) {
                         var img = document.createElement('img');
                         img.setAttribute('src', tmppath);
@@ -34,8 +32,7 @@
                     }
                 });
 
-                $("[name='visivel']").bootstrapSwitch();
-
+                $("input[name='visivel']").bootstrapSwitch();
                 $('#dataEntrada').datetimepicker({
                     locale: 'pt',
                     format: 'DD/MM/YYYY'
@@ -50,7 +47,6 @@
                 $("#dataEntrada").on("dp.change", function (e) {
                     $('#dataSaida').data("DateTimePicker").minDate(e.date);
                 });
-
                 $("#dataSaida").on("dp.change", function (e) {
                     $('#dataEntrada').data("DateTimePicker").maxDate(e.date);
                 });
@@ -58,57 +54,88 @@
                 $("[name='visivel']").on('switchChange.bootstrapSwitch', function (event, state) {
                     var status = state;
                     var id = $(this).attr('id');
-
                     console.log('id: ' + id + ' visivel: ' + state);
                 })
 
                 $('[data-toggle="tooltip"]').tooltip();
 
+                $('#modalCadBanner').on('hide.bs.modal', function (e) {
+                    $("#opcao").val('cadastrar');
+                    $("#idBanner").val('');
+                    $("#titulo").val('');
+                    $("#link").val('');
+                    $("#imagem").val('');
+                    $("#dataEntrada").val('');
+                    $("#dataSaida").val('');
+                    $(".btn-success").text('Adicionar');
+
+                    $('#form-group-categoria').removeClass('has-error has-feedback');
+                    $('#form-group-categoria').removeClass('has-success');
+                    $("#icon-categoria").removeClass('glyphicon-warning-sign');
+                    $("#icon-categoria").removeClass('glyphicon-ok');
+                    $("#label-categoria").html('');
+                });
+
                 $("#btnCadBanner").click(function () {
-                    var titulo;
-                    var link;
+                    var titulo = $("#titulo").val();
+                    var link = $("#link").val();
                     var novaJanela = ($("#novaJanela").is(':checked')) ? 1 : 0;
-                    var dataEntrada;
-                    var dataSaida;
+                    var dataEntrada = $("#dataEntrada").data('datepicker');
+                    var dataSaida = $("#dataSaida").val();
+                    
+                    console.log(dataEntrada);
 
                     var validImagem = false;
                     var validTitulo = false;
                     var validDataEntrada = false;
-                    
-                    if(foto != ''){
-                        validImagem = true;
-                    }
-                    
-                    if(titulo != ''){
-                        validTitulo = true;
-                    }
-                    
-                    if(dataEntrada != ''){
-                        validDataEntrada = true;
-                    }
-                    
-                    if (validImagem && validTitulo && validDataEntrada) {
-                    var data = new FormData();
-                            data.append('opcao', 'cadastrar');
-                            data.append('foto', foto);
-                            data.append('titulo', titulo);
-                            data.append('link', link);
-                            data.append('novaJanela', novaJanela);
-                            data.append('dataEntrada', dataEntrada);
-                            data.append('dataSaida', dataSaida);
-                            $.ajax({
-                            url: 'control/controleBanners.php',
-                                    method: 'POST',
-                                    cache: false,
-                                    contentType: false,
-                                    processData: false,
-                                    data: data,
-                                    success: function () {
 
-                                        window.location = 'banners.php'
-                                    }
+                    if (foto != '') {
+                        validImagem = true;
+                        validateBootstrap('imagem', '', 0);
+                    } else {
+                        validateBootstrap('imagem', 'Você deve selecionar uma foto', 1);
+                        validImagem = false;
+                    }
+
+                    if (titulo != '') {
+                        validTitulo = true;
+                        validateBootstrap('titulo', '', 0);
+                    } else {
+                        validateBootstrap('titulo', 'Você deve informar um título', 1);
+                        validTitulo = false;
+                    }
+
+                    if (dataEntrada != '') {
+                        validDataEntrada = true;
+                        validateBootstrap('dataEntrada', '', 0);
+                    } else {
+                        validateBootstrap('dataEntrada', 'Você deve informar uma data de entrada', 1);
+                        validDataEntrada = false;
+                    }
+
+                    if (validImagem && validTitulo && validDataEntrada) {
+                        var data = new FormData();
+                        data.append('opcao', 'cadastrar');
+                        data.append('foto', foto);
+                        data.append('titulo', titulo);
+                        data.append('link', link);
+                        data.append('novaJanela', novaJanela);
+                        data.append('dataEntrada', dataEntrada);
+                        data.append('dataSaida', dataSaida);
+                        $.ajax({
+                            url: 'control/controleBanners.php',
+                            method: 'POST',
+                            cache: false,
+                            contentType: false,
+                            processData: false,
+                            data: data,
+                            success: function () {
+//                                $("#listaBanners").load('listaBannersAjax.php');
+//                                window.location = 'banners.php'
+                                $("#modalCadBanner").modal('hide');
+                            }
                         });
-                        * /
+                    }
                 });
             });
         </script>
@@ -140,24 +167,26 @@
             <hr>
             <div class="row">
                 <div class="col-xs-12 text-center">
-                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#myModal">Adicionar banner</button>
+                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#modalCadBanner">Adicionar banner</button>
                 </div>
                 <!-- Modal -->
-                <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal fade" id="modalCadBanner" tabindex="-1" role="dialog" aria-labelledby="modalCadBannerLabel">
                     <div class="modal-dialog modal-lg" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">Adicionar banner - Banners</h4>
+                                <h4 class="modal-title" id="modalCadBannerLabel">Adicionar banner - Banners</h4>
                             </div>
                             <div class="modal-body">
                                 <form id="defaultForm" method="post" class="form-horizontal">
                                     <div class="row">
-                                        <div class="col-md-5">
-                                            <label for="image">Imagem </label>
+                                        <div class="col-md-5" id="form-group-imagem">
+                                            <label class="control-label" for="imagem">Imagem </label>
                                             <div class="fileupload fileupload-new" data-provides="fileupload">
                                                 <div class="input-group">
-                                                    <input type="file" name="imagem" id="imagem">
+                                                    <input type="file" name="imagem" id="imagem" class="form-control">
+                                                    <span class="glyphicon form-control-feedback" id="icon-imagem" aria-hidden="true"></span>
+                                                    <label class="control-label" id="label-imagem"></label>
                                                 </div>
                                             </div><br />
                                             <div id="imagePreview">
@@ -165,39 +194,44 @@
                                         </div>
                                         <div class="col-md-7">
                                             <div class="row">
-                                                <div class="col-md-12">
+                                                <div class="col-md-12" id="form-group-titulo">
                                                     <label for="title">Título </label>
-                                                    <input type="text" name="title" value="" class="form-control">
+                                                    <input type="text" name="titulo" id="titulo" class="form-control">
+                                                    <span class="glyphicon form-control-feedback" id="icon-titulo" aria-hidden="true"></span>
+                                                    <label class="control-label" id="label-titulo"></label>
                                                 </div>
                                             </div>
                                             <br>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <label for="link">Link </label>
-                                                    <input type="text" name="link" value="" class="form-control">
+                                                    <input type="text" name="link" id="link" class="form-control">
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label>Opções</label>
                                                     <label class="checkbox">
-                                                        <input type="checkbox" name="new_window" value="1"> Nova Janela				
+                                                        <input type="checkbox" id="novaJanela" value="1"> Nova Janela				
+
                                                     </label>
                                                 </div>
                                             </div>
                                             <br>
                                             <div class="row">
-                                                <div class="col-md-6">
+                                                <div class="col-md-6" id="form-group-dataEntrada">
                                                     <strong>Ativar na data</strong>
                                                     <div class='input-group date' id='dataEntrada'>
-                                                        <input type='text' class="form-control" />
+                                                        <input type='text' id="dataEntrada" class="form-control" />
                                                         <span class="input-group-addon">
-                                                            <span class="glyphicon glyphicon-calendar"></span>
+                                                            <span class="glyphicon glyphicon-calendar" id="icon-dataEntrada"></span>
+                                                            <!--<span class="glyphicon form-control-feedback" id="icon-dataEntrada" aria-hidden="true"></span>-->
                                                         </span>
                                                     </div>
+                                                        <label class="control-label" id="label-dataEntrada"></label>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <strong>Desativar na data</strong>
                                                     <div class='input-group date' id='dataSaida'>
-                                                        <input type='text' class="form-control" />
+                                                        <input type='text' id="dataSaida" class="form-control" />
                                                         <span class="input-group-addon">
                                                             <span class="glyphicon glyphicon-calendar"></span>
                                                         </span>
@@ -217,86 +251,10 @@
                 </div>
             </div>
             <br><br>
-            <div class="verBanners">
-                <div class="row thead">
-                    <div class="col-md-1">Ordenar</div>
-                    <div class="col-md-3">Imagem</div>
-                    <div class="col-md-2">Data de entrada</div>
-                    <div class="col-md-2">Data de saída</div>
-                    <div class="col-md-1">Editar</div>
-                    <div class="col-md-1">Excluir</div>
-                    <div class="col-md-2">Visível</div>
-                </div>
-                <div class="row tbody">
-                    <div class="col-md-1">
-                        <i class="glyphicon glyphicon-resize-vertical"></i>
-                    </div>
-                    <div class="col-md-3">
-                        <img src="http://www.agenciaguppy.com.br/img/banner/pousada-amparo.png" alt=""/>                        
-                    </div>
-                    <div class="col-md-2">
-                        29/09/2016
-                    </div>
-                    <div class="col-md-2">
-                        29/09/2016
-                    </div>
-                    <div class="col-md-1">
-                        <button id="editar1" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-pencil"></i></button>
-                    </div>
-                    <div class="col-md-1">
-                        <a href="#" class="btn btn-danger  btn-sm"><i class="glyphicon glyphicon-trash"></i></a>
-                    </div>
-                    <div class="col-md-2">
-                        <input type="checkbox" name="visivel" id="1" checked>
-                    </div>
-                </div>
-                <div class="row tbody cinza">
-                    <div class="col-md-1">
-                        <i class="glyphicon glyphicon-resize-vertical"></i>
-                    </div>
-                    <div class="col-md-3">
-                        <img src="http://www.agenciaguppy.com.br/img/banner/pousada-amparo.png" alt=""/>                        
-                    </div>
-                    <div class="col-md-2">
-                        29/09/2016
-                    </div>
-                    <div class="col-md-2">
-                        29/09/2016
-                    </div>
-                    <div class="col-md-1">
-                        <button id="editar1" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-pencil"></i></button>
-                    </div>
-                    <div class="col-md-1">
-                        <a href="#" class="btn btn-danger  btn-sm"><i class="glyphicon glyphicon-trash"></i></a>
-                    </div>
-                    <div class="col-md-2">
-                        <input type="checkbox" name="visivel" id="2" checked>
-                    </div>
-                </div>
-                <div class="row tbody">
-                    <div class="col-md-1">
-                        <i class="glyphicon glyphicon-resize-vertical"></i>
-                    </div>
-                    <div class="col-md-3">
-                        <img src="http://www.agenciaguppy.com.br/img/banner/pousada-amparo.png" alt=""/>                        
-                    </div>
-                    <div class="col-md-2">
-                        29/09/2016
-                    </div>
-                    <div class="col-md-2">
-                        29/09/2016
-                    </div>
-                    <div class="col-md-1">
-                        <button id="editar1" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-warning btn-sm"><i class="glyphicon glyphicon-pencil"></i></button>
-                    </div>
-                    <div class="col-md-1">
-                        <a href="#" class="btn btn-danger  btn-sm"><i class="glyphicon glyphicon-trash"></i></a>
-                    </div>
-                    <div class="col-md-2">
-                        <input type="checkbox" name="visivel" id="3" checked>
-                    </div>
-                </div>
-
+            <div class="listaBanners">
+                <?php
+                require_once 'listaBannersAjax.php';
+                ?>
             </div>            
 
         </div>
