@@ -33,7 +33,7 @@ var busca = function (termo, url, campos) {
         async: false,
         data: {opcao: 'buscaInput', query: termo}
     });
-
+//console.log(retorno.responseText);
     var obj = $.parseJSON(retorno.responseText);
     var data = new Array();
     $.each(obj, function (i, v) {
@@ -246,7 +246,7 @@ function isNumero() {
 
     if ((tecla > 47 && tecla < 58) || (tecla > 95 && tecla < 106))
         return true;
-    else if (tecla === 8 || tecla === 16 || tecla === 17 || tecla === 0)
+    else if (tecla === 9 || tecla === 8 || tecla === 16 || tecla === 17 || tecla === 0)
         return true;
     else
         return false;

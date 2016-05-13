@@ -1,15 +1,16 @@
 i = 0;
+iReferencia = 1;
 j = 0;
 foto = new Array();
 function apagaOpcao(id, novaOpcao) {
     if (typeof (novaOpcao) === 'undefined') {
         $.post('control/opcaoControle.php', {idOpcao: id, opcao: 'excluirOpcao'},
-                function (r) {
-                    console.log(r);
-                    $("#opcao-" + id).fadeOut(400, function () {
-                        tr.remove();
-                    });
-                });
+        function (r) {
+            console.log(r);
+            $("#opcao-" + id).fadeOut(400, function () {
+                tr.remove();
+            });
+        });
     } else {
         var tr = $(id).closest('tr');
 
@@ -23,27 +24,27 @@ function alteraOpcao(id) {
     var titulo = $("#opcao-" + id + " input").val();
 
     $.post('control/opcaoControle.php', {idOpcao: id, titulo: titulo, opcao: 'alteraOpcao'},
-            function (r) {
-                console.log(r);
-            });
+    function (r) {
+        console.log(r);
+    });
 }
 
 function cadastraOpcao(id) {
     var titulo = $("#" + id).val();
 
     if (titulo == '') {
-        validateBootstrap(id, 'VocÃƒÂª deve preencher o tÃƒÂ­tulo', 1);
+        validateBootstrap(id, 'Você deve preencher o título', 1);
         //                    $("#" + id).focus();
     } else {
         validateBootstrap(id, '', 0);
         $.post('control/opcaoControle.php', {opcao: 'cadastrarOpcao', titulo: titulo},
-                function (r) {
-                    console.log(r);
-                    $("#" + id).attr('readonly', true);
-                    $("#apaga-" + id).attr('disabled', true);
-                    $("#apaga-" + id).removeAttr('onclick');
-                    carrega();
-                });
+        function (r) {
+            console.log(r);
+            $("#" + id).attr('readonly', true);
+            $("#apaga-" + id).attr('disabled', true);
+            $("#apaga-" + id).removeAttr('onclick');
+            carrega();
+        });
     }
 
 }
@@ -132,9 +133,9 @@ function cadastraVariacao(idOpcao, idVariacao) {
     var validAtributo = false;
 
     if (titulo == '') {
-        validateBootstrap("input-titulo-" + idVariacao, 'Voce deve preencher o tÃ­tulo!', 1);
+        validateBootstrap("input-titulo-" + idVariacao, 'Voce deve preencher o título!', 1);
 
-        alert('Voce deve preencher o tÃ­tulo!');
+        alert('Voce deve preencher o título!');
     } else {
         validateBootstrap("input-titulo-" + idVariacao, '', 0);
         validTitulo = true;
@@ -192,9 +193,9 @@ function alteraVariacao(idVariacao) {
     //        var validAtributo = false;
 
     if (titulo == '') {
-        validateBootstrap("input-titulo-" + idVariacao, 'Voce deve preencher o tÃ­tulo!', 1);
+        validateBootstrap("input-titulo-" + idVariacao, 'Voce deve preencher o título!', 1);
 
-        alert('Voce deve preencher o tÃ­tulo!');
+        alert('Voce deve preencher o título!');
     } else {
         validateBootstrap("input-titulo-" + idVariacao, '', 0);
         validTitulo = true;
@@ -294,13 +295,13 @@ function criarVariacao(idOpcao) {
 function apagaVariacao(id, novaVariacao) {
     if (typeof (novaVariacao) === 'undefined') {
         $.post('control/opcaoControle.php', {idVariacao: id, opcao: 'excluirVariacao'},
-                function (r) {
-                    console.log(r);
-                    var tr = $("#variacao-" + id).closest('div.row');
-                    tr.fadeOut(400, function () {
-                        tr.remove();
-                    });
-                });
+        function (r) {
+            console.log(r);
+            var tr = $("#variacao-" + id).closest('div.row');
+            tr.fadeOut(400, function () {
+                tr.remove();
+            });
+        });
     } else {
         var tr = $("#" + id).closest('div.row');
         tr.fadeOut(400, function () {
@@ -344,7 +345,15 @@ function criaVariacoesProdutos() {
         $("#esconde").load('listaVariacoesProdutosAjax.php?idOpcoes=' + idOpcoes, function () {
 
             $("#variacoesProdutos").append($("#esconde").html());
+
+            var lastChildId = $("#variacoesProdutos .row:last-child").attr('id');
+            var proximaReferencia = $("#referenciaProduto").val() + "-" + iReferencia;
+
+            $("#referencia" + lastChildId).val(proximaReferencia);
+
+            iReferencia++;
         });
+
     } else {
         alert('Por favor, selecione pelo menos uma opção!');
     }

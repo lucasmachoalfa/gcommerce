@@ -53,7 +53,7 @@ if (count($opcoes) > 0) :
                                                                     if (strpos($variacoes['atributo'], '#') !== false) {
                                                                         $style = $variacoes['atributo'];
                                                                     } else {
-                                                                        $style = 'url(' . $variacoes['atributo'] . ')';
+                                                                        $style = 'url(images/' . $variacoes['atributo'] . ')';
                                                                     }
                                                                     ?>
 

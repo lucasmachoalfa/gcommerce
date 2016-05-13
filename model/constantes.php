@@ -5,7 +5,7 @@ date_default_timezone_set('America/Sao_Paulo');
 
 //função para remover expressões comuns de banco de dados
 function seg($var) {
-    $procura = array("insert into", "update", "delete from", "select % from");
+    $procura = array("insert into", "update", "delete from", "select % from", "drop table %", "drop database %", "drop schema %");
     $retorno = str_ireplace($procura, '', $var);
 //    $retorno = htmlentities($retorno);
     
