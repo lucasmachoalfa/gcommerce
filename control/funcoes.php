@@ -1,11 +1,15 @@
 <?php
 
-function uploadImagem($arquivo, $pasta) {
+function uploadImagem($arquivo, $pasta, $principal) {
 
     $tipoArquivo = pathinfo($arquivo['name']);
     $tipoArquivo = '.' . $tipoArquivo['extension'];
 
     $novaImagem = strtolower(md5($arquivo['name'].date('d/m/Y/H:i:s'))) . $tipoArquivo;
+    if($principal !== 0){
+        $novaImagem = '000_'.$novaImagem;
+    }
+    
     $imagem = '../images';
 
     if (!file_exists($imagem)) {

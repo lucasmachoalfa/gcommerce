@@ -38,10 +38,24 @@ $(document).ready(function () {
 
                 var icone = document.createElement('i');
                 icone.setAttribute('class', 'glyphicon glyphicon-trash');
-
+                
+                var labelPrincipal = document.createElement('label');
+                labelPrincipal.setAttribute('for','fotoPrincipal_'+id);
+                labelPrincipal.textContent = ' Foto Pricipal ';
+                
+                var inputPrincipal = document.createElement('input');
+                inputPrincipal.setAttribute('type','radio');
+                inputPrincipal.setAttribute('name','fotoPrincipal');
+                inputPrincipal.setAttribute('id','fotoPrincipal_'+id);
+                if(id === 0){
+                    inputPrincipal.setAttribute('checked','true');
+                }
+                
                 botao.appendChild(icone);
                 div.appendChild(img);
                 div.appendChild(botao);
+                div.appendChild(labelPrincipal);
+                div.appendChild(inputPrincipal);
 
                 $("#imagePreview").append(div);
                 fotos['pictures'].push(event.target.files[j]);
@@ -142,6 +156,13 @@ $(document).ready(function () {
             data.append('custoProduto', custoProduto);
 
             for (var i = 0; i < fotos['pictures'].length; i++) {
+                
+                if($("#fotoPrincipal_"+i).is(':checked')){
+                    fotos['principal'] = i;
+//                    var arr = new Array()//                    fotos['pictures'][i].push('principal');
+                    console.log(fotos);
+                data.append('imagem[]', fotos['principal']);
+                }
                 data.append('imagem[]', fotos['pictures'][i]);
             }
         }

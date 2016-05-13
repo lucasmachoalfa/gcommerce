@@ -15,9 +15,13 @@ switch ($opcao) {
         break;
 
     case 'cadastrar':
+//        var_dump($_FILES['imagem']);
         $slug = slug($_POST['nomeProduto']);
         $imagens = reArrayFiles($_FILES['imagem']);
-
+        
+//        var_dump($_POST['imagem']);
+//        var_dump($imagens);
+//die();
         //detalhes
         $objProduto->setIdVendedor($_POST['vendedor']);
         $objProduto->setNome($_POST['nomeProduto']);
@@ -35,7 +39,7 @@ switch ($opcao) {
 
         //estoque e variações
         $opcoesProdutos = json_decode($_POST['opcoesProdutos']);
-        var_dump($opcoesProdutos);
+//        var_dump($opcoesProdutos);
         
         $objProduto->setReferencia($_POST['referenciaProduto']);
         $objProduto->setGerenciarEstoque($_POST['gerenciarEstoque']);
@@ -63,8 +67,10 @@ switch ($opcao) {
 
         $idProduto = $objProdutoDao->cadastrarProduto($objProduto);
 
-        foreach ($imagens as $imagem) {
-            uploadImagem($imagem, 'produto/'.$idProduto);
+        for($i =0; $i < count($imagens);$i++) {
+            $principal = ($_POST['imagem'][0] == $i) ? 1 : 0;
+            
+            uploadImagem($imagens[$i], 'produto/'.$idProduto, $principal);
         }
         
         if($categorias != NULL){
