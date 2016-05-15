@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <title>Esqueleto Loja Virtual</title>
         <?php include_once './includes/head.php'; ?>
-        
+
         <style>
             #banner-home .item img{
                 display: block;
@@ -44,79 +44,62 @@
 
         <div class="lista-produtos">
 
-            <!-- REPLICAR A 'c3' TODA VEZ QUE A 'i-produtos' (numero de produtos) CHEGAR EM UM MULTIPLO DE 3 -->
-            <div class="c3">
-                <!-- ESSA TIVE É A DO PRODUTO, REPLICAR A DIV, QUANDO CHEGAR NO MULTIPLO DE 3, FECHA A 'c3', ABRE NOVAMENTE, REPLICA A 'i-produtos' -->
+
+            <?php
+            require_once 'model/produtoDao.php';
+
+            $produtos = $objProdutoDao->listaProdutos();
+            
+//            var_dump($produtos);
+
+            $i = 1;
+            foreach ($produtos as $produto):
+                $caminhoFotos = '../admin/images/produtos/'.$produto['idProduto'];
+                $fotos = array();
+                if (is_dir($caminhoFotos) > 0) {
+
+                    $ponteiro = scandir($caminhoFotos);
+                    foreach ($ponteiro as $listar) {
+                        if ($listar != "." && $listar != "..") {
+                            $fotos[] = $listar;
+                        }
+                    }
+                }
+                
+                if ($i === 1):
+                    echo '<div class="c3">';
+                endif;
+                ?>
                 <div class="i-produtos">
                     <div class="foto-produto">
                         <figure class="foto1">
                             <a href="ver_produto.php">
-                                <img src="img/produtos/foto1.jpg" alt="NOME DO PRODUTO" title="NOME DO PRODUTO" onMouseOver="this.src = 'img/produtos/foto2.jpg'" onMouseOut="this.src = 'img/produtos/foto1.jpg'" />
+                                <img src="<?php echo $caminhoFotos.'/'.$fotos[0]; ?>" alt="<?php echo $produto['nome']; ?>" title="<?php echo $produto['nome']; ?>" onMouseOver="this.src = '<?php echo $caminhoFotos.'/'.$fotos[1]; ?>'" onMouseOut="this.src = '<?php echo $caminhoFotos.'/'.$fotos[0]; ?>'" />
                             </a>
                         </figure>
                     </div>
                     <div class="nome-produto">
-                        <a href="#">Casaco Gato Loco</a>
+                        <a href="ver_produto.php?idProduto=<?php echo $produto['idProduto']; ?>"><?php echo $produto['nome']; ?></a>
                     </div>
                     <div class="descricao-produto">
                         <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                            <?php echo $produto['resumo']; ?>
                         </p>
                     </div>
                     <div class="preco-de">
-                        De: <span>R$ 200,00</span>
+                        De: <span>R$ <?php echo number_format($produto['precoNormal'],2,',','.'); ?></span>
                     </div>
                     <div class="preco-por">
-                        <span>Por: R$ 100,00</span>
+                        <span>Por: R$ <?php echo number_format($produto['precoPromocional'],2,',','.'); ?></span>
                     </div>
                 </div>
-                <div class="i-produtos">
-                    <div class="foto-produto">
-                        <figure class="foto1">
-                            <a href="ver_produto.php">
-                                <img src="img/produtos/foto1.jpg" alt="NOME DO PRODUTO" title="NOME DO PRODUTO" onMouseOver="this.src = 'img/produtos/foto2.jpg'" onMouseOut="this.src = 'img/produtos/foto1.jpg'" />
-                            </a>
-                        </figure>
-                    </div>
-                    <div class="nome-produto">
-                        <a href="#">Casaco Gato Loco</a>
-                    </div>
-                    <div class="descricao-produto">
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                        </p>
-                    </div>
-                    <div class="preco-de">
-                        De: <span>R$ 200,00</span>
-                    </div>
-                    <div class="preco-por">
-                        <span>Por: R$ 100,00</span>
-                    </div>
-                </div>
-                <div class="i-produtos">
-                    <div class="foto-produto">
-                        <figure class="foto1">
-                            <a href="ver_produto.php">
-                                <img src="img/produtos/foto1.jpg" alt="NOME DO PRODUTO" title="NOME DO PRODUTO" onMouseOver="this.src = 'img/produtos/foto2.jpg'" onMouseOut="this.src = 'img/produtos/foto1.jpg'" />
-                            </a>
-                        </figure>
-                    </div>
-                    <div class="nome-produto">
-                        <a href="#">Casaco Gato Loco</a>
-                    </div>
-                    <div class="descricao-produto">
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                        </p>
-                    </div>
-                    <div class="preco-de">
-                        De: <span>R$ 200,00</span>
-                    </div>
-                    <div class="preco-por">
-                        <span>Por: R$ 100,00</span>
-                    </div>
-                </div>
-            </div>
+                <?php
+                if ($i % 3 == 0):
+                    echo '</div><div class="c3">';
+                endif;
+                $i++;
+            endforeach;
+            ?>
         </div>
     </body>
 </html>
