@@ -203,9 +203,8 @@ $(document).ready(function () {
                     var idOpcao = $(this).attr('id');
 
                     var row = {
-                        idDiv: idDiv,
-                        idOpcao: idOpcao,
-                        valorOpcao: '',
+                        idOpcao: '',
+                        idVariacao: '',
                         referencia: '',
                         quantidade: '',
                         preco: '',
@@ -219,8 +218,13 @@ $(document).ready(function () {
                         validForm = false;
                     } else {
                         validateBootstrap(idOpcao, '', 0);
+                        var explodeOpcao = valorOpcao.split('-')
+                        var idOpcao = explodeOpcao[0];
+                        var idVariacao = explodeOpcao[1];
+                        
                         row.valid = true;
-                        row.valorOpcao = valorOpcao;
+                        row.idOpcao = idOpcao;
+                        row.idVariacao = idVariacao;
                         row.referencia = referencia;
                         row.quantidade = quantidade;
                         row.preco = preco;

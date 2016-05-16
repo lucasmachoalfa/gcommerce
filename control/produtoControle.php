@@ -15,13 +15,9 @@ switch ($opcao) {
         break;
 
     case 'cadastrar':
-//        var_dump($_FILES['imagem']);
         $slug = slug($_POST['nomeProduto']);
         $imagens = reArrayFiles($_FILES['imagem']);
-        
-//        var_dump($_POST['imagem']);
-//        var_dump($imagens);
-//die();
+
         //detalhes
         $objProduto->setIdVendedor($_POST['vendedor']);
         $objProduto->setNome($_POST['nomeProduto']);
@@ -40,7 +36,7 @@ switch ($opcao) {
         //estoque e variações
         $opcoesProdutos = json_decode($_POST['opcoesProdutos']);
 //        var_dump($opcoesProdutos);
-        
+
         $objProduto->setReferencia($_POST['referenciaProduto']);
         $objProduto->setGerenciarEstoque($_POST['gerenciarEstoque']);
         $objProduto->setQuantidadeFixa($_POST['quantidadeFixa']);
@@ -64,25 +60,36 @@ switch ($opcao) {
         $objProduto->setDataCadastro(date('Y-m-d H:i:s'));
         $objProduto->setStatus(1);
 
-
         $idProduto = $objProdutoDao->cadastrarProduto($objProduto);
 
-        for($i =0; $i < count($imagens);$i++) {
+        for ($i = 0; $i < count($imagens); $i++) {
             $principal = ($_POST['imagem'][0] == $i) ? 1 : 0;
-            
-            uploadImagem($imagens[$i], 'produto/'.$idProduto, $principal);
+
+            uploadImagem($imagens[$i], 'produto/' . $idProduto, $principal);
         }
-        
-        if($categorias != NULL){
-            $explodeCategorias = explode(',',$categorias);
+
+        if ($categorias != NULL && $categorias != '') {
+            $explodeCategorias = explode(',', $categorias);
             
-            foreach($explodeCategorias as $idCategoria){
-                $query .= '('.$idProduto.','.$idCategoria.'),';
+            $queryCategorias = '';
+            foreach ($explodeCategorias as $idCategoria) {
+                $queryCategorias .= '(' . $idProduto . ',' . $idCategoria . '),';
             }
-            
-            $query = rtrim($query,',');
-            
-            $objProdutoDao->cadRelCategoria($query);
+
+            $queryCategorias  = rtrim($queryCategorias, ',');
+
+            $objProdutoDao->cadRelCategoria($queryCategorias );
+        }
+
+        if ($opcoesProdutos != '' && $opcoesProdutos != NULL) {
+            $queryOpcoes  = '';
+            foreach ($opcoesProdutos as $opcaoProduto) {
+                $queryOpcoes .= '(' . $idProduto . ',' . $opcaoProduto->idOpcao . ',' . $opcaoProduto->idVariacao . ', "' . $opcaoProduto->referencia . '","' . $opcaoProduto->quantidade . '","' . $opcaoProduto->preco . '","' . $opcaoProduto->peso . '"),';
+            }
+
+            $queryOpcoes = rtrim($queryOpcoes, ',');
+
+            $objProdutoDao->cadRelOpcao($queryOpcoes);
         }
         break;
 }

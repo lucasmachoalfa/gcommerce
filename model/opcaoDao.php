@@ -17,7 +17,7 @@ class OpcaoDao extends Banco {
                 FROM " . TBL_OPCOES . " o
                 LEFT JOIN " . TBL_VARIACAO . " v ON o.idOpcao = v.idOpcao AND v.status = 1
                 WHERE o.status = 1
-                ".$where."
+                " . $where . "
                 GROUP BY o.idOpcao
                 ORDER BY o.ordem
                 ";

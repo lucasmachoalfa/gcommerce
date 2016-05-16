@@ -79,7 +79,17 @@ class ProdutoDao extends Banco {
 
         $sql = 'INSERT INTO ' . REL_CATEGORIA_PRODUTO . ' (idProduto,idCategoria) VALUES ' . $query;
 
-        $conexao->query($sql) or die($conexao->error);
+        $conexao->query($sql);
+
+        $this->fechaConexao();
+    }
+    
+    public function cadRelOpcao($query){
+        $conexao = $this->abreConexao();
+
+        $sql = 'INSERT INTO ' . REL_VARIACAO_PRODUTO . ' (idProduto, idOpcao, idVariacao, referencia, quantidade, preco, peso) VALUES '.$query;
+
+        $conexao->query($sql);
 
         $this->fechaConexao();
     }
