@@ -54,7 +54,7 @@
 
             $i = 1;
             foreach ($produtos as $produto):
-                $caminhoFotos = '../admin/images/produtos/'.$produto['idProduto'];
+                $caminhoFotos = '../images/produto/'.$produto['idProduto'];
                 $fotos = array();
                 if (is_dir($caminhoFotos) > 0) {
 
@@ -73,8 +73,12 @@
                 <div class="i-produtos">
                     <div class="foto-produto">
                         <figure class="foto1">
-                            <a href="ver_produto.php">
-                                <img src="<?php echo $caminhoFotos.'/'.$fotos[0]; ?>" alt="<?php echo $produto['nome']; ?>" title="<?php echo $produto['nome']; ?>" onMouseOver="this.src = '<?php echo $caminhoFotos.'/'.$fotos[1]; ?>'" onMouseOut="this.src = '<?php echo $caminhoFotos.'/'.$fotos[0]; ?>'" />
+                            <a href="ver_produto.php?idProduto=<?php echo $produto['idProduto']; ?>">
+                                <img
+                                    src="<?php echo $caminhoFotos.'/'.$fotos[0]; ?>"
+                                    alt="<?php echo $produto['nome']; ?>"
+                                    title="<?php echo $produto['nome']; ?>"
+                                    <?php echo (isset($fotos[1])) ? 'onMouseOver="this.src = \''.$caminhoFotos.'/'.$fotos[1].'\'" onMouseOut="this.src = \''.$caminhoFotos.'/'.$fotos[0].'\'"' : ''; ?> />
                             </a>
                         </figure>
                     </div>

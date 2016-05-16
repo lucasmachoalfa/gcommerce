@@ -5,7 +5,7 @@ $objProduto->setIdProduto($_GET['idProduto']);
 
 $produto = $objProdutoDao->listaProdutos($objProduto)[0];
 
-$caminhoFotos = '../admin/images/produtos/' . $produto['idProduto'];
+$caminhoFotos = '../images/produto/' . $produto['idProduto'];
 $fotos = array();
 if (is_dir($caminhoFotos) > 0) {
 
