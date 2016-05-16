@@ -6,7 +6,7 @@ $opcao = $_POST['opcao'];
 switch ($opcao) {
     case 'calculaCep':
         $servico = array(
-            40010 => 'SEDEX sem contrato.',
+            40010 => 'SEDEX', // sem contrato.
             40045 => 'SEDEX a Cobrar, sem contrato.',
             40126 => 'SEDEX a Cobrar, com contrato.',
             40215 => 'SEDEX 10, sem contrato.',
@@ -16,7 +16,7 @@ switch ($opcao) {
             40444 => 'SEDEX com contrato',
             40568 => 'SEDEX com contrato.',
             40606 => 'SEDEX com contrato.',
-            41106 => 'PAC sem contrato.',
+            41106 => 'PAC', //sem contrato
             41068 => 'PAC com contrato.',
             81019 => 'e-SEDEX, com contrato.',
             81027 => 'e-SEDEX Prioritário, com conrato.',
@@ -24,7 +24,6 @@ switch ($opcao) {
             81868 => '(Grupo 1) e-SEDEX, com contrato.',
             81833 => '(Grupo 2) e-SEDEX, com contrato.',
             81850 => '(Grupo 3) e-SEDEX, com contrato.',
-            40010 => 'SEDEX sem contrato.'
         );
         
         $peso = ($_POST['peso'] != "0" || $_POST['peso'] != "0.00" || $_POST['peso'] != "0.0") ? $_POST['peso'] : 1;
@@ -47,7 +46,7 @@ switch ($opcao) {
         $data['sCdAvisoRecebimento'] = 'n';
         $data['StrRetorno'] = 'xml';
 //        $data['nCdServico'] = '40010';
-        $data['nCdServico'] = '40010,40045,40215,40290,41106';
+        $data['nCdServico'] = '40010,41106';
         $data = http_build_query($data);
 
         $url = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx';

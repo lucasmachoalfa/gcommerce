@@ -47,6 +47,7 @@ $(document).ready(function () {
 
         if (cep != "") {
             var fretes = calcularFrete(idProduto, cep, comprimento, altura, largura, peso);
+            $("#valorFrete").html('');
             for (var i = 0; i < fretes.length; i++) {
                 var divRow = document.createElement('div');
                 divRow.setAttribute('class', 'row');
