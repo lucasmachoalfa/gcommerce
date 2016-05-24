@@ -31,3 +31,4 @@ define("REL_CUPOM_PRODUTO", DB_ADMIN . TBL_ADMIN . "rel_produtosXCupomDesconto")
 define("REL_CUPOM_CLIENTE", DB_ADMIN . TBL_ADMIN . "rel_clientesXcupomDesconto");
 define("REL_CUPOM_CATEGORIA", DB_ADMIN . TBL_ADMIN . "rel_categoriasXcupomDesconto");
 define("REL_CATEGORIA_PRODUTO", DB_ADMIN . TBL_ADMIN . "rel_categoriasXprodutos");
+define("REL_VARIACAO_PRODUTO", DB_ADMIN . TBL_ADMIN . "rel_variacoesXprodutos");

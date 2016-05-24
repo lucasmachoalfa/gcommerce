@@ -25,7 +25,7 @@ switch ($opcao) {
             81833 => '(Grupo 2) e-SEDEX, com contrato.',
             81850 => '(Grupo 3) e-SEDEX, com contrato.',
         );
-        
+
         $peso = ($_POST['peso'] != "0" || $_POST['peso'] != "0.00" || $_POST['peso'] != "0.0") ? $_POST['peso'] : 1;
         $comprimento = ($_POST['comprimento'] != "0" || $_POST['comprimento'] != "0.00" || $_POST['comprimento'] != "0.0") ? $_POST['comprimento'] : 16;
         $altura = ($_POST['altura'] != "0" || $_POST['altura'] != "0.00" || $_POST['altura'] != "0.0") ? $_POST['altura'] : 2;
@@ -74,10 +74,51 @@ switch ($opcao) {
         $retorno = json_encode($linhas);
         print_r($retorno);
         break;
-}
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
+    case 'buscaAtributos':
+        $idOpcao = $_POST['idOpcao'];
+        $idVariacao = $_POST['idVariacao'];
+        $idProduto = $_POST['idProduto'];
+
+        $objProduto->setIdProduto($idProduto);
+        $objProduto->setIdVariacao($idVariacao);
+        $objProduto->setIdOpcao($idOpcao);
+
+        $atributos = $objProdutoDao->buscaVariacoesProduto($objProduto);
+
+//        var_dump($atributos);
+
+        $idOpcao = '';
+        $variacoes = array();
+        foreach ($atributos as $atributo) {
+            $idOpcao = $atributo['idOpcao'];
+//            $variacoes[] = $atributo['idVariacao'];
+            $variacao = array('idVariacao' => $atributo['idVariacao'], 'referencia' => $atributo['referencia'], 'quantidade' => $atributo['quantidade'], 'preco' => $atributo['preco'], 'peso' => $atributo['peso']);
+            $variacoes[] = $variacao;
+        }
+        $atributos = array('idOpcao' => $idOpcao, 'variacoes' => $variacoes);
+        $atributos = json_encode($atributos);
+
+        print_r($atributos);
+        break;
+
+    case 'buscaReferenciaAtributos':
+
+        $atributos = array_filter(json_decode($_POST['json']));
+
+//        var_dump($atributo);
+//        die();
+        $where = '';
+        foreach ($atributos as $atribtuo) {
+
+            $idVariacao = $atribtuo->idVariacao;
+            $idProduto = $atribtuo->idProduto;
+            
+            $where .= 'AND referencia IN( (SELECT referencia FROM '.REL_VARIACAO_PRODUTO.' WHERE idVariacao = ' . $idVariacao . ' AND idProduto = ' . $idProduto . ') )';
+        }
+
+        $atributo = $objProdutoDao->buscaAtributo($where);
+
+        print_r(json_encode($atributo));
+        break;
+}

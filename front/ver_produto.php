@@ -24,6 +24,11 @@ if (is_dir($caminhoFotos) > 0) {
         <title>Esqueleto Loja Virtual</title>
         <?php include_once './includes/head.php'; ?>
         <script src="js/produto.js"></script>
+        <style>
+            .disabled{
+                color: #CCC;
+            }
+        </style>
     </head>
     <body>
         <?php include_once './includes/header.php'; ?>
@@ -64,30 +69,39 @@ if (is_dir($caminhoFotos) > 0) {
                     </div>
 
                     <div class="variacoes-tamanho">
-                        <ul>
-                            <li>Tamanho:</li>
-                            <li><a href="#">PP</a></li>
-                            <li><a href="#">P</a></li>
-                            <li><a href="#">M</a></li>
-                            <li><a href="#">G</a></li>
-                            <li><a href="#">GG</a></li>
-                            <li><a href="#">XG</a></li>
-                            <li><a href="#">XGG</a></li>
-                            <li><a href="#">XGGG</a></li>
-                        </ul>
-                    </div>
+                        <?php
+                        $opcoesVariacoes = $objProdutoDao->listaVariacoesProduto($objProduto);
 
-                    <div class="variacoes-cor">
-                        <span style="margin-right: 10px;">Cor:</span>
-                        <select>
-                            <option>Preto</option>
-                            <option>Branco</option>
-                            <option>Vermelho</option>
-                            <option>Laranja</option>
-                            <option>Azul</option>
-                            <option>Verde</option>
-                        </select>
-                    </div>
+//                        var_dump($opcoesVariacoes);
+
+                        foreach ($opcoesVariacoes as $opcoes) {
+                            echo '<ul id="opcao' . $opcoes["idOpcao"] . '">
+                                    <li>' . $opcoes["opcao"] . ':</li>';
+
+                            $variacoes = explode(',', $opcoes["variacao"]);
+                            foreach ($variacoes as $variacao) {
+                                $campos = explode('-', $variacao);
+                                $idVariacao = $campos[0];
+                                $titulo = $campos[1];
+                                $atributo = $campos[2];
+                                
+                                
+                                if($atributo == ''){
+                                    $span = $titulo;
+                                }else if(strpos($atributo, '#') !== false){
+                                    $span = '<span style="background:'.$atributo.'">'.$titulo.'</span>';
+                                }else{
+                                    $span = '<span style="background:url(images/'.$atributo.')">'.$titulo.'</span>';
+                                }
+                                
+                                echo '<li>
+                                        <button id="btnBuscaAtributo_'.$idVariacao.'" onclick="buscaAtributos('.$opcoes["idOpcao"].','.$idVariacao.','.$objProduto->getIdProduto().')">'.$span.'</button>
+                                     </li>';
+                            }
+
+                            echo '</ul>';
+                        }
+                        ?>
 
                     <div class="calcular-frete">
                         <span style="margin-bottom: 8px; display: block; font-size: 14px;">Digite seu CEP:</span>
@@ -96,10 +110,10 @@ if (is_dir($caminhoFotos) > 0) {
                             <input type="button" value="CALCULAR FRETE" id="btnCalcularFrete"/>
                         </form>
                         <?php
-                        echo '<input type="hidden" value="'.$produto["peso"].'" id="peso">';
-                        echo '<input type="hidden" value="'.$produto["comprimento"].'" id="comprimento">';
-                        echo '<input type="hidden" value="'.$produto["largura"].'" id="largura">';
-                        echo '<input type="hidden" value="'.$produto["altura"].'" id="altura">';
+                        echo '<input type="hidden" value="' . $produto["peso"] . '" id="peso">';
+                        echo '<input type="hidden" value="' . $produto["comprimento"] . '" id="comprimento">';
+                        echo '<input type="hidden" value="' . $produto["largura"] . '" id="largura">';
+                        echo '<input type="hidden" value="' . $produto["altura"] . '" id="altura">';
                         ?>
                         <div id="valorFrete"></div>
                     </div>
@@ -119,7 +133,7 @@ if (is_dir($caminhoFotos) > 0) {
                     </div>
 
                     <div class="btn-comprar">
-                        <a href="#">COMPRAR</a>
+                        <a href="#" id="btnComprar">COMPRAR</a>
                     </div>
                 </div>
             </div>
