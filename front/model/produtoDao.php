@@ -108,6 +108,28 @@ class ProdutoDao extends Banco {
         $this->fechaConexao();
     }
 
+    public function listaProdutosCarrinho(Produto $objProduto) {
+        $conexao = $this->abreConexao();
+        
+        $sql = "SELECT p.*, vp.preco AS precoVariacao, vp.peso AS pesoVariacao, vp.quantidade AS quantidadeVariacao
+                    FROM " . TBL_PRODUTOS . " p
+                    LEFT JOIN " . REL_VARIACAO_PRODUTO . " vp ON p.idProduto = vp.idProduto
+                        WHERE p.idProduto IN(" . $objProduto->getIdProduto() . ")
+                        AND vp.referencia IN(" . $objProduto->getReferencia() . ")
+                        GROUP BY vp.referencia
+               ";
+
+        $banco = $conexao->query($sql);
+
+        $linhas = array();
+        while ($linha = $banco->fetch_assoc()) {
+            $linhas[] = $linha;
+        }
+
+        return $linhas;
+        $this->fechaConexao();
+    }
+
 }
 
 $objProdutoDao = new ProdutoDao();

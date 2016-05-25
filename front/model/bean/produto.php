@@ -5,6 +5,7 @@ class Produto {
     private $idVendedor;
     private $idOpcao;
     private $idVariacao;
+    private $referencia;
 
     function getIdProduto() {
         return $this->idProduto;
@@ -34,6 +35,13 @@ class Produto {
         $this->idVariacao = seg($idVariacao);
     }
 
+    
+    function getReferencia() {
+        return $this->referencia;
+    }
+    function setReferencia($referencia) {
+        $this->referencia = seg($referencia);
+    }
 }
 
 $objProduto = new Produto();
