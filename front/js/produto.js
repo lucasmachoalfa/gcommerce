@@ -2,6 +2,9 @@
 variacoesProdutos = {
     i: 0,
     referencia: '',
+    preco: '',
+    peso: '',
+    quantidade: '',
     variacoes: new Array(),
     setVariacao: function (idVariacao, idProduto, idOpcao) {
         this.variacoes[idOpcao] = '';
@@ -22,6 +25,9 @@ variacoesProdutos = {
 
         if (obj.length === 1) {
             this.referencia = obj[0].referencia;
+            this.preco = obj[0].preco;
+            this.peso = obj[0].peso;
+            this.quantidade = obj[0].quantidade;
         } else {
             this.referencia = '';
         }
@@ -87,6 +93,8 @@ function buscaAtributos(getIdOpcao, getIdVariacao, getIdProduto) {
 }
 
 $(document).ready(function () {
+//     localStorage.clear();
+
     $("#btnCalcularFrete").click(function () {
         var idProduto = $("#idProduto").val();
         var cep = $("#cep").val();
@@ -129,15 +137,47 @@ $(document).ready(function () {
         if (variacoesProdutos.referencia == '') {
             alert('você deve selecionar as variações');
         } else {
-//            console.log(variacoesProdutos.variacoes);
             var referencia = variacoesProdutos.referencia;
+            var idProduto = '';
+            var idVariacao = '';
+            var quantidade = variacoesProdutos.quantidade;
+            var preco = variacoesProdutos.preco;
+            var peso = variacoesProdutos.peso;
+
             Object.keys(variacoesProdutos.variacoes).forEach(function (key) {
-                console.log(key);
-                variacoesProdutos.variacoes[key]['referencia'] = referencia;
+                idProduto = variacoesProdutos.variacoes[key]['idProduto'];
+                idVariacao += variacoesProdutos.variacoes[key]['idVariacao'] + ',';
             });
-            var variacoes = JSON.stringify(variacoesProdutos.variacoes);
-            
-            localStorage.setItem("variacoes", variacoes);
+
+            idVariacao = idVariacao.replace(/,+$/, '');
+
+            var produto = {
+                idProduto: idProduto,
+                idVariacao: idVariacao,
+                referencia: referencia,
+                quantidadeMax: quantidade,
+                preco: preco,
+                peso: peso
+            };
+
+            var produtos = new Array();
+
+            if (localStorage.produtos == '' || typeof localStorage.produtos == 'undefined') {
+
+                produtos.push(produto);
+            } else {
+                var obj = JSON.parse(localStorage.produtos);
+
+                for (var i =0; i < obj.length; i++) {
+                    produtos.push(obj[i]);
+                }
+                
+                produtos.push(produto);
+            }
+
+            localStorage.produtos = JSON.stringify(produtos);
+
+            window.location = 'carrinho.php';
         }
     });
 });
