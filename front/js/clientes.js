@@ -1,6 +1,6 @@
-$(document).ready(function(){
+$(document).ready(function () {
     ($("#cpf").length) ? $("#cpf").mask('999.999.999-99') : '';
-    ($("#dataNascimento").length) ? $("#dataNascimento").mask('99/99/9999') : '';
+//    ($("#dataNascimento").length) ? $("#dataNascimento").mask('99/99/9999') : '';
     ($("#cep").length) ? $("#cep").mask('99999-999') : '';
     ($("#listaClientes").length) ? buscaCliente('') : '';
 
@@ -12,7 +12,7 @@ $(document).ready(function(){
         var telefone = $("#telefone");
         var cpf = $("#cpf");
         var dataNascimento = $("#dataNascimento");
-        var sexo;
+        var sexo = $("input[name='sexo']:checked").val();
         var nomeIdentificador = $("#nomeIdentificador");
         var cep = $("#cep");
         var logradouro = $("#logradouro");
@@ -22,156 +22,98 @@ $(document).ready(function(){
         var estado = $("#estado");
         var cidade = $("#cidade");
 
-        var validEmail = 0;
-        var validSenha = 0;
-        var validNome = 0;
-        var validTelefone = 0;
-        var validCpf = 0;
-        var validDataNascimento = 0;
-        var validSexo = 0;
-        var validNomeIdentificador = 0;
-        var validCep = 0;
-        var validLogradouro = 0;
-        var validNumero = 0;
-        var validBairro = 0;
-        var validEstado = 0;
-        var validCidade = 0;
 
-        $("input[name='inlineRadioOptions']").each(function () {
-            if ($(this).is(':checked')) {
-                sexo = $(this).val();
-            }
-        });
+//        var validEmail = 0;
+//        var validSenha = 0;
+//        var validNome = 0;
+//        var validTelefone = 0;
+//        var validCpf = 0;
+//        var validDataNascimento = 0;
+//        var validSexo = 0;
+//        var validNomeIdentificador = 0;
+//        var validCep = 0;
+//        var validLogradouro = 0;
+//        var validNumero = 0;
+//        var validBairro = 0;
+//        var validEstado = 0;
+//        var validCidade = 0;
 
+//        $("input[name='inlineRadioOptions']").each(function () {
+//            if ($(this).is(':checked')) {
+//                sexo = $(this).val();
+//            }
+//        });
+
+//        if (email.val() == '') {
+//            validateBootstrap('email', 'Você deve preencher o Email!', 1);
+//        } else if (!isEmail(email.val())) {
+//            validateBootstrap('email', 'Você deve informar um Email válido!', 1);
+//        } else if (!emailUnico(email.val())) {
+//            validateBootstrap('email', 'Este email já se encontra em nossa base', 1);
+//        } else {
+//            validateBootstrap('email', '', 0);
+//            validEmail = 1;
+//        }
         if (email.val() == '') {
-            validateBootstrap('email', 'Você deve preencher o Email!', 1);
+            $("#email").focus();
+            $("#spanCadastro").html('Você deve preencher o Email!');
         } else if (!isEmail(email.val())) {
-            validateBootstrap('email', 'Você deve informar um Email válido!', 1);
+            $("#email").focus();
+            $("#spanCadastro").html('Você deve informar um Email válido!');
         } else if (!emailUnico(email.val())) {
-            validateBootstrap('email', 'Este email já se encontra em nossa base', 1);
-        } else {
-            validateBootstrap('email', '', 0);
-            validEmail = 1;
-        }
-
-        if (senha.val() == '') {
-            validateBootstrap('senha', 'Você deve preencher a senha!', 1);
-            validateBootstrap('senhaN', '', 1);
+            $("#email").focus();
+            $("#spanCadastro").html('Este email já se encontra em nossa base');
+        } else if (senha.val() == '') {
+            $("#senha").focus();
+            $("#spanCadastro").html('Você deve preencher a senha!');
         } else if ((senha.val() != '' && senhaN.val() == '') || (senha.val() != senhaN.val())) {
-            validateBootstrap('senha', 'As senhas não conferem!', 1);
-        } else {
-            validateBootstrap('senha', '', 0);
-            validateBootstrap('senhaN', '', 0);
-            validSenha = 1;
-        }
-
-        if (nome.val() == '') {
-            validateBootstrap('nome', 'Você deve preencher o Nome Completo!', 1);
-        } else {
-            validateBootstrap('nome', '', 0);
-            validNome = 1;
-        }
-
-
-        if (telefone.val() == '') {
-            validateBootstrap('telefone', 'Você deve preencher o Telefone!', 1);
-        } else {
-            validateBootstrap('telefone', '', 0);
-            validTelefone = 1;
-        }
-
-        if (cpf.val() == '') {
-            validateBootstrap('cpf', 'Você deve preencher o CPF!', 1);
+            $("#senha").focus();
+            $("#spanCadastro").html('As senhas não conferem!');
+        } else if (nome.val() == '') {
+            $("#nome").focus();
+            $("#spanCadastro").html('Você deve preencher o Nome Completo!');
+        } else if (telefone.val() == '') {
+            $("#telefone").focus();
+            $("#spanCadastro").html('Você deve preencher o Telefone!');
+        } else if (cpf.val() == '') {
+            $("#cpf").focus();
+            $("#spanCadastro").html('Você deve preencher o CPF!');
         } else if (!isCpf(cpf.val())) {
-            validateBootstrap('cpf', 'Você deve preencher um CPF válido!', 1);
+            $("#cpf").focus();
+            $("#spanCadastro").html('Você deve preencher um CPF válido!');
         } else if (!cpfUnico(cpf.val())) {
-            validateBootstrap('cpf', 'este CPF já se encontra em nossa base!', 1);
+            $("#cpf").focus();
+            $("#spanCadastro").html('este CPF já se encontra em nossa base!');
+        } else if (dataNascimento.val() == "") {
+            $("#dataNascimento").focus();
+            $("#spanCadastro").html('Você deve preencher a data de nascimento!');
+        } else if (sexo != 'M' && sexo != 'F') {
+            $("#sexo").focus();
+            $("#spanCadastro").html('Você deve selecionar um gênero!');
+        } else if (nomeIdentificador.val() == '') {
+            alert('1fnfjfddfs');
+            
+            $("#nomeIdentificador").focus();
+            $("#spanCadastro").html('Você deve preencher o nome identificador!');
+        } else if (cep.val() == '') {
+            $("#cep").focus();
+            $("#spanCadastro").html('Você deve preencher o cep!');
+        } else if (logradouro.val() == '') {
+            $("#logradouro").focus();
+            $("#spanCadastro").html('Você deve preencher o logradouro!');
+        } else if (numero.val() == '') {
+            $("#numero").focus();
+            $("#spanCadastro").html('Você deve preencher o numero!');
+        } else if (bairro.val() == '') {
+            $("#bairro").focus();
+            $("#spanCadastro").html('Você deve preencher o bairro!');
+        } else if (estado.val() == '') {
+            $("#estado").focus();
+            $("#spanCadastro").html('Você deve selecionar um estado!');
+        } else if (cidade.val() == '' || cidade.val() == null) {
+            $("#cidade").focus();
+            $("#spanCadastro").html('Você deve selecionar uma cidade!');
         } else {
-            validateBootstrap('cpf', '', 0);
-            validCpf = 1;
-        }
-
-
-        if (dataNascimento.val() == "") {
-            validateBootstrap('dataNascimento', 'Você deve preencher a data de nascimento!', 1);
-        } else {
-            validateBootstrap('dataNascimento', '', 0);
-            validDataNascimento = 1;
-        }
-
-        if (sexo != 'M' && sexo != 'F') {
-            validateBootstrap('sexo', 'Você deve selecionar um gênero!', 1);
-        } else {
-            validateBootstrap('sexo', '', 0);
-            validSexo = 1;
-        }
-
-        if (nomeIdentificador.val() == '') {
-            validateBootstrap('nomeIdentificador', 'Você deve preencher o nome identificador!', 1);
-        } else {
-            validateBootstrap('nomeIdentificador', '', 0);
-            validNomeIdentificador = 1;
-        }
-
-        if (cep.val() == '') {
-            validateBootstrap('cep', 'Você deve preencher o cep!', 1);
-        } else {
-            validateBootstrap('cep', '', 0);
-            validCep = 1;
-        }
-
-        if (logradouro.val() == '') {
-            validateBootstrap('logradouro', 'Você deve preencher o logradouro!', 1);
-        } else {
-            validateBootstrap('logradouro', '', 0);
-            validLogradouro = 1;
-        }
-
-        if (numero.val() == '') {
-            validateBootstrap('numero', 'Você deve preencher o numero!', 1);
-        } else {
-            validateBootstrap('numero', '', 0);
-            validNumero = 1;
-        }
-
-        if (bairro.val() == '') {
-            validateBootstrap('bairro', 'Você deve preencher o bairro!', 1);
-        } else {
-            validateBootstrap('bairro', '', 0);
-            validBairro = 1;
-        }
-
-        if (estado.val() == '') {
-            validateBootstrap('estado', 'Você deve selecionar um estado!', 1);
-        } else {
-            validateBootstrap('estado', '', 0);
-            validEstado = 1;
-        }
-
-
-        if (cidade.val() == '' || cidade.val() == null) {
-            validateBootstrap('cidade', 'Você deve selecionar uma cidade!', 1);
-        } else {
-            validateBootstrap('cidade', '', 0);
-            validCidade = 1;
-        }
-
-        if (
-                validEmail === 1 &&
-                validSenha === 1 &&
-                validNome === 1 &&
-                validTelefone === 1 &&
-                validCpf === 1 &&
-                validDataNascimento === 1 &&
-                validSexo === 1 &&
-                validNomeIdentificador === 1 &&
-                validCep === 1 &&
-                validLogradouro === 1 &&
-                validNumero === 1 &&
-                validBairro === 1 &&
-                validEstado === 1 &&
-                validCidade === 1
-                ) {
             $.post(
                     'control/clienteControle.php',
                     {
@@ -193,13 +135,13 @@ $(document).ready(function(){
                         cidade: cidade.val(),
                     },
                     function (r) {
-//                        console.log(r);
-                        window.location = 'verClientes.php';
+                        console.log(r);
+                        localStorage.cliente = r;
+//                        window.location = 'verClientes.php';
                     }
             );
         }
-    })
-
+    });
 
     $("#telefone").keypress(function () {
         return isPhone($("#telefone").val());
@@ -229,6 +171,40 @@ $(document).ready(function(){
             if ($("#cidade").val() != '') {
                 $("#cidade").attr('disabled', 'disabled');
             }
+        }
+    });
+
+    $("#estado").change(function () {
+        var estado = $(this).val();
+
+        if (estado != '') {
+            var campos = {cidade: 'cidade'};
+            buscaCidade(estado, campos);
+        }
+    });
+
+    $("#email").blur(function () {
+        var email = $(this).val().trim();
+
+
+        if (email != "" && !emailUnico(email)) {
+            $("#email").focus();
+            $("#spanCadastro").html('Esse email já existe!');
+            alert('Esse email já existe!');
+        }
+    });
+
+    $("#cpf").blur(function () {
+        var cpf = $(this).val().trim();
+
+        if (cpf != "" && !isCpf(cpf)) {
+            $("#cpf").focus();
+            $("#spanCadastro").html('Esse cpf não é válido!');
+            alert('Esse cpf não é válido!');
+        } else if (cpf != "" && !cpfUnico(cpf)) {
+            $("#cpf").focus();
+            $("#spanCadastro").html('Esse cpf já existe!');
+            alert('Esse cpf já existe!');
         }
     });
 });

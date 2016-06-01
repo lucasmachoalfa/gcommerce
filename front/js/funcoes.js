@@ -17,8 +17,8 @@ function calcularFrete(cep, comprimento, altura, largura, peso) {
 
             });
     return JSON.parse(resposta.responseText);
-};
-
+}
+;
 
 //função para gerar uma string de números e letras aleatoriamente
 function generateString(chars) {
@@ -41,7 +41,6 @@ function generateString(chars) {
 
     return pass;
 }
-
 
 //funções de busca, utilizando autocomplete do jquery
 var busca = function (termo, url, campos) {
@@ -83,11 +82,13 @@ function extractLast(term) {
 function emailUnico(email) {
     var bool;
     $.ajax({
-        url: 'control/controleCliente.php',
+        url: 'control/clienteControle.php',
         method: 'POST',
         async: false,
         data: {opcao: 'verificaEmail', email: email},
         success: function (resposta) {
+            console.log(resposta);
+
             if (resposta == 0) {
                 bool = false;
             } else {
@@ -199,7 +200,6 @@ function buscaCep(cep, campos) {
         success: function (r) {
             r = $.parseJSON(r);
             retorno = r;
-            console.log(r);
             var logradouro = r.logradouro;
             var estado = r.uf;
             var cidade = r.cidade;

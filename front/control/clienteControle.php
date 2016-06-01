@@ -1,5 +1,5 @@
 <?php
-
+@session_start();
 require_once '../model/enderecoDao.php';
 require_once '../model/clienteDao.php';
 
@@ -45,6 +45,10 @@ switch ($opcao) {
         $objEndereco->setCidade($cidade);
 
         $objEnderecoDao->cadEndereco($objEndereco);
+        
+        print_r($idCliente);
+        
+        $_SESSION['CLIENTE'] = $idCliente;
         break;
 
     case 'verificaEmail':
