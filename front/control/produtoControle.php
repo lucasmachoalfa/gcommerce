@@ -31,6 +31,7 @@ switch ($opcao) {
         $altura = ($_POST['altura'] != "0" || $_POST['altura'] != "0.00" || $_POST['altura'] != "0.0") ? $_POST['altura'] : 2;
         $largura = ($_POST['largura'] != "0" || $_POST['largura'] != "0.00" || $_POST['largura'] != "0.0") ? $_POST['largura'] : 11;
 
+        
         $data['nCdEmpresa'] = '';
         $data['sDsSenha'] = '';
         $data['sCepOrigem'] = $_POST['cep'];
@@ -45,7 +46,6 @@ switch ($opcao) {
         $data['nVlValorDeclarado'] = '0';
         $data['sCdAvisoRecebimento'] = 'n';
         $data['StrRetorno'] = 'xml';
-//        $data['nCdServico'] = '40010';
         $data['nCdServico'] = '40010,41106';
         $data = http_build_query($data);
 

@@ -34,27 +34,6 @@ variacoesProdutos = {
     }
 };
 
-calcularFrete = function (idProduto, cep, comprimento, altura, largura, peso) {
-    var resposta =
-            $.ajax({
-                method: 'POST',
-                url: 'control/produtoControle.php',
-                data: {
-                    opcao: 'calculaCep',
-                    cep: cep,
-                    comprimento: comprimento,
-                    altura: altura,
-                    largura: largura,
-                    peso: peso,
-                    idProduto: idProduto
-                },
-                async: false
-
-
-            });
-    return JSON.parse(resposta.responseText);
-};
-
 function buscaAtributos(getIdOpcao, getIdVariacao, getIdProduto) {
     var atributos =
             $.ajax({
@@ -103,7 +82,7 @@ $(document).ready(function () {
         var largura = $("#largura").val();
         var peso = $("#peso").val();
         if (cep != "") {
-            var fretes = calcularFrete(idProduto, cep, comprimento, altura, largura, peso);
+            var fretes = calcularFrete(cep, comprimento, altura, largura, peso);
             $("#valorFrete").html('');
             for (var i = 0; i < fretes.length; i++) {
                 var divRow = document.createElement('div');

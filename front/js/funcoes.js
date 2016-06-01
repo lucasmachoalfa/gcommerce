@@ -1,3 +1,25 @@
+function calcularFrete(cep, comprimento, altura, largura, peso) {
+    var resposta =
+            $.ajax({
+                method: 'POST',
+                url: 'control/produtoControle.php',
+                data: {
+                    opcao: 'calculaCep',
+                    cep: cep,
+                    comprimento: comprimento,
+                    altura: altura,
+                    largura: largura,
+                    peso: peso
+//                    idProduto: idProduto
+                },
+                async: false
+
+
+            });
+    return JSON.parse(resposta.responseText);
+};
+
+
 //função para gerar uma string de números e letras aleatoriamente
 function generateString(chars) {
     var pass = "";
@@ -80,7 +102,7 @@ function emailUnico(email) {
 function cpfUnico(cpf) {
     var bool;
     $.ajax({
-        url: 'control/controleCliente.php',
+        url: 'control/clienteControle.php',
         method: 'POST',
         async: false,
         data: {opcao: 'verificaCpf', cpf: cpf},

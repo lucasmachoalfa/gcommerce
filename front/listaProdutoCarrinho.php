@@ -90,62 +90,32 @@ $produtos = $objProdutoDao->listaProdutosCarrinho($objProduto);
     <div class="calcular-frete">
         <span>Digite aqui o seu CEP para calcular o frete:</span>
         <input type="text" name="calcularFrete" id="calcularFrete" class="shipping-zipcode" value="">
-        <button class="button calculate-shipping-button">Calcular Frete</button>
+        <button class="button calculate-shipping-button" id="btnCalcularFrete">Calcular Frete</button>
         <span class="loading" style="display: none;"><i class="fa fa-refresh fa-spin"></i></span>
         <span class="invalid-zipcode" style="display: none;">O CEP está inválido.</span>
     </div>
 
-    <ul class="lista-opcoes-frete" style="display: none">
-        <li>
-            <label for="shipping-1">
-                <input id="shipping-1" type="radio" name="opcao-frete" style="display:none">
-                <span class="shipping-option">
-                    <img src="http://d26lpennugtm8s.cloudfront.net/assets/common/img/logos/shipping/br/correios/pac@2x.png">
-                    Correios - PAC - 5 dias úteis - <strong>$53,76</strong>
-                </span>
-            </label>
-        </li>
-
-        <li>
-            <label for="shipping-2">
-                <input id="shipping-2" type="radio" name="opcao-frete" style="display:none">
-                <span class="shipping-option">
-                    <img src="http://d26lpennugtm8s.cloudfront.net/assets/common/img/logos/shipping/br/correios/pac@2x.png">
-                    Correios - PAC - 5 dias úteis - <strong>$53,76</strong>
-                </span>
-            </label>
-        </li>
-
-        <li>
-            <label for="shipping-3">
-                <input id="shipping-3" type="radio" name="opcao-frete" style="display:none">
-                <span class="shipping-option">
-                    <img src="http://d26lpennugtm8s.cloudfront.net/assets/common/img/logos/shipping/br/correios/pac@2x.png">
-                    Correios - PAC - 5 dias úteis - <strong>$53,76</strong>
-                </span>
-            </label>
-        </li>
-    </ul>
+    <ul class="lista-opcoes-frete" style="display: none"></ul>
 </section>
 
 <ul class="total-produto">
     <li class="subtotal">
-        <!--h3 style="font-weight: lighter;">Subtotal: R$300,00</h3-->
-        <h3 style="font-weight: lighter;">&nbsp;</h3>
+        <h3 style="font-weight: lighter;">Subtotal: R$<span id="subtotalProdutos"><?php echo number_format($total, 2, ',', '.'); ?></span></h3>
+        <!--<h3 style="font-weight: lighter;">&nbsp;</h3>-->
     </li>
     <li class="total">
-        <h3 style="font-weight: bold;">Total: R$<?php echo number_format($total, 2, ',', '.'); ?></h3>
+        <h3 style="font-weight: bold;">Total: R$<span id="totalCompra"><?php echo number_format($total, 2, ',', '.'); ?></span></h3>
     </li>
 </ul>
 
 <div class="botoes-finais">
     <div class="continuar">
-        <a href="#">
+        <a href="./">
             CONTINUAR COMPRANDO
         </a>
     </div>
     <div class="finalizar">
-        <a href="#">
+        <a href="javascript:finalizarCompra()">
             FINALIZAR COMPRA
         </a>
     </div>

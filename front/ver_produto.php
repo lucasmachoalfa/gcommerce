@@ -23,6 +23,7 @@ if (is_dir($caminhoFotos) > 0) {
         <meta charset="UTF-8">
         <title>Esqueleto Loja Virtual</title>
         <?php include_once './includes/head.php'; ?>
+        <script src="js/funcoes.js"></script>
         <script src="js/produto.js"></script>
         <style>
             .disabled{
