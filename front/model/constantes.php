@@ -26,9 +26,11 @@ define("TBL_OPCOES", DB_ADMIN . TBL_ADMIN . "opcoes");
 define("TBL_EMAIL", DB_ADMIN . TBL_ADMIN . "emailsPersonalizados");
 define("TBL_VENDEDOR", DB_ADMIN . TBL_ADMIN . "vendedores");
 define("TBL_VARIACAO", DB_ADMIN . TBL_ADMIN . "variacoes");
+define("TBL_CARRINHO", DB_ADMIN . TBL_ADMIN . "carrinho");
 
 define("REL_CUPOM_PRODUTO", DB_ADMIN . TBL_ADMIN . "rel_produtosXCupomDesconto");
 define("REL_CUPOM_CLIENTE", DB_ADMIN . TBL_ADMIN . "rel_clientesXcupomDesconto");
 define("REL_CUPOM_CATEGORIA", DB_ADMIN . TBL_ADMIN . "rel_categoriasXcupomDesconto");
 define("REL_CATEGORIA_PRODUTO", DB_ADMIN . TBL_ADMIN . "rel_categoriasXprodutos");
 define("REL_VARIACAO_PRODUTO", DB_ADMIN . TBL_ADMIN . "rel_variacoesXprodutos");
+define("REL_CARRINHO_PRODUTO", DB_ADMIN . TBL_ADMIN . "rel_carrinhoXprodutos");

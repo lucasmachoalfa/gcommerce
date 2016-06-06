@@ -130,27 +130,55 @@ $(document).ready(function () {
 
             idVariacao = idVariacao.replace(/,+$/, '');
 
-            var produto = {
+            produto = {
                 idProduto: idProduto,
                 idVariacao: idVariacao,
                 referencia: referencia,
                 quantidadeMax: quantidade,
                 preco: preco,
-                peso: peso
+                peso: peso,
+                idCarrinho: 0
             };
 
             var produtos = new Array();
 
             if (localStorage.produtos == '' || typeof localStorage.produtos == 'undefined') {
 
+                //fazer a validação de cliente logado
+                //passar idCliente = 0 quando não estiver logado
+                var idCliente = 0;
+
+//                var idCarrinho ='teste';
+                var idCarrinho = $.ajax({
+                    url: 'control/carrinhoControle.php',
+                    data: {opcao: 'cadCarrinho', idProduto: produto.idProduto, quantidade: 1, idCliente: idCliente},
+                    async: false,
+                    method: "POST",
+                }).responseText;
+
+
+                produto.idCarrinho = parseInt(idCarrinho);
+                /*
+                 $.post('control/carrinhoControle.php', {opcao: 'cadCarrinho', idProduto: produto.idProduto, quantidade: 1, idCliente: idCliente},
+                 function (r) {
+                 produto.idCarrinho = r;
+                 });
+                 */
+                console.log(produto);
+
                 produtos.push(produto);
             } else {
                 var obj = JSON.parse(localStorage.produtos);
 
-                for (var i =0; i < obj.length; i++) {
+                var idCarrinho = 0;
+
+                for (var i = 0; i < obj.length; i++) {
+                    idCarrinho = obj[i].idCarrinho;
+
                     produtos.push(obj[i]);
                 }
-                
+                produto.idCarrinho = idCarrinho;
+
                 produtos.push(produto);
             }
 
