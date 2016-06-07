@@ -2,7 +2,14 @@ function finalizarCompra(){
     if(frete == ''){
         alert('você deve selecionar um frete');
     }else{
-        var freteFinal = frete+'|'+freteCodigo;
+        var freteFinal = {
+            'codigo':freteCodigo,
+            'servico':freteServico,
+            'valor':frete,
+            'prazo':fretePrazo
+        };
+        
+        freteFinal = JSON.stringify(freteFinal)
         localStorage.frete = freteFinal;
         
         window.location = 'clientes.php'
@@ -36,14 +43,18 @@ $(document).ready(function () {
                 function () {
                     frete = 0.00;
                     freteCodigo = '';
+                    freteServico = '';
+                    fretePrazo = '';
                     totalProdutos = parseFloat($("#subtotalProdutos").html().replace('.', '').replace(',', '.'));
 
                     function selecionarFrete() {
                         
                         var explode = $(this).attr('data').split('|');
-                        var valor = explode[1];
+                        var valor = explode[2];
                         frete = parseFloat(valor.replace(',', '.'));
                         freteCodigo = explode[0];
+                        freteServico = explode[1];
+                        fretePrazo = explode[3];
 
 
                         var valorFinal = frete + totalProdutos;
@@ -129,7 +140,7 @@ $(document).ready(function () {
 
                                 var span = document.createElement('span');
                                 span.setAttribute('class', 'shipping-option');
-                                span.setAttribute('data', codigo + '|' + valor);
+                                span.setAttribute('data', codigo + '|' +servico+ '|' + valor+'|'+prazoEntrega);
                                 span.addEventListener("click", selecionarFrete);
 
                                 var img = document.createElement('img');

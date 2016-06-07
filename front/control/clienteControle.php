@@ -1,4 +1,5 @@
 <?php
+
 @session_start();
 require_once '../model/enderecoDao.php';
 require_once '../model/clienteDao.php';
@@ -34,6 +35,8 @@ switch ($opcao) {
 
         $idCliente = $objClienteDao->cadCliente($objCliente);
 
+        $objCliente->setIdCliente($idCliente);
+
         $objEndereco->setIdCliente($idCliente);
         $objEndereco->setNome($nomeIdentificador);
         $objEndereco->setComplemento($complemento);
@@ -44,10 +47,16 @@ switch ($opcao) {
         $objEndereco->setEstado($estado);
         $objEndereco->setCidade($cidade);
 
-        $objEnderecoDao->cadEndereco($objEndereco);
-        
-        print_r($idCliente);
-        
+        $idEndereco = $objEnderecoDao->cadEndereco($objEndereco);
+
+        $objEndereco->setIdEndereco($idEndereco);
+
+        $cliente = $objClienteDao->listaCliente1($objCliente);
+        $endereco = $objEnderecoDao->listaEndereco1($objEndereco);
+
+        $resposta = json_encode(array($cliente, $endereco));
+        echo($resposta);
+
         $_SESSION['CLIENTE'] = $idCliente;
         break;
 
@@ -66,7 +75,6 @@ switch ($opcao) {
         print_r($resposta);
         break;
 
-
     case 'verificaCpf':
         $cpf = $_POST['cpf'];
         $resposta = 0;
@@ -80,5 +88,23 @@ switch ($opcao) {
         }
 
         print_r($resposta);
+        break;
+
+    case 'verificaLogin':
+        $email = $_POST['email'];
+        $senha = md5($_POST['senha']);
+        
+        $objCliente->setEmail($email);
+        $objCliente->setSenha($senha);
+        
+        $retorno = $objClienteDao->verificaLogin($objCliente);
+        
+        if($retorno != 0){
+            $resposta = json_encode($retorno);
+        }else{
+            $resposta = 0;
+        }
+        
+        echo $resposta;
         break;
 }

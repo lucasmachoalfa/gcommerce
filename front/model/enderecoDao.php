@@ -1,8 +1,10 @@
 <?php
+
 require_once 'banco.php';
 require_once 'bean/endereco.php';
 
-class EnderecoDao extends Banco{
+class EnderecoDao extends Banco {
+
     public function listaEstados() {
         $conexao = $this->abreConexao();
 
@@ -54,23 +56,43 @@ class EnderecoDao extends Banco{
         return $linha['idCidade'];
         $this->fechaConexao();
     }
+
+    public function cadEndereco(Endereco $objEndereco) {
+        $conexao = $this->abreConexao();
+
+        $sql = "INSERT INTO " . TBL_ENDERECOS . " SET
+                idCliente = " . $objEndereco->getIdCliente() . ",
+                nome = '" . $objEndereco->getNome() . "',
+                cep = '" . $objEndereco->getCep() . "',
+                logradouro = '" . $objEndereco->getLogradouro() . "',
+                numero = '" . $objEndereco->getNumero() . "',
+                complemento = '" . $objEndereco->getComplemento() . "',
+                bairro = '" . $objEndereco->getBairro() . "',
+                estado = '" . $objEndereco->getEstado() . "',
+                cidade = " . $objEndereco->getCidade() . "
+               ";
+
+        $conexao->query($sql);
+        
+        $idEndereco = $conexao->insert_id;
+        
+        return $idEndereco;
+
+        $this->fechaConexao();
+    }
     
-    public function cadEndereco(Endereco $objEndereco){
+    public function listaEndereco1(Endereco $objEndereco){
         $conexao = $this->abreConexao();
         
-        echo $sql = "INSERT INTO ".TBL_ENDERECOS." SET
-                idCliente = ".$objEndereco->getIdCliente().",
-                nome = '".$objEndereco->getNome()."',
-                cep = '".$objEndereco->getCep()."',
-                logradouro = '".$objEndereco->getLogradouro()."',
-                numero = '".$objEndereco->getNumero()."',
-                complemento = '".$objEndereco->getComplemento()."',
-                bairro = '".$objEndereco->getBairro()."',
-                estado = '".$objEndereco->getEstado()."',
-                cidade = ".$objEndereco->getCidade()."
-               ";
+        $sql = "SELECT *
+                FROM ".TBL_ENDERECOS."
+                    WHERE idEndereco = ".$objEndereco->getIdEndereco();
         
-        $conexao->query($sql) or die($conexao->error);
+        $banco = $conexao->query($sql);
+        
+        $linha = $banco->fetch_assoc();
+        
+        return $linha;
         
         $this->fechaConexao();
     }

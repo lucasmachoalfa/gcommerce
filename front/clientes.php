@@ -7,6 +7,21 @@
         <script src="js/funcoes.js"></script>
         <script src="js/jquery.maskedinput.js"></script>
         <script src="js/clientes.js"></script>
+
+        <style>
+            #login{
+                margin-left: 10%;
+                border: 1px black dashed;
+                min-height: 300px;
+                width: 50%;
+                float: right;
+            }
+            
+            #cadastro{
+                float: left;
+                width: 40%;
+            }
+        </style>
     </head>
     <body>
         <?php include_once './includes/header.php'; ?>
@@ -15,7 +30,6 @@
             <div class="carrinho-de-compras">
                 <h1 style="text-align: center;">Carrinho de compras</h1>
 
-                <section id="login"></section>
                 <section id="cadastro">
                     <form id="frmCadCliente">
                         <fieldset>
@@ -97,6 +111,20 @@
                             <input type="button" id="btnCadCliente" value="Cadastrar" /><br />
                             <span id="spanCadastro" class="error"></span>
                         </fieldset>
+                    </form>
+                </section>
+                <section id="login">
+                    <form id="frmLoginCliente">
+                        <fieldset>
+                            <label for="emailLogin">Email:</label>
+                            <input type="text" id="emailLogin" />
+                        </fieldset>
+                        <fieldset>
+                            <label for="senhaLogin">Senha:</label>
+                            <input type="password" id="senhaLogin" />
+                        </fieldset>
+                        <input type="button" value="Login" id="btnLoginCliente" /><br />
+                        <span id="spanLogin" class="error"></span>
                     </form>
                 </section>
 

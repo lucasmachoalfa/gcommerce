@@ -59,6 +59,22 @@ class ClienteDao extends Banco {
         $this->fechaConexao();
     }
 
+    public function listaCliente1(Cliente $objCliente) {
+        $conexao = $this->abreConexao();
+
+        $sql = "SELECT *
+                FROM " . TBL_CLIENTES . "
+                    WHERE idCliente = " . $objCliente->getIdCliente();
+
+        $banco = $conexao->query($sql);
+
+        $linha = $banco->fetch_assoc();
+
+        return $linha;
+
+        $this->fechaConexao();
+    }
+
     public function numClientes($busca) {
         $conexao = $this->abreConexao();
 
@@ -105,6 +121,28 @@ class ClienteDao extends Banco {
 
         return $numLinhas;
 
+        $this->fechaConexao();
+    }
+
+    public function verificaLogin(Cliente $objCliente) {
+        $conexao = $this->abreConexao();
+
+        $sql = "SELECT *
+                FROM " . TBL_CLIENTES . "
+                WHERE email = '" . $objCliente->getEmail() . "'
+                AND senha = '" . $objCliente->getSenha() . "'
+               ";
+
+        $banco = $conexao->query($sql);
+
+        $numLinha = $banco->num_rows;
+
+        if ($numLinha == 1) {
+            $retorno = $banco->fetch_assoc();;
+        } else {
+            $retorno = 0;
+        }
+        return $retorno;
         $this->fechaConexao();
     }
 
