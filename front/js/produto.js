@@ -146,9 +146,8 @@ $(document).ready(function () {
 
                 //fazer a validação de cliente logado
                 //passar idCliente = 0 quando não estiver logado
-                var idCliente = 0;
+                var idCliente = (localStorage.cliente == '' || typeof localStorage.cliente == 'undefined') ? 0 : localStorage.cliente;
 
-//                var idCarrinho ='teste';
                 var idCarrinho = $.ajax({
                     url: 'control/carrinhoControle.php',
                     data: {opcao: 'cadCarrinho', idProduto: produto.idProduto, quantidade: 1, idCliente: idCliente},
@@ -156,15 +155,7 @@ $(document).ready(function () {
                     method: "POST",
                 }).responseText;
 
-
                 produto.idCarrinho = parseInt(idCarrinho);
-                /*
-                 $.post('control/carrinhoControle.php', {opcao: 'cadCarrinho', idProduto: produto.idProduto, quantidade: 1, idCliente: idCliente},
-                 function (r) {
-                 produto.idCarrinho = r;
-                 });
-                 */
-                console.log(produto);
 
                 produtos.push(produto);
             } else {

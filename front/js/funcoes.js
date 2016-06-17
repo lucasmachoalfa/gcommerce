@@ -16,6 +16,8 @@ function calcularFrete(cep, comprimento, altura, largura, peso) {
 
 
             });
+            
+            console.log(resposta.responseText);
     return JSON.parse(resposta.responseText);
 }
 ;

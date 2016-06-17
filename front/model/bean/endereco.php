@@ -10,6 +10,7 @@ class Endereco {
     private $bairro;
     private $estado;
     private $cidade;
+    private $padrao;
     
     
     public function getIdEndereco() {
@@ -97,6 +98,15 @@ class Endereco {
     public function setCidade($cidade) {
         $this->cidade = seg($cidade);
     }
+    
+    public function getPadrao() {
+        return $this->padrao;
+    }
+    public function setPadrao($padrao) {
+        $this->padrao = seg($padrao);
+    }
+
+
 }
 
 $objEndereco = new Endereco();
