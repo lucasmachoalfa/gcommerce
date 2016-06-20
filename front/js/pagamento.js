@@ -21,10 +21,21 @@ $(document).ready(function () {
 
 //var endereco = ;
 
-console.log();
+//console.log();
 
     $('#abreModalEnderecos').click(function (event) {
         event.preventDefault();
         listaEnderecos();
+    });
+    
+    $("input[name='frete']").change(function(){
+        var frete = $(this).val();
+        var explode = frete.split('|');
+        var servico = explode[0];
+        var preco = explode[1];
+        var prazo = explode[2];
+        
+        $("#pagamentoBcash").load('pagamentoBcash.php?servico='+servico+'&preco='+preco+'&prazo='+prazo);
+        
     });
 });

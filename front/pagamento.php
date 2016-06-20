@@ -190,25 +190,8 @@
                     </div>
                 </div>
 
-                <table class="tabela">
-                    <thead>
-                        <tr style="font-weight: bold; font-style: normal;">
-                            <td>Itens do pedido</td>
-                            <td>Qtde</td>
-                            <td>Preço</td>
-                        </tr>
-                    </thead>
-                    <tbody id="resumoPedido_produtos">
-                    </tbody>
-                </table>
-
-                <div class="i-resumo-pedido">
-                    Frete <span>Grátis</span>
-                </div>
-
-                <div class="i-resumo-pedido">
-                    <strong><p>TOTAL <span>R$ 135,90</span></p></strong>
-                </div>
+                <div id="resumoPedido_produtos"></div>
+                
             </div>
         </div>    
     </body>
