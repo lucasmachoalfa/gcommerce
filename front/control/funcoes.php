@@ -1,15 +1,90 @@
 <?php
 
+function calculaFrete($peso, $comprimento, $altura, $largura, $cep) {
+//    echo $cep, ' ', $peso, ' ', $comprimento, ' ', $altura, ' ', $largura;
+    
+//
+//    echo '<br />';
+
+
+    $servico = array(
+        40010 => 'Expresso', //SEDEX sem contrato.
+        40045 => 'SEDEX a Cobrar, sem contrato.',
+        40126 => 'SEDEX a Cobrar, com contrato.',
+        40215 => 'SEDEX 10, sem contrato.',
+        40290 => 'SEDEX Hoje, sem contrato.',
+        40096 => 'SEDEX com contrato.',
+        40436 => 'SEDEX com contrato.',
+        40444 => 'SEDEX com contrato',
+        40568 => 'SEDEX com contrato.',
+        40606 => 'SEDEX com contrato.',
+        41106 => 'Normal', //PAC sem contrato
+        41068 => 'PAC com contrato.',
+        81019 => 'e-SEDEX, com contrato.',
+        81027 => 'e-SEDEX Prioritário, com conrato.',
+        81035 => 'e-SEDEX Express, com contrato.',
+        81868 => '(Grupo 1) e-SEDEX, com contrato.',
+        81833 => '(Grupo 2) e-SEDEX, com contrato.',
+        81850 => '(Grupo 3) e-SEDEX, com contrato.',
+    );
+
+    $peso = ($peso != "0" || $peso != "0.00" || $peso != "0.0") ? $peso : 1;
+    $comprimento = ($comprimento != "0" || $comprimento != "0.00" || $comprimento != "0.0") ? $comprimento : 16;
+    $altura = ($altura != "0" || $altura != "0.00" || $altura != "0.0") ? $altura : 2;
+    $largura = ($largura != "0" || $largura != "0.00" || $largura != "0.0") ? $largura : 11;
+    
+
+    $data['nCdEmpresa'] = '';
+    $data['sDsSenha'] = '';
+    $data['sCepOrigem'] = $cep;
+    $data['sCepDestino'] = '26015-005';
+    $data['nVlPeso'] = $peso;
+    $data['nCdFormato'] = '1';
+    $data['nVlComprimento'] = $comprimento;
+    $data['nVlAltura'] = $altura;
+    $data['nVlLargura'] = $largura;
+    $data['nVlDiametro'] = '0';
+    $data['sCdMaoPropria'] = 'n';
+    $data['nVlValorDeclarado'] = '0';
+    $data['sCdAvisoRecebimento'] = 'n';
+    $data['StrRetorno'] = 'xml';
+    $data['nCdServico'] = '40010,41106';
+    $data = http_build_query($data);
+
+    $url = 'http://ws.correios.com.br/calculador/CalcPrecoPrazo.aspx';
+
+    $curl = curl_init($url . '?' . $data);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+
+    $result = curl_exec($curl);
+    $result = simplexml_load_string($result);
+    $linhas = array();
+
+    $i = 0;
+    foreach ($result->cServico as $row) {
+
+        if ($row->Erro !== '0') {
+            $descricaoServico = $servico[(int) $row->Codigo];
+
+            $linha = array('codigo' => (string) $row->Codigo, 'servico' => $descricaoServico, 'valor' => (string) $row->Valor, 'prazoEntrega' => (string) $row->PrazoEntrega);
+
+            $linhas[] = json_decode(json_encode((array) $linha), TRUE);
+        }
+    }
+
+    return $linhas;
+}
+
 function uploadImagem($arquivo, $pasta, $principal) {
 
     $tipoArquivo = pathinfo($arquivo['name']);
     $tipoArquivo = '.' . $tipoArquivo['extension'];
 
-    $novaImagem = strtolower(md5($arquivo['name'].date('d/m/Y/H:i:s'))) . $tipoArquivo;
-    if($principal !== 0){
-        $novaImagem = '000_'.$novaImagem;
+    $novaImagem = strtolower(md5($arquivo['name'] . date('d/m/Y/H:i:s'))) . $tipoArquivo;
+    if ($principal !== 0) {
+        $novaImagem = '000_' . $novaImagem;
     }
-    
+
     $imagem = '../images';
 
     if (!file_exists($imagem)) {

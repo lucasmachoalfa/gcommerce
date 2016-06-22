@@ -106,5 +106,12 @@ switch ($opcao) {
         }
         
         echo $resposta;
+        
+    case 'listarEnderecos':
+        $idCliente = $_POST['idCliente'];
+        
+        $enderecos = json_encode($objEnderecoDao->listaEnderecosCliente($idCliente));
+        
+        print_r($enderecos);
         break;
 }

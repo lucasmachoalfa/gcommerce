@@ -130,27 +130,46 @@ $(document).ready(function () {
 
             idVariacao = idVariacao.replace(/,+$/, '');
 
-            var produto = {
+            produto = {
                 idProduto: idProduto,
                 idVariacao: idVariacao,
                 referencia: referencia,
                 quantidadeMax: quantidade,
                 preco: preco,
-                peso: peso
+                peso: peso,
+                idCarrinho: 0
             };
 
             var produtos = new Array();
 
             if (localStorage.produtos == '' || typeof localStorage.produtos == 'undefined') {
 
+                //fazer a validação de cliente logado
+                //passar idCliente = 0 quando não estiver logado
+                var idCliente = (localStorage.cliente == '' || typeof localStorage.cliente == 'undefined') ? 0 : localStorage.cliente;
+
+                var idCarrinho = $.ajax({
+                    url: 'control/carrinhoControle.php',
+                    data: {opcao: 'cadCarrinho', idProduto: produto.idProduto, quantidade: 1, idCliente: idCliente},
+                    async: false,
+                    method: "POST",
+                }).responseText;
+
+                produto.idCarrinho = parseInt(idCarrinho);
+
                 produtos.push(produto);
             } else {
                 var obj = JSON.parse(localStorage.produtos);
 
-                for (var i =0; i < obj.length; i++) {
+                var idCarrinho = 0;
+
+                for (var i = 0; i < obj.length; i++) {
+                    idCarrinho = obj[i].idCarrinho;
+
                     produtos.push(obj[i]);
                 }
-                
+                produto.idCarrinho = idCarrinho;
+
                 produtos.push(produto);
             }
 

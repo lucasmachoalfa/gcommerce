@@ -110,7 +110,7 @@ class ProdutoDao extends Banco {
 
     public function listaProdutosCarrinho(Produto $objProduto) {
         $conexao = $this->abreConexao();
-        
+
         $sql = "SELECT p.*, vp.preco AS precoVariacao, vp.peso AS pesoVariacao, vp.quantidade AS quantidadeVariacao
                     FROM " . TBL_PRODUTOS . " p
                     LEFT JOIN " . REL_VARIACAO_PRODUTO . " vp ON p.idProduto = vp.idProduto
@@ -122,6 +122,75 @@ class ProdutoDao extends Banco {
         $banco = $conexao->query($sql);
 
         $linhas = array();
+        while ($linha = $banco->fetch_assoc()) {
+            $linhas[] = $linha;
+        }
+
+        return $linhas;
+        $this->fechaConexao();
+    }
+
+    public function listaProdutosResumoCarrinho($idCarrinho) {
+        $conexao = $this->abreConexao();
+
+        $sql = "SELECT (p.precoPromocional * cp.quantidade) as preco, p.nome, cp.quantidade
+                    FROM " . REL_CARRINHO_PRODUTO . " cp
+                    JOIN " . TBL_PRODUTOS . " p ON cp.idProduto = p.idProduto
+                        WHERE cp.idCarrinho = " . $idCarrinho;
+
+        $banco = $conexao->query($sql) or die($conexao->error);
+
+        $linhas = array();
+
+        while ($linha = $banco->fetch_assoc()) {
+            $linhas[] = $linha;
+        }
+
+        return $linhas;
+
+        $this->fechaConexao();
+    }
+
+    public function listaProdutosDetalheCarrinho($idCarrinho, $referencia = NULL) {
+        $conexao = $this->abreConexao();
+
+        $sql = "SELECT p.*, GROUP_CONCAT(o.titulo) AS opcoes, GROUP_CONCAT(v.titulo) AS variacoes
+                    FROM " . REL_CARRINHO_PRODUTO . " cp
+                        JOIN " . TBL_PRODUTOS . " p ON cp.idProduto = p.idProduto
+                        JOIN " . REL_VARIACAO_PRODUTO . " rp ON p.idProduto = rp.idProduto AND rp.referencia IN(" . $referencia . ")
+                        JOIN " . TBL_OPCOES . " o ON o.idOpcao = rp.idOpcao
+                        JOIN " . TBL_VARIACAO . " v ON v.idVariacao = rp.idVariacao
+                            WHERE cp.idCarrinho = " . $idCarrinho . "
+                                GROUP BY rp.referencia
+                ";
+
+        $banco = $conexao->query($sql) or die($conexao->error);
+
+        $linhas = array();
+
+        while ($linha = $banco->fetch_assoc()) {
+            $linhas[] = $linha;
+        }
+
+        return $linhas;
+        $this->fechaConexao();
+    }
+
+    public function listaFreteProdutosCarrinho($idCarrinho, $referencia) {
+        $conexao = $this->abreConexao();
+        
+        $sql = "
+                SELECT p.*, cp.quantidade, rp.preco AS precoVariacao, rp.peso AS pesoVariacao, rp.quantidade AS quantidadeVariacao
+                    FROM " . REL_CARRINHO_PRODUTO . " cp
+                    JOIN " . TBL_PRODUTOS . " p ON cp.idProduto = p.idProduto
+                    JOIN " . REL_VARIACAO_PRODUTO . " rp ON p.idProduto = rp.idProduto AND rp.referencia IN(" . $referencia . ")
+                        WHERE cp.idCarrinho = " . $idCarrinho . " GROUP BY p.idProduto
+               ";
+
+        $banco = $conexao->query($sql) or die($conexao->error);
+
+        $linhas = array();
+
         while ($linha = $banco->fetch_assoc()) {
             $linhas[] = $linha;
         }

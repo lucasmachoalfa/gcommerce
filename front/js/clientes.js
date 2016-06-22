@@ -91,8 +91,6 @@ $(document).ready(function () {
             $("#sexo").focus();
             $("#spanCadastro").html('Você deve selecionar um gênero!');
         } else if (nomeIdentificador.val() == '') {
-            alert('1fnfjfddfs');
-            
             $("#nomeIdentificador").focus();
             $("#spanCadastro").html('Você deve preencher o nome identificador!');
         } else if (cep.val() == '') {

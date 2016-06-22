@@ -11,6 +11,80 @@ switch ($opcao) {
         header('Location:../../');
         break;
 
+    case 'cadEndereco':
+        $nomeIdentificador = $_POST['nomeIdentificador'];
+        $cep = $_POST['cep'];
+        $complemento = $_POST['complemento'];
+        $logradouro = $_POST['logradouro'];
+        $numero = $_POST['numero'];
+        $bairro = $_POST['bairro'];
+        $estado = $_POST['estado'];
+        $cidade = $_POST['cidade'];
+        $idCliente = $_POST['idCliente'];
+        $padrao = $_POST['padrao'];
+
+        $objEndereco->setIdCliente($idCliente);
+        $objEndereco->setNome($nomeIdentificador);
+        $objEndereco->setComplemento($complemento);
+        $objEndereco->setCep($cep);
+        $objEndereco->setLogradouro($logradouro);
+        $objEndereco->setNumero($numero);
+        $objEndereco->setBairro($bairro);
+        $objEndereco->setEstado($estado);
+        $objEndereco->setCidade($cidade);
+        $objEndereco->setPadrao($padrao);
+
+        $objEnderecoDao->cadEndereco($objEndereco);
+        
+        
+        break;
+    
+    case 'altEndereco':
+        $nomeIdentificador = $_POST['nomeIdentificador'];
+        $cep = $_POST['cep'];
+        $complemento = $_POST['complemento'];
+        $logradouro = $_POST['logradouro'];
+        $numero = $_POST['numero'];
+        $bairro = $_POST['bairro'];
+        $estado = $_POST['estado'];
+        $cidade = $_POST['cidade'];
+        $idEndereco = $_POST['idEndereco'];
+
+        $objEndereco->setIdEndereco($idEndereco);
+        $objEndereco->setNome($nomeIdentificador);
+        $objEndereco->setComplemento($complemento);
+        $objEndereco->setCep($cep);
+        $objEndereco->setLogradouro($logradouro);
+        $objEndereco->setNumero($numero);
+        $objEndereco->setBairro($bairro);
+        $objEndereco->setEstado($estado);
+        $objEndereco->setCidade($cidade);
+
+        $objEnderecoDao->altEndereco($objEndereco);
+        
+        
+        break;
+    
+    case 'setPadrao':
+        $idEndereco = $_POST['idEndereco'];
+        echo $idCliente = $_POST['idCliente'];
+        $padrao = 1;
+        
+        $objEndereco->setIdEndereco($idEndereco);
+        $objEndereco->setIdCliente($idCliente);
+        $objEndereco->setPadrao($padrao);
+        
+        $objEnderecoDao->setPadrao($objEndereco);
+        break;
+    
+    case 'delEndereco':
+        $idEndereco = $_POST['idEndereco'];
+        
+        $objEndereco->setIdEndereco($idEndereco);
+        
+        $objEnderecoDao->delEndereco($objEndereco);
+        break;
+
     case 'buscaCep':
         $cep = addslashes($_POST['cep']);
 
